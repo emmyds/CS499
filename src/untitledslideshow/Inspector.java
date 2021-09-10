@@ -8,7 +8,6 @@ package untitledslideshow;
 /**
  *
  * @author Annaleise
- * 
  * Controls behavior for inspector window
  */
 public class Inspector {
@@ -79,4 +78,9 @@ public class Inspector {
     public void setTransitionFocus(boolean transitionFocus) {
         this.transitionFocus = transitionFocus;
     }
+=======
+ */
+public class Inspector {
+    
+>>>>>>> main
 }
