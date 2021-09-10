@@ -23,8 +23,14 @@ public class TransitionReel implements Reel{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     * Remove an item from the reel based on x/y mouse position.
+     * @param x mouse pos
+     * @param y mouse pos
+     * @return the removed item
+     */
     @Override
-    public void removeAtPosition(int x, int y) {
+    public Item removeAtPosition(int x, int y) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

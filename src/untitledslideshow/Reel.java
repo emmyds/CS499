@@ -33,6 +33,12 @@ public interface Reel {
      * @param x mouse position x
      * @param y mouse position y
      */
-    public void removeAtPosition(int x, int y);
+    public Item removeAtPosition(int x, int y);
+    
+    /**
+     * Get ordered list of reel items.
+     * @return the item list.
+     */
+    public Item[] getReelItems();
     
 }

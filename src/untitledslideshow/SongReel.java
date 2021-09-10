@@ -25,7 +25,7 @@ public class SongReel implements Reel {
     }
 
     @Override
-    public void removeAtPosition(int x, int y) {
+    public Item removeAtPosition(int x, int y) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

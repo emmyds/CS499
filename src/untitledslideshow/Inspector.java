@@ -24,58 +24,32 @@ public class Inspector {
      */
     public void displayImage()
     {
-        setTransitionFocus(false);
-        setImageFocus(true);
-        
-        
-        
+        transitionFocus = false;
+        imageFocus = true;
+      
     };
     
     /**
      * Display the transition and transition controls in the inspector window.
      */
     public void displayTransition(){
-        setImageFocus(false);
-        setTransitionFocus(true);
-        
-        
+        imageFocus = false;
+        transitionFocus = true;
     }
    
-    
-    
-    //   GETTERS ---------------------------------------------------------------
-    public Image getImage() {
-        return image;
-    }
-
-    public Transition getTransition() {
-        return transition;
-    }
-
-    public boolean isImageFocus() {
-        return imageFocus;
-    }
-
-    public boolean isTransitionFocus() {
-        return transitionFocus;
-    }
-    
-    
-    
-    //   SETTERS ---------------------------------------------------------------
-    public void setImage(Image image) {
-        this.image = image;
-    }
-
-    public void setTransition(Transition transition) {
-        this.transition = transition;
-    }
-
-    public void setImageFocus(boolean imageFocus) {
-        this.imageFocus = imageFocus;
-    }
-
-    public void setTransitionFocus(boolean transitionFocus) {
-        this.transitionFocus = transitionFocus;
-    }
+    /**
+     * Get the item that is currently being focused on in the inspector.
+     * @return focused item
+     */
+    public Item getFocusItem(){
+        if(imageFocus){
+            return image;
+        }
+        else if(transitionFocus){
+            return transition;
+        }
+        else{
+            return null;
+        }
+    };
 }
