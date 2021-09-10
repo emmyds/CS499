@@ -78,9 +78,4 @@ public class Inspector {
     public void setTransitionFocus(boolean transitionFocus) {
         this.transitionFocus = transitionFocus;
     }
-=======
- */
-public class Inspector {
-    
->>>>>>> main
 }
