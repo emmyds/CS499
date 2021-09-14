@@ -4,13 +4,19 @@
  * and open the template in the editor.
  */
 package untitledslideshow;
-
+import java.awt.MouseInfo;
+import java.awt.Point;
+import java.awt.Cursor;
+import javax.swing.*;
 /**
  *
  * @author Annaleise
+ * @author Roberto Murcia
+ * 
  */
 public class DnDHandler {
     private Item dragItem;
+    private Cursor userCursor;
     private int startX;
     private int startY;
     private int stopX;
@@ -20,9 +26,11 @@ public class DnDHandler {
     /**
      * Change cursor during drag to match Item type.
      */
-    private void changeCursor()
+    private void changeCursor(Item selectedItem)
     {
-        
+        /*JPanel panel = new JPanel();
+        panel.getRootPane().setCursor(userCursor);
+        */
     };
     
     /**
@@ -34,7 +42,21 @@ public class DnDHandler {
      */
     public void startDrag()
     {
-        
+        Point cursorStart = MouseInfo.getPointerInfo().getLocation();
+        startX = cursorStart.x;
+        startY = cursorStart.y;
+        if(isReel(startX, startY) == true){
+            dragItem = reel.removeByPosition(startX, startY);
+        }
+        else if(isInspector(startX, startY) == true){
+            dragItem = Inspector.getFocusItem();
+        }
+        else if(isPalette(startX,startY) == true){
+            dragItem = pallete.positionToItem(startX, startY);
+            
+        }
+        changeCursor(dragItem);
+                
     };
     
     
@@ -44,6 +66,12 @@ public class DnDHandler {
      */
     public void stopDrop()
     {
+        Point cursorStop = MouseInfo.getPointerInfo().getLocation();
+        stopX = cursorStop.x;
+        stopY = cursorStop.y;
+        if(isReel(stopX,stopY)){
+            Reel.insertAtPosition(dragItem,stopX,stopY)
+        }
         
     };
     
