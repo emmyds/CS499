@@ -10,6 +10,8 @@
  * @author Roberto Murcia
  */
 import javax.swing.JFileChooser;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -371,8 +373,18 @@ public class MightyPointGui extends javax.swing.JFrame {
      * @param evt is the event of the user clicking the Open Directory button
      */
     private void imageDirectoryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_imageDirectoryButtonActionPerformed
+        ImageIcon currentImage;
+        ImageIcon imageList[];
+        int counter = 0;
+        
         final JFileChooser directory = new JFileChooser();
         directory.showOpenDialog(imagesPanel);
+        File files[] = directory.getSelectedFiles();
+        String parentDirectory = files[0].getParent();
+        
+        /*for(File image : files){
+            
+        }*/
     }//GEN-LAST:event_imageDirectoryButtonActionPerformed
     /**
      * Allows the user to save a file that can be opened in the companion application
@@ -385,15 +397,7 @@ public class MightyPointGui extends javax.swing.JFrame {
             boolean isSuccessful = new File("slideshows").mkdir();                          //Attempts to create a folder named slideshows in the root project folder
             if(isSuccessful)
             {
-                javax.swing.JPanel dialogPanel = new javax.swing.JPanel();
-                javax.swing.JLabel dialogLabel = new javax.swing.JLabel("Slideshow folder successfully created in project root!");
-                dialogLabel.setLayout(new java.awt.BorderLayout());
-                dialogPanel.add(dialogLabel);
-                javax.swing.JDialog successBox = new javax.swing.JDialog();
-                successBox.add(dialogPanel);
-                //successBox.setBounds(10,10,40,20);
-                successBox.isAlwaysOnTop();
-                successBox.setVisible(true);
+                
                 System.out.println("Directory for slides successfully created.");
             }
             else
