@@ -11,6 +11,9 @@
  */
 import javax.swing.JFileChooser;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.awt.event.ActionEvent;
 public class MightyPointGui extends javax.swing.JFrame {
     
     /**
@@ -83,14 +86,12 @@ public class MightyPointGui extends javax.swing.JFrame {
 
         intervalLabel.setText("User interval or manual selection");
 
-        saveButton.setText("Save File");
+        saveButton.setText("Save and Export");
         saveButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saveButtonActionPerformed(evt);
             }
         });
-
-        filenameTextBox.setText("fileName.file");
 
         imageDirectoryButton.setText("Select Image Directory");
         imageDirectoryButton.addActionListener(new java.awt.event.ActionListener() {
@@ -113,8 +114,8 @@ public class MightyPointGui extends javax.swing.JFrame {
             .addGroup(imagesPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(imagesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(imagesScrollPane, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
-                    .addComponent(imageDirectoryButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE))
+                    .addComponent(imagesScrollPane, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE)
+                    .addComponent(imageDirectoryButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE))
                 .addContainerGap())
         );
         imagesPanelLayout.setVerticalGroup(
@@ -145,7 +146,7 @@ public class MightyPointGui extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(soundsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(soundsScrollPane)
-                    .addComponent(soundSelectButton, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE))
+                    .addComponent(soundSelectButton, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE))
                 .addContainerGap())
         );
         soundsPanelLayout.setVerticalGroup(
@@ -172,7 +173,7 @@ public class MightyPointGui extends javax.swing.JFrame {
             transitionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(transitionsPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(transitionsScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
+                .addComponent(transitionsScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE)
                 .addContainerGap())
         );
         transitionsPanelLayout.setVerticalGroup(
@@ -276,7 +277,7 @@ public class MightyPointGui extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(filenameTextBox, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(filenameTextBox, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(saveButton)
                                         .addGap(0, 0, Short.MAX_VALUE))
@@ -297,7 +298,7 @@ public class MightyPointGui extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(264, 264, 264)
                                 .addComponent(previewButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 327, Short.MAX_VALUE)))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 308, Short.MAX_VALUE)))))
                 .addComponent(exitButton))
         );
         layout.setVerticalGroup(
@@ -356,7 +357,6 @@ public class MightyPointGui extends javax.swing.JFrame {
      */
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
 
-       setVisible(false);
        System.exit(1);
     }//GEN-LAST:event_exitButtonActionPerformed
     /**
@@ -364,7 +364,7 @@ public class MightyPointGui extends javax.swing.JFrame {
      * @param evt is the event of the user clicking the preview button
      */
     private void previewButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_previewButtonActionPerformed
-        String filename = filenameTextBox.getText() + ".JSON";
+    
     }//GEN-LAST:event_previewButtonActionPerformed
     /**
      * Allows the user to open a file explorer in order to select the directory of images to be used
@@ -380,7 +380,63 @@ public class MightyPointGui extends javax.swing.JFrame {
      * @param evt is the event of the user clicking on the Save button
      */
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
+        try
+        {
+            boolean isSuccessful = new File("slideshows").mkdir();                          //Attempts to create a folder named slideshows in the root project folder
+            if(isSuccessful)
+            {
+                javax.swing.JPanel dialogPanel = new javax.swing.JPanel();
+                javax.swing.JLabel dialogLabel = new javax.swing.JLabel("Slideshow folder successfully created in project root!");
+                dialogLabel.setLayout(new java.awt.BorderLayout());
+                dialogPanel.add(dialogLabel);
+                javax.swing.JDialog successBox = new javax.swing.JDialog();
+                successBox.add(dialogPanel);
+                //successBox.setBounds(10,10,40,20);
+                successBox.isAlwaysOnTop();
+                successBox.setVisible(true);
+                System.out.println("Directory for slides successfully created.");
+            }
+            else
+            {
+                System.out.println("Directory already created.");
+            }
+        }
+        catch(SecurityException e)
+        {
+            e.printStackTrace();
+        }
         String filename = filenameTextBox.getText() + ".JSON";
+        
+        File saveFile = new File("slideshows/" + filename);
+        boolean isSuccessful;
+        try
+        {
+            isSuccessful = saveFile.createNewFile();
+            if(isSuccessful)
+            {
+                System.out.println("File created at " + saveFile.getCanonicalPath());
+            }
+            else
+            {
+                System.out.println("File already exists at location: " + saveFile.getCanonicalPath());
+            }
+        }
+        catch(IOException e)
+        {
+            e.printStackTrace();
+        }
+        try
+        {
+            FileWriter writer = new FileWriter("slideshows/" + filename);
+            writer.write("This is a test, Hello World!");
+            writer.write("\nThe name of this file is " + filename);
+            writer.close();
+        }
+        catch(IOException e)
+        {
+            e.printStackTrace();
+        }
+     
     }//GEN-LAST:event_saveButtonActionPerformed
 
     /**
