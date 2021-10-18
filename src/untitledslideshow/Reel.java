@@ -40,5 +40,11 @@ public interface Reel {
      * @return the item list.
      */
     public Item[] getReelItems();
-    
+    /**
+     * Determines if the point provided by x and y are in the space of a reel.Returns true if a reel is present, false if otherwise
+     * @param x mouse position x
+     * @param y mouse position y
+     * @return
+     */
+    public boolean isReel(int x, int y);
 }

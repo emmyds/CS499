@@ -26,6 +26,7 @@ import java.awt.Graphics2D;
 public class DisplayImage {
     private String imagePath;
     private ImageIcon image;
+    private boolean isValid = true;
     /**
      * Constructor for DisplayImage
      */
@@ -40,8 +41,13 @@ public class DisplayImage {
      * @throws IOException 
      */
     public ImageIcon getDisplayImage(String path) throws IOException {
+        
         BufferedImage img = ImageIO.read(new File(path));
-        BufferedImage thumbnail = resize(img,100,150);                          // 100x150 is preferred size for thumbnails
+        BufferedImage thumbnail = resize(img,175,175);                          // 100x150 is preferred size for thumbnails
+        if(thumbnail == null)
+        {
+            return null;
+        }
         ImageIcon icon = new ImageIcon(thumbnail);                                //display thumnail on screen
         return icon;
     }
@@ -54,12 +60,17 @@ public class DisplayImage {
      * @return the resized BufferedImage
      */
     private static BufferedImage resize(BufferedImage img, int height, int width) {
-        Image tmp = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-        BufferedImage resized = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2d = resized.createGraphics();
-        g2d.drawImage(tmp, 0, 0, null);
-        g2d.dispose();
-        return resized;
+        try{
+            Image tmp = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+            BufferedImage resized = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+            Graphics2D g2d = resized.createGraphics();
+            g2d.drawImage(tmp, 0, 0, null);
+            g2d.dispose();
+            return resized;
+        }catch(NullPointerException exception){
+            return null;
+        }
+        
     }
     /**
      * setImagePath sets the path for the image for the given DisplayImage object
