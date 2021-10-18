@@ -1,3 +1,5 @@
+package untitledslideshow;
+
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -9,25 +11,18 @@
  *
  * @author Roberto Murcia
  */
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.nio.file.PathMatcher;
-import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import untitledslideshow.DisplayImage;
 public class MightyPointGui extends javax.swing.JFrame {
     
     /**
@@ -40,6 +35,7 @@ public class MightyPointGui extends javax.swing.JFrame {
     private boolean isInterval;
     private int intervalTime;
     private String saveDirectory;
+    private String imageDirectory;
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -520,39 +516,35 @@ public class MightyPointGui extends javax.swing.JFrame {
         /*
         Creation of the frame for the popup
         */
-        JFrame firstFrame = new JFrame();
-        firstFrame.setLayout(new FlowLayout());
-        firstFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        JLabel firstLabel = new JLabel();
-        JLabel secondLabel = new JLabel();
-        JButton newSlide = new JButton();
-        JButton oldSlide = new JButton();
-        firstLabel.setText("Welcome to the mightyPoint slideshow editor!");
-        secondLabel.setText("Choose from either of the following options: ");
-        newSlide.setText("Create a new slideshow");
-        oldSlide.setText("Import an old slideshow");
-        firstFrame.add(firstLabel);
-        firstFrame.add(secondLabel);
-        firstFrame.add(newSlide);
-        firstFrame.add(oldSlide);
-                
-        /*
-        Resizing and dimensions of the popup
-        */
-        firstFrame.setPreferredSize(new Dimension(400,150));
-        firstFrame.pack();
-        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
-        int x = (int) ((dimension.getWidth() - firstFrame.getWidth()) / 2);
-        int y = (int) ((dimension.getHeight() - firstFrame.getHeight()) / 2);
-        firstFrame.setLocation(x, y);
-        firstFrame.setResizable(false);
-        firstFrame.setVisible(true);
-        /**
-         * newSlide.addActionListener allows for the detection of the new slide
-         * button being pressed. If it is pressed, it will provide a JFileChooser
-         * popup and requests the desired directory of images.
-         */
-        newSlide.addActionListener((ActionEvent e) -> {
+        MightyPointGui mainGui = new MightyPointGui();
+        FirstPopUp popUp = new FirstPopUp();
+        popUp.createPop();
+        ArrayList<DisplayImage> thumbImages = null;
+        while(true){
+            thumbImages = popUp.getArrayList();
+            if(thumbImages != null){
+                break;
+            }
+        }
+        System.out.print("Left PopUp");
+        DefaultListModel dlm = new DefaultListModel();
+        int i = 0;
+        for(DisplayImage listImage : thumbImages){
+            JLabel imageLabel = new JLabel();
+            imageLabel.setIcon(listImage.getImage());
+            imageLabel.setSize(175, 175);
+            //System.out.print(listImage.getImagePath());
+            dlm.add(i, listImage.getImage());
+            i++;
+        }
+        mainGui.imageDirectory = popUp.getImageDirectory();
+        mainGui.imagesList.setModel(dlm);
+        mainGui.setVisible(true);
+        
+        
+        
+        
+        /*newSlide.addActionListener((ActionEvent e) -> {
             File imageDirectory = null;
             boolean isNewSlide = true;
             boolean noDirectory = true;
@@ -585,10 +577,11 @@ public class MightyPointGui extends javax.swing.JFrame {
                 File fileDirectories[] = imageDirectory.listFiles();
                 int counter = 0;
                 PathMatcher matcher = FileSystems.getDefault().getPathMatcher("regex:^.*\\.jpg");
+                PathMatcher matcher2 = FileSystems.getDefault().getPathMatcher("regex:^.*\\.png");
                 try{
                     for (File fileDirectory : fileDirectories) {
                         Path filePath = fileDirectory.toPath();
-                        if (matcher.matches(filePath)){
+                        if (matcher.matches(filePath) || matcher2.matches(filePath)){
                             counter++;
                             System.out.print("Item name: " + filePath + " is an image!\n");
                             imagePaths.add(filePath.toString());
@@ -613,6 +606,9 @@ public class MightyPointGui extends javax.swing.JFrame {
                 for(String jpegPath : imagePaths){                                  //For creates a display image object and holds the current image
                     DisplayImage newImage = new DisplayImage();                     //Then sets the image path of that image
                     newImage.setImagePath(jpegPath);                                //Then adds that display image object into imageThumbnails
+                    if(newImage.getImage() == null){
+                        continue;
+                    }
                     imageThumbnails.add(newImage);
                 }
                 System.out.print(imageThumbnails.size());
