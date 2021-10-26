@@ -33,6 +33,18 @@ public interface Reel {
      * @param x mouse position x
      * @param y mouse position y
      */
-    public void removeAtPosition(int x, int y);
+    public Item removeAtPosition(int x, int y);
     
+    /**
+     * Get ordered list of reel items.
+     * @return the item list.
+     */
+    public Item[] getReelItems();
+    /**
+     * Determines if the point provided by x and y are in the space of a reel.Returns true if a reel is present, false if otherwise
+     * @param x mouse position x
+     * @param y mouse position y
+     * @return
+     */
+    public boolean isReel(int x, int y);
 }

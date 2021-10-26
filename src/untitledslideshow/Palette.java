@@ -21,7 +21,7 @@ public interface Palette {
     public void addItem(Item item, int pos);
     
     /**
-     * displaying the list of Items in the Palette
+     * Display the list of Items in the Palette.
      */
     public void displayItems();
     

@@ -7,8 +7,8 @@ package untitledslideshow;
 
 /**
  *
- * @author Annaleise
+ * @author magic
  */
-public interface test {
+public class AudioPlayer {
     
 }

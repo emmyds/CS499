@@ -18,9 +18,15 @@ public class Image implements Item{
         return path;
     }
 
+    
+    /**
+     * Get the time that the image should be displayed in the presentation
+     * @return 
+     */
     @Override
     public int getTime() {
-        return time;
+        //return the user-set time interval here;
+        return -1;
     }
     
 }

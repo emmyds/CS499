@@ -11,4 +11,5 @@ package untitledslideshow;
  */
 public interface Item {
     public String getString();
+    public int getTime();
 }
