@@ -8,20 +8,42 @@ package untitledslideshow;
 /**
  *
  * @author Annaleise
+ * @author Emily
  */
+
+/**
+ *The Song class contains private variables for the Path and Length for each member of the Song Class.
+ */
+
 public class Song implements Item{
 
     private String path;
-    private int length;
+    private int time;
     
-    @Override
-    public String getString() {
+    /**
+    *The Song Function creates an instance of the Song class for each class member.
+    */
+    public Song(String path, int time) 
+    {
+        this.path= path;
+        this.time = time;
+    }
+ 
+ 
+    /**
+    *The getPath Function allows the path variable to be accessed by other classes.
+    */
+    public String getPath()
+    {
         return path;
     }
-
-    @Override
-    public int getTime() {
-        return length;
+ 
+    /**
+    *The getSongLength Function allows the songLength variable to be accessed by other classes.
+    */
+    public int getSongLength()
+    {
+        return time;
     }
     
 }
