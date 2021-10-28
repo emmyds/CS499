@@ -15,10 +15,11 @@ package untitledslideshow;
  *The Song class contains private variables for the Path and Length for each member of the Song Class.
  */
 
-public class Song implements Item{
+public abstract class Song implements Item{
 
     private String path;
     private int time;
+    private String title;
     
     /**
     *The Song Function creates an instance of the Song class for each class member.
@@ -29,7 +30,14 @@ public class Song implements Item{
         this.time = time;
     }
  
- 
+    /**
+     * The getTitle Function allows the title variable to be accessed by other classes.
+     */
+    public String getTitle()
+    {
+        return title;
+    }
+    
     /**
     *The getPath Function allows the path variable to be accessed by other classes.
     */
