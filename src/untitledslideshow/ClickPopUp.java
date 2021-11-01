@@ -6,10 +6,14 @@ package untitledslideshow;
 Importations
 */
 import java.awt.Component;
+import java.awt.FlowLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
 
 /**
  * ClickPopUp creates a JPopupMenu whenever the user clicks on a component
@@ -17,9 +21,7 @@ import javax.swing.JPopupMenu;
  * remove/add specific images, transitions, and sounds to their respective reels.
  * 
  * @author Roberto Murcia
- */
-
-
+ **/
 public class ClickPopUp extends JPopupMenu{
     /*
     Test Variables
@@ -32,14 +34,28 @@ public class ClickPopUp extends JPopupMenu{
     Actual Variables
     */
     private static final MightyPointGui tempGui = new MightyPointGui();
+    private static final JList tempReelList = tempGui.imagesReel;
     private static final DefaultListModel tempModel = new DefaultListModel();
+    private static final JFrame tempFrame = new JFrame();
+    private static final JPanel tempPanel = new JPanel();
+    /**
+     * ClickPopUp creates a popup based on the component that was clicked over.
+     * For example, if the component is the imagesList, it provides the options
+     * to add images to parts of the image reel. If it is the imagesReel, it allows
+     * the user to remove images/shift images in the reel.
+     * @param c 
+     */
     public ClickPopUp(Component c){
+        tempReelList.setName("imagesReel");
         if(c instanceof JList && "imagesList".equals(c.getName())){
+            if(c == null){
+                System.out.println("No component Found");
+            }
             //Copies the elements found in the componenent into tempList
             JList tempList = (JList) c;
             int index = tempList.getSelectedIndex();
             DefaultListModel model = (DefaultListModel) tempList.getModel();
-            System.out.println("Parent Component Name: " + c.getComponentAt(c.getX(), c.getY()).getName());
+            //System.out.println("Parent Component Name: " + c.getComponentAt(c.getX(), c.getY()).getName());
             /**
              * Code that adds the selected image into the last index of the image reel
              */
@@ -48,10 +64,29 @@ public class ClickPopUp extends JPopupMenu{
                 int endIndex = tempModel.size();
                 tempModel.add(endIndex, temp);
                 tempGui.imagesReel.setModel(tempModel);
+                tempReelList.setModel(tempModel);
                 System.out.println("Size of temp model is: " + tempGui.imagesReel.getModel().getSize());
                 //System.out.println("Added to End of Reel: " + tempGui.imagesReel.getModel().getElementAt(endIndex).toString());
-                if(tempGui.imagesReel.getModel().getSize() > 0){
-                    tempGui.setVisible(true);
+                if(tempList.getModel().getSize() > 0 && !tempGui.isVisible()){
+                    /*
+                    For GUI presentation, fix after using
+                    */
+                    //tempGui.setVisible(true);
+                    tempFrame.add(tempPanel);
+                    tempFrame.setSize(1000, 300);
+                    tempFrame.setResizable(false);
+                    tempFrame.setLocation(500, 500);
+                    tempFrame.setLayout(new FlowLayout());
+                    tempPanel.setLayout(new FlowLayout());
+                    tempReelList.setSize(300,250);
+                    JScrollPane tempScroll = new JScrollPane(tempReelList);
+                    //tempPanel.add(new JScrollPane(tempReelList));
+                    tempScroll.setSize(300, 250);
+                    tempPanel.add(tempScroll);
+                    tempPanel.setSize(300,300);
+                    tempFrame.setAlwaysOnTop(true);
+                    tempFrame.setVisible(true);
+                    
                 }
             });
             /**
@@ -61,13 +96,32 @@ public class ClickPopUp extends JPopupMenu{
                 ImageIcon temp = (ImageIcon) model.getElementAt(index);
                 tempModel.add(0, temp);
                 tempGui.imagesReel.setModel(tempModel);
+                tempReelList.setModel(tempModel);
                 //System.out.println("Added to Start of Reel: " + tempGui.imagesReel.getModel().getElementAt(0).toString());
                 //System.out.println("Image at end of reel: " + 
                 //        tempGui.imagesReel.getModel().getElementAt(
                 //        tempGui.imagesReel.getModel().getSize()).toString());
                 System.out.println("Size of temp model is: " + tempGui.imagesReel.getModel().getSize());
-                if(tempGui.imagesReel.getModel().getSize() > 0){
-                    tempGui.setVisible(true);
+                if(tempGui.imagesReel.getModel().getSize() > 0 && !tempGui.isVisible()){
+                    /*
+                    For GUI presentation, fix after using
+                    */
+                    
+                    tempFrame.add(tempPanel);
+                    tempFrame.setSize(1000, 300);
+                    tempFrame.setResizable(false);
+                    tempFrame.setLocation(500, 500);
+                    tempFrame.setLayout(new FlowLayout());
+                    tempPanel.setLayout(new FlowLayout());
+                    tempReelList.setSize(300,250);
+                    JScrollPane tempScroll = new JScrollPane(tempReelList);
+                    //tempPanel.add(new JScrollPane(tempReelList));
+                    tempScroll.setSize(300, 250);
+                    tempPanel.add(tempScroll);
+                    tempPanel.setSize(300,300);
+                    tempFrame.setAlwaysOnTop(true);
+                    tempFrame.setVisible(true);
+                    //tempGui.setVisible(true);
                 }    
             });            
             /*
@@ -84,7 +138,6 @@ public class ClickPopUp extends JPopupMenu{
             //DefaultListModel tempModel = (DefaultListModel) tempListModel;
             this.add("Remove from Reel:").addActionListener(e->{
                 tempModel.remove(index);
-                tempList.setModel(tempModel);
             });
             this.add("Shift Left").addActionListener(e->{
                 if(index-1 >= 0){
@@ -112,7 +165,7 @@ public class ClickPopUp extends JPopupMenu{
                 
             });
             
-}
+        }
         else if("soundsList".equals(c.getName())){
             /*
             this.addToSoundReel = new JMenuItem("Add to End of Reel");
@@ -120,14 +173,18 @@ public class ClickPopUp extends JPopupMenu{
             this.shiftRight = new JMenuItem("Move sound one spot to the right");
             this.add(addToSoundReel); this.add(shiftLeft); this.add(shiftRight);
             */
-}
+        }
         else{
 
-        }
-        
-        
+        }  
+    }
+    private void createTempReel(){
+        JPanel tempPanel = new JPanel();
+        tempPanel.setSize(1000, 300);
+        tempPanel.setLayout(new FlowLayout());
+        JList tempList = new JList();
+        tempList.setModel(tempModel);
+        tempPanel.add(tempList);
         
     }
-    
-    
 }

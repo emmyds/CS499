@@ -17,13 +17,14 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import java.awt.Graphics2D;
+import javax.swing.JLabel;
 
 /**
  * 
  * DisplayImage is a class that creates the objects that will hold information
  * for the thumbnails to be used
  */
-public class DisplayImage {
+public class DisplayImage{
     private String imagePath;
     private ImageIcon image;
     /**
@@ -47,6 +48,7 @@ public class DisplayImage {
         {
             return null;
         }
+        
         ImageIcon icon = new ImageIcon(thumbnail);                                //display thumnail on screen
         /*try{
             this.imageLabel.setBounds(150, 150, 150, 150);

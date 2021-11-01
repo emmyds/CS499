@@ -21,6 +21,7 @@ import java.nio.file.PathMatcher;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import java.util.ArrayList;
+import java.util.Iterator;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 public class MightyPointGui extends javax.swing.JFrame {
@@ -101,10 +102,12 @@ public class MightyPointGui extends javax.swing.JFrame {
         });
         imagesList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         imagesList.setToolTipText("");
+        imagesList.setAutoscrolls(false);
+        imagesList.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         imagesList.setDragEnabled(true);
         imagesList.setDropMode(javax.swing.DropMode.ON);
-        imagesList.setFixedCellHeight(180);
-        imagesList.setFixedCellWidth(180);
+        imagesList.setFixedCellHeight(175);
+        imagesList.setFixedCellWidth(175);
         imagesList.setLayoutOrientation(javax.swing.JList.HORIZONTAL_WRAP);
         imagesList.setName("imagesList"); // NOI18N
         imagesList.setSelectionBackground(new java.awt.Color(0, 51, 153));
@@ -112,7 +115,6 @@ public class MightyPointGui extends javax.swing.JFrame {
         imagesScrollPane.setViewportView(imagesList);
         imagesList.getAccessibleContext().setAccessibleName("");
         imagesList.addMouseListener(new ClickListener());
-        //imagesList.setCellRenderer(new ElementRenderer());
 
         javax.swing.GroupLayout imagesPanelLayout = new javax.swing.GroupLayout(imagesPanel);
         imagesPanel.setLayout(imagesPanelLayout);
@@ -524,18 +526,16 @@ public class MightyPointGui extends javax.swing.JFrame {
         System.out.println("Left PopUp");
         DefaultListModel dlm = new DefaultListModel();
         int i = 0;
-        for(DisplayImage listImage : thumbImages){
+        for (DisplayImage listImage : thumbImages) {
             dlm.add(i, listImage.getImage());
             i++;
-        }
-        //ImageReel reel = new ImageReel();
-        //LayoutManager mgr = new FlowLayout();
-        //reel.setLayout(mgr);
-        //mainGui.slideShowReelPanel.add(new JScrollPane(reel));
+        } //ImageReel reel = new ImageReel();
         
         mainGui.imageDirectory = popUp.getImageDirectory();
         mainGui.imagesList.setModel(dlm);
         mainGui.imagesList.setDragEnabled(true);
+        ElementRenderer renderer = new ElementRenderer();
+        //mainGui.imagesList.setCellRenderer(renderer);
         mainGui.slideShowReelPanel.setLayout(new CardLayout());
 
         /* Create and display the form */
@@ -549,7 +549,7 @@ public class MightyPointGui extends javax.swing.JFrame {
     private javax.swing.JPanel extraSettingsPanel;
     private javax.swing.JTextField filenameTextBox;
     private javax.swing.JPanel iconPanel;
-    private javax.swing.JList<String> imagesList;
+    protected javax.swing.JList<String> imagesList;
     private javax.swing.JPanel imagesPanel;
     protected javax.swing.JList<String> imagesReel;
     private javax.swing.JScrollPane imagesScrollPane;
