@@ -33,6 +33,9 @@ public class ClickPopUp extends JPopupMenu{
     /*
     Actual Variables
     */
+    /**
+     * Variable declarations for temporary gui
+     */
     private static final MightyPointGui tempGui = new MightyPointGui();
     private static final JList tempReelList = tempGui.imagesReel;
     private static final DefaultListModel tempModel = new DefaultListModel();
@@ -43,49 +46,34 @@ public class ClickPopUp extends JPopupMenu{
      * For example, if the component is the imagesList, it provides the options
      * to add images to parts of the image reel. If it is the imagesReel, it allows
      * the user to remove images/shift images in the reel.
-     * @param c 
+     * @param c is the component that was clicked over
      */
     public ClickPopUp(Component c){
         tempReelList.setName("imagesReel");
         if(c instanceof JList && "imagesList".equals(c.getName())){
-            if(c == null){
-                System.out.println("No component Found");
-            }
             //Copies the elements found in the componenent into tempList
             JList tempList = (JList) c;
+            //Gets the index of the selected items
             int index = tempList.getSelectedIndex();
             DefaultListModel model = (DefaultListModel) tempList.getModel();
             //System.out.println("Parent Component Name: " + c.getComponentAt(c.getX(), c.getY()).getName());
             /**
              * Code that adds the selected image into the last index of the image reel
+             * by creating a listener on the menu tab
              */
             this.add("Add to End of Reel").addActionListener(e->{
                 ImageIcon temp = (ImageIcon) model.getElementAt(index);
                 int endIndex = tempModel.size();
                 tempModel.add(endIndex, temp);
-                tempGui.imagesReel.setModel(tempModel);
+                //tempGui.imagesReel.setModel(tempModel);
                 tempReelList.setModel(tempModel);
                 System.out.println("Size of temp model is: " + tempGui.imagesReel.getModel().getSize());
-                //System.out.println("Added to End of Reel: " + tempGui.imagesReel.getModel().getElementAt(endIndex).toString());
-                if(tempList.getModel().getSize() > 0 && !tempGui.isVisible()){
+                if(tempList.getModel().getSize() > 0 && !tempFrame.isVisible()){
                     /*
                     For GUI presentation, fix after using
                     */
                     //tempGui.setVisible(true);
-                    tempFrame.add(tempPanel);
-                    tempFrame.setSize(1000, 300);
-                    tempFrame.setResizable(false);
-                    tempFrame.setLocation(500, 500);
-                    tempFrame.setLayout(new FlowLayout());
-                    tempPanel.setLayout(new FlowLayout());
-                    tempReelList.setSize(300,250);
-                    JScrollPane tempScroll = new JScrollPane(tempReelList);
-                    //tempPanel.add(new JScrollPane(tempReelList));
-                    tempScroll.setSize(300, 250);
-                    tempPanel.add(tempScroll);
-                    tempPanel.setSize(300,300);
-                    tempFrame.setAlwaysOnTop(true);
-                    tempFrame.setVisible(true);
+                    createTempReel();
                     
                 }
             });
@@ -93,6 +81,7 @@ public class ClickPopUp extends JPopupMenu{
              * Code that adds the selected image to the beginning of the image reel
              */
             this.add("Add to Start of Reel").addActionListener(e->{
+                
                 ImageIcon temp = (ImageIcon) model.getElementAt(index);
                 tempModel.add(0, temp);
                 tempGui.imagesReel.setModel(tempModel);
@@ -102,25 +91,11 @@ public class ClickPopUp extends JPopupMenu{
                 //        tempGui.imagesReel.getModel().getElementAt(
                 //        tempGui.imagesReel.getModel().getSize()).toString());
                 System.out.println("Size of temp model is: " + tempGui.imagesReel.getModel().getSize());
-                if(tempGui.imagesReel.getModel().getSize() > 0 && !tempGui.isVisible()){
+                if(tempGui.imagesReel.getModel().getSize() > 0 && !tempFrame.isVisible()){
                     /*
                     For GUI presentation, fix after using
                     */
-                    
-                    tempFrame.add(tempPanel);
-                    tempFrame.setSize(1000, 300);
-                    tempFrame.setResizable(false);
-                    tempFrame.setLocation(500, 500);
-                    tempFrame.setLayout(new FlowLayout());
-                    tempPanel.setLayout(new FlowLayout());
-                    tempReelList.setSize(300,250);
-                    JScrollPane tempScroll = new JScrollPane(tempReelList);
-                    //tempPanel.add(new JScrollPane(tempReelList));
-                    tempScroll.setSize(300, 250);
-                    tempPanel.add(tempScroll);
-                    tempPanel.setSize(300,300);
-                    tempFrame.setAlwaysOnTop(true);
-                    tempFrame.setVisible(true);
+                    createTempReel();
                     //tempGui.setVisible(true);
                 }    
             });            
@@ -137,7 +112,13 @@ public class ClickPopUp extends JPopupMenu{
             int index = tempList.getSelectedIndex();
             //DefaultListModel tempModel = (DefaultListModel) tempListModel;
             this.add("Remove from Reel:").addActionListener(e->{
-                tempModel.remove(index);
+                if(tempModel.getSize() == 0){
+                    System.out.println("No Elements in Reel.");
+                }
+                else{
+                    tempModel.remove(index);
+                }
+
             });
             this.add("Shift Left").addActionListener(e->{
                 if(index-1 >= 0){
@@ -146,13 +127,20 @@ public class ClickPopUp extends JPopupMenu{
                     tempModel.setElementAt(temp1, index-1);
                     tempModel.setElementAt(temp2, index);
                 }
+                else if(tempModel.getSize() == 0){
+                    System.out.println("No Elements in Reel to shift.");
+                }
                 else{
                     System.out.println("Image is already at the beginning of the reel.");
                 }
             });
             this.add("Shift Right").addActionListener(e->{
                 try{
-                    if(index >= tempModel.getSize()){}
+                    if(index >= tempModel.getSize()){
+                    }
+                    else if(tempModel.getSize() == 0){
+                    System.out.println("No Elements in Reel to shift.");
+                    }
                     else{
                         var temp1 = tempModel.getElementAt(index);
                         var temp2 = tempModel.getElementAt(index + 1);
@@ -164,6 +152,51 @@ public class ClickPopUp extends JPopupMenu{
                 }
                 
             });
+            this.addSeparator();
+           
+           this.add("Wipe Left").addActionListener(e -> {
+              String trans = "WL";
+              var image = tempModel.getElementAt(index);
+                System.out.println(image);
+                System.out.println(index);
+              System.out.println("Wipe Left added to current image ");
+           });
+           
+           
+            this.add("Wipe Right").addActionListener(e -> {
+                String trans = "WR";
+                var image = tempModel.getElementAt(index);
+                System.out.println(image);
+                System.out.println(index);
+               System.out.println("Wipe Right added to current image ");
+           });
+            
+            
+            this.add("Wipe Up").addActionListener(e -> {
+                String trans = "WU";
+                var image = tempModel.getElementAt(index);
+                System.out.println(image);
+                System.out.println(index);
+               System.out.println("Wipe Up added to current image ");
+           });
+            
+            
+            this.add("Wipe Down").addActionListener(e -> {
+                String trans = "WD";
+                var image = tempModel.getElementAt(index);
+                System.out.println(image);
+                System.out.println(index);
+               System.out.println("Wipe Down added to current image ");
+           });
+            
+            
+            this.add("Crossfade").addActionListener(e -> {
+                String trans = "CF";
+                var image = tempModel.getElementAt(index);
+                System.out.println(image);
+                System.out.println(index);
+               System.out.println("Crossfade added to current image ");
+           });
             
         }
         else if("soundsList".equals(c.getName())){
@@ -175,16 +208,27 @@ public class ClickPopUp extends JPopupMenu{
             */
         }
         else{
-
         }  
     }
+    /**
+     * For the live/video presentation, must integrate into actual main gui
+     * 
+     */
     private void createTempReel(){
-        JPanel tempPanel = new JPanel();
-        tempPanel.setSize(1000, 300);
+        tempFrame.add(tempPanel);
+        tempFrame.setSize(1000, 300);
+        tempFrame.setResizable(true);
+        tempFrame.setLocation(500, 500);
+        tempFrame.setLayout(new FlowLayout());
         tempPanel.setLayout(new FlowLayout());
-        JList tempList = new JList();
-        tempList.setModel(tempModel);
-        tempPanel.add(tempList);
-        
+        JScrollPane tempScroll = new JScrollPane(tempReelList);
+        //tempPanel.add(new JScrollPane(tempReelList));
+        tempReelList.setDragEnabled(false);
+        tempReelList.setSize(500,250);
+        tempScroll.setSize(500, 250);
+        tempPanel.add(tempScroll);
+        tempPanel.setSize(500,300);
+        tempFrame.setAlwaysOnTop(true);
+        tempFrame.setVisible(true);
     }
 }

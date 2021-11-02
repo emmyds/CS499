@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.text.AbstractDocument;
 public class MightyPointGui extends javax.swing.JFrame {
     
     /**
@@ -94,6 +95,8 @@ public class MightyPointGui extends javax.swing.JFrame {
                 saveButtonActionPerformed(evt);
             }
         });
+
+        ((AbstractDocument) filenameTextBox.getDocument()).setDocumentFilter(new InputFilter());
 
         imagesList.setModel(new javax.swing.DefaultListModel<String>() {
             String[] imageStrings = {null};
@@ -200,6 +203,7 @@ public class MightyPointGui extends javax.swing.JFrame {
         extraSettingsPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         manualIntervalButton.add(manualButton);
+        manualButton.setSelected(true);
         manualButton.setText("Manual Slides");
 
         manualIntervalButton.add(intervalButton);
@@ -259,9 +263,9 @@ public class MightyPointGui extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(intervalSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(intervalLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 393, Short.MAX_VALUE)
                 .addComponent(previewButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 393, Short.MAX_VALUE)
                 .addComponent(transitionSettingsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -326,8 +330,8 @@ public class MightyPointGui extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(iconPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(21, 21, 21)
-                                .addComponent(filenameTextBox, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap()
+                                .addComponent(filenameTextBox, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(saveButton)))
                         .addGap(0, 848, Short.MAX_VALUE))
@@ -455,6 +459,13 @@ public class MightyPointGui extends javax.swing.JFrame {
             FileWriter writer = new FileWriter("slideshows/" + filename);
             writer.write("This is a test, Hello World!");
             writer.write("\nThe name of this file is " + filename);
+            if(this.intervalButton.isSelected() == true){
+                writer.write("\nInterval Time: " + this.intervalTime);
+            }
+            else{
+                writer.write("\nInterval Time: " + null);
+            }
+            writer.write("\nImage Directory: " + this.imageDirectory);
             writer.close();
         }
         catch(IOException e)
@@ -529,13 +540,15 @@ public class MightyPointGui extends javax.swing.JFrame {
         for (DisplayImage listImage : thumbImages) {
             dlm.add(i, listImage.getImage());
             i++;
-        } //ImageReel reel = new ImageReel();
+        }
         
         mainGui.imageDirectory = popUp.getImageDirectory();
         mainGui.imagesList.setModel(dlm);
-        mainGui.imagesList.setDragEnabled(true);
+        /* Cell Renderer Shenanigans
         ElementRenderer renderer = new ElementRenderer();
-        //mainGui.imagesList.setCellRenderer(renderer);
+        mainGui.imagesList.setCellRenderer(renderer);
+        */
+        
         mainGui.slideShowReelPanel.setLayout(new CardLayout());
 
         /* Create and display the form */
