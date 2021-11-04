@@ -37,16 +37,15 @@ public class InputFilter extends DocumentFilter {
         for(int n = text.length(); n > 0; n--){
             char c = text.charAt(n - 1);
             System.out.println(c);
-            if(Character.isAlphabetic(c) || 
-                    Character.isDigit(c) || 
-                    Character.valueOf(c).compareTo('"') != 0 ||
-                    Character.valueOf(c).compareTo('*') != 0 ||
-                    Character.valueOf(c).compareTo('<') != 0 ||
-                    Character.valueOf(c).compareTo('>') != 0 ||
-                    Character.valueOf(c).compareTo('?') != 0 ||
-                    Character.valueOf(c).compareTo('\\') != 0 ||
-                    Character.valueOf(c).compareTo('|') != 0 ||
-                    Character.valueOf(c).compareTo('/') != 0 ||
+            if(Character.valueOf(c).compareTo(' ') != 0 && 
+                    Character.valueOf(c).compareTo('"') != 0 &&
+                    Character.valueOf(c).compareTo('*') != 0 &&
+                    Character.valueOf(c).compareTo('<') != 0 &&
+                    Character.valueOf(c).compareTo('>') != 0 &&
+                    Character.valueOf(c).compareTo('?') != 0 &&
+                    Character.valueOf(c).compareTo('\\') != 0 &&
+                    Character.valueOf(c).compareTo('|') != 0 &&
+                    Character.valueOf(c).compareTo('/') != 0 &&
                     Character.valueOf(c).compareTo(':') != 0){
                 super.replace(fb, offset, length, String.valueOf(c), attrs);
             }
