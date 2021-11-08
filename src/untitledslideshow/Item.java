@@ -10,7 +10,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 /**
- *
+ * @author Annaleise
  * @author Roberto Murcia
  */
 public class Item extends JLabel{
