@@ -17,16 +17,16 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import java.awt.Graphics2D;
+import javax.swing.JLabel;
 
 /**
  * 
  * DisplayImage is a class that creates the objects that will hold information
  * for the thumbnails to be used
  */
-public class DisplayImage {
+public class DisplayImage{
     private String imagePath;
     private ImageIcon image;
-    private boolean isValid = true;
     /**
      * Constructor for DisplayImage
      */
@@ -40,15 +40,24 @@ public class DisplayImage {
      * @return is used to return the icon for the thumbnail for the image
      * @throws IOException 
      */
-    public ImageIcon getDisplayImage(String path) throws IOException {
+    public ImageIcon getDisplayImage(String path) throws IOException{
         
         BufferedImage img = ImageIO.read(new File(path));
         BufferedImage thumbnail = resize(img,175,175);                          // 100x150 is preferred size for thumbnails
         if(thumbnail == null)
         {
+            System.out.println("Image at " + path + " is not a valid image file.");
             return null;
         }
+        
         ImageIcon icon = new ImageIcon(thumbnail);                                //display thumnail on screen
+        /*try{
+            this.imageLabel.setBounds(150, 150, 150, 150);
+            this.imageLabel.addMouseListener(new ClickListener());
+            this.imageLabel.setIcon((Icon) icon);
+        }catch(NullPointerException e){
+        }*/
+        
         return icon;
     }
     

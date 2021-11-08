@@ -75,16 +75,18 @@ public class FirstPopUp {
                 imageDirectory = filechooser.getSelectedFile();
                 setImageDirectory(imageDirectory);
                 if(imageDirectory == null){
-                    JOptionPane.showMessageDialog(filechooser, "Welcome");
+                    JOptionPane.showMessageDialog(filechooser, "New Slideshow Cancelled");
                     isNewSlide = false;
+                    break;
                 }
                 else{
                     noDirectory = false;
                 }
             }catch(NullPointerException exception){}
             }
-            File fileDirectories[] = this.imageDirectory.listFiles();
-            int counter = 0;
+            try{
+                File fileDirectories[] = this.imageDirectory.listFiles();
+                int counter = 0;
             PathMatcher matcher = FileSystems.getDefault().getPathMatcher("regex:^.*\\.jpg");
             PathMatcher matcher2 = FileSystems.getDefault().getPathMatcher("regex:^.*\\.png");
             try{
@@ -127,6 +129,9 @@ public class FirstPopUp {
                 }
             }
             catch(NullPointerException exception){System.out.print(exception);}
+            }
+            catch(NullPointerException e){}
+            
             
         }
         return null;
@@ -149,4 +154,5 @@ public class FirstPopUp {
     public String getImageDirectory(){
         return imageDirectory.toString();
     }
+
 }
