@@ -10,6 +10,8 @@ import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JList;
 import javax.swing.JPopupMenu;
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * ClickPopUp creates a JPopupMenu whenever the user clicks on a component
@@ -32,7 +34,7 @@ public class ClickPopUp extends JPopupMenu{
     /**
      * Variable declarations for temporary GUI
      */
-    private static final MightyPointGui tempGui = new MightyPointGui();
+    private static MightyPointGui tempGui;
     private static final JList tempReelList = tempGui.imagesReel;
     private static final DefaultListModel tempModel = new DefaultListModel();
     //private static final JFrame tempFrame = new JFrame();
@@ -45,6 +47,8 @@ public class ClickPopUp extends JPopupMenu{
      * @param c is the component that was clicked over
      */
     public ClickPopUp(Component c){
+        this.tempGui = new MightyPointGui();
+        Exporter exporter = MightyPointGui.exporter;
         tempReelList.setName("imagesReel");
         if(c instanceof JList && "imagesList".equals(c.getName())){
             //Copies the elements found in the componenent into tempList
@@ -59,20 +63,25 @@ public class ClickPopUp extends JPopupMenu{
              */
             this.add("Add to End of Reel").addActionListener(e->{
                 ImageIcon temp = (ImageIcon) model.getElementAt(index);
+                
                 int endIndex = tempModel.size();
                 tempModel.add(endIndex, temp);
+                exporter.getImages().add(new ImageItem(temp.getDescription(), "no transition")); //push a new image item to the end of the list
                 //tempGui.imagesReel.setModel(tempModel);
                 tempReelList.setModel(tempModel);
                 System.out.println("Size of temp model is: " + tempGui.imagesReel.getModel().getSize());
-                
+                for (ImageItem i : exporter.getImages()){
+                    System.out.println("Image: " + i.getPath() + " trans: " + i.getTransition());
+                }
+
             });
             /**
              * Code that adds the selected image to the beginning of the image reel
              */
             this.add("Add to Start of Reel").addActionListener(e->{
-                
                 ImageIcon temp = (ImageIcon) model.getElementAt(index);
                 tempModel.add(0, temp);
+                exporter.getImages().add(0, new ImageItem(temp.getDescription(), "no transition"));
                 tempGui.imagesReel.setModel(tempModel);
                 tempReelList.setModel(tempModel);
                 //System.out.println("Added to Start of Reel: " + tempGui.imagesReel.getModel().getElementAt(0).toString());
@@ -80,8 +89,9 @@ public class ClickPopUp extends JPopupMenu{
                 //        tempGui.imagesReel.getModel().getElementAt(
                 //        tempGui.imagesReel.getModel().getSize()).toString());
                 System.out.println("Size of temp model is: " + tempGui.imagesReel.getModel().getSize());
-
-                
+                for (ImageItem i : exporter.getImages()){
+                    System.out.println("Image: " + i.getPath() + " trans: " + i.getTransition());
+                }
             });            
             /*
             Testing and debug code
@@ -110,6 +120,7 @@ public class ClickPopUp extends JPopupMenu{
                     var temp2 = tempModel.getElementAt(index - 1);
                     tempModel.setElementAt(temp1, index-1);
                     tempModel.setElementAt(temp2, index);
+                    Collections.swap(exporter.getImages(), index, index-1);
                 }
                 else if(tempModel.getSize() == 0){
                     System.out.println("No Elements in Reel to shift.");
@@ -130,6 +141,7 @@ public class ClickPopUp extends JPopupMenu{
                         var temp2 = tempModel.getElementAt(index + 1);
                         tempModel.setElementAt(temp1, index+1);
                         tempModel.setElementAt(temp2, index);
+                        Collections.swap(exporter.getImages(), index+1, index);
                     }
                 }catch(ArrayIndexOutOfBoundsException error){
                     System.out.println("Image is already at the end of the reel.");
@@ -141,6 +153,7 @@ public class ClickPopUp extends JPopupMenu{
            this.add("Wipe Left").addActionListener(e -> {
               String trans = "WL";
               var image = tempModel.getElementAt(index);
+              exporter.getImages().get(index).setTransition(trans);
                 System.out.println(image);
                 System.out.println(index);
               System.out.println("Wipe Left added to current image ");
@@ -150,6 +163,7 @@ public class ClickPopUp extends JPopupMenu{
             this.add("Wipe Right").addActionListener(e -> {
                 String trans = "WR";
                 var image = tempModel.getElementAt(index);
+                exporter.getImages().get(index).setTransition(trans);
                 System.out.println(image);
                 System.out.println(index);
                System.out.println("Wipe Right added to current image ");
@@ -159,6 +173,7 @@ public class ClickPopUp extends JPopupMenu{
             this.add("Wipe Up").addActionListener(e -> {
                 String trans = "WU";
                 var image = tempModel.getElementAt(index);
+                exporter.getImages().get(index).setTransition(trans);
                 System.out.println(image);
                 System.out.println(index);
                System.out.println("Wipe Up added to current image ");
@@ -168,6 +183,7 @@ public class ClickPopUp extends JPopupMenu{
             this.add("Wipe Down").addActionListener(e -> {
                 String trans = "WD";
                 var image = tempModel.getElementAt(index);
+                exporter.getImages().get(index).setTransition(trans);
                 System.out.println(image);
                 System.out.println(index);
                System.out.println("Wipe Down added to current image ");
@@ -177,6 +193,7 @@ public class ClickPopUp extends JPopupMenu{
             this.add("Crossfade").addActionListener(e -> {
                 String trans = "CF";
                 var image = tempModel.getElementAt(index);
+                exporter.getImages().get(index).setTransition(trans);
                 System.out.println(image);
                 System.out.println(index);
                System.out.println("Crossfade added to current image ");

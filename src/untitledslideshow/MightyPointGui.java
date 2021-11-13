@@ -24,19 +24,24 @@ import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.text.AbstractDocument;
+import javax.swing.ImageIcon;
 public class MightyPointGui extends javax.swing.JFrame {
     
     /**
      * Creates new form MightyPointGUI
      */
-    public MightyPointGui() {
-        initComponents();
-    }
     private boolean isManual;
     private boolean isInterval;
     private int intervalTime;
     private String saveDirectory;
     private String imageDirectory;
+    private ArrayList<ImageItem> images;
+    public static final Exporter exporter = new Exporter();
+    
+    public MightyPointGui() {
+        initComponents();
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -392,59 +397,7 @@ public class MightyPointGui extends javax.swing.JFrame {
      * @param evt is the event of the user clicking on the Save button
      */
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-        try
-        {
-            boolean isSuccessful = new File("slideshows").mkdir();                          //Attempts to create a folder named slideshows in the root project folder
-            if(isSuccessful)
-            {
-                
-                System.out.println("\nDirectory for slides successfully created.");
-            }
-            else
-            {
-                System.out.println("\nDirectory already created.");
-            }
-        }
-        catch(SecurityException e)
-        {
-        }
-        String filename = filenameTextBox.getText() + ".JSON";
-        
-        File saveFile = new File("slideshows/" + filename);
-        boolean isSuccessful;
-        try
-        {
-            isSuccessful = saveFile.createNewFile();
-            if(isSuccessful)
-            {
-                System.out.println("\nFile created at " + saveFile.getCanonicalPath());
-            }
-            else
-            {
-                System.out.println("\nFile already exists at location: " + saveFile.getCanonicalPath());
-            }
-        }
-        catch(IOException e)
-        {
-        }
-        try
-        {
-            FileWriter writer = new FileWriter("slideshows/" + filename);
-            writer.write("This is a test, Hello World!");
-            writer.write("\nThe name of this file is " + filename);
-            if(this.intervalButton.isSelected() == true){
-                writer.write("\nInterval Time: " + this.intervalTime);
-            }
-            else{
-                writer.write("\nInterval Time: " + null);
-            }
-            writer.write("\nImage Directory: " + this.imageDirectory);
-            writer.close();
-        }
-        catch(IOException e)
-        {
-        }
-     
+        exporter.export();
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void soundSelectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_soundSelectButtonActionPerformed
@@ -487,7 +440,9 @@ public class MightyPointGui extends javax.swing.JFrame {
         
        
     }//GEN-LAST:event_soundSelectButtonActionPerformed
-
+//    public ArrayList<ImageItem> getImages(){
+//        return this.images;
+//    }
     /**
      * Main will begin by providing a popup, asking the user if they would like to
      * create a new slideshow, or import an old one. The editor should not open unless
@@ -515,6 +470,8 @@ public class MightyPointGui extends javax.swing.JFrame {
         DefaultListModel dlm = new DefaultListModel();
         int i = 0;
         for (DisplayImage listImage : thumbImages) {
+            ImageIcon newImg = listImage.getImage();
+            newImg.setDescription(listImage.getImagePath());
             dlm.add(i, listImage.getImage());
             i++;
         }

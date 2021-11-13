@@ -15,7 +15,7 @@ package untitledslideshow;
  *The Song class contains private variables for the Path and Length for each member of the Song Class.
  */
 
-public abstract class Song implements Item{
+public class Song{
 
     private String path;
     private int time;
@@ -26,7 +26,7 @@ public abstract class Song implements Item{
     */
     public Song(String path, int time) 
     {
-        this.path= path;
+        this.path = path;
         this.time = time;
     }
  
