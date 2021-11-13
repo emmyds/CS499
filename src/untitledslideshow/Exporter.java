@@ -99,16 +99,14 @@ public class Exporter {
         catch(IOException e)
         {
         }
-        try
-        {
-            FileWriter writer = new FileWriter("slideshows/" + filename);
+        try (FileWriter writer = new FileWriter("slideshows/" + filename)) {
             writer.write("This is a test, Hello World!");
             writer.write("\nThe name of this file is " + filename);
             writer.write("\nInterval Time: " + this.intervalTime);
-            writer.close();
         }
         catch(IOException e)
         {
+              System.out.println("Exception durring export: " + e);
         }
     }
 }

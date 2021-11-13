@@ -465,6 +465,12 @@ public class MightyPointGui extends javax.swing.JFrame {
             if(thumbImages != null){
                 break;
             }
+            try {
+               Thread.sleep(100); 
+            }
+            catch(InterruptedException ex){
+                
+            }
         }
         System.out.println("Left PopUp");
         DefaultListModel dlm = new DefaultListModel();

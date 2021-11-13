@@ -34,7 +34,7 @@ public class ClickPopUp extends JPopupMenu{
     /**
      * Variable declarations for temporary GUI
      */
-    private static MightyPointGui tempGui;
+    private static final MightyPointGui tempGui = new MightyPointGui();
     private static final JList tempReelList = tempGui.imagesReel;
     private static final DefaultListModel tempModel = new DefaultListModel();
     //private static final JFrame tempFrame = new JFrame();
@@ -47,7 +47,6 @@ public class ClickPopUp extends JPopupMenu{
      * @param c is the component that was clicked over
      */
     public ClickPopUp(Component c){
-        this.tempGui = new MightyPointGui();
         Exporter exporter = MightyPointGui.exporter;
         tempReelList.setName("imagesReel");
         if(c instanceof JList && "imagesList".equals(c.getName())){
@@ -111,6 +110,7 @@ public class ClickPopUp extends JPopupMenu{
                 }
                 else{
                     tempModel.remove(index);
+                    exporter.getImages().remove(index);
                 }
 
             });
@@ -152,19 +152,15 @@ public class ClickPopUp extends JPopupMenu{
            
            this.add("Wipe Left").addActionListener(e -> {
               String trans = "WL";
-              var image = tempModel.getElementAt(index);
               exporter.getImages().get(index).setTransition(trans);
-                System.out.println(image);
-                System.out.println(index);
+              System.out.println(index);
               System.out.println("Wipe Left added to current image ");
            });
            
            
             this.add("Wipe Right").addActionListener(e -> {
                 String trans = "WR";
-                var image = tempModel.getElementAt(index);
                 exporter.getImages().get(index).setTransition(trans);
-                System.out.println(image);
                 System.out.println(index);
                System.out.println("Wipe Right added to current image ");
            });
@@ -172,9 +168,7 @@ public class ClickPopUp extends JPopupMenu{
             
             this.add("Wipe Up").addActionListener(e -> {
                 String trans = "WU";
-                var image = tempModel.getElementAt(index);
                 exporter.getImages().get(index).setTransition(trans);
-                System.out.println(image);
                 System.out.println(index);
                System.out.println("Wipe Up added to current image ");
            });
@@ -182,9 +176,7 @@ public class ClickPopUp extends JPopupMenu{
             
             this.add("Wipe Down").addActionListener(e -> {
                 String trans = "WD";
-                var image = tempModel.getElementAt(index);
                 exporter.getImages().get(index).setTransition(trans);
-                System.out.println(image);
                 System.out.println(index);
                System.out.println("Wipe Down added to current image ");
            });
@@ -192,9 +184,7 @@ public class ClickPopUp extends JPopupMenu{
             
             this.add("Crossfade").addActionListener(e -> {
                 String trans = "CF";
-                var image = tempModel.getElementAt(index);
                 exporter.getImages().get(index).setTransition(trans);
-                System.out.println(image);
                 System.out.println(index);
                System.out.println("Crossfade added to current image ");
            });
