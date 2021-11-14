@@ -478,12 +478,14 @@ public class MightyPointGui extends javax.swing.JFrame {
         for (DisplayImage listImage : thumbImages) {
             ImageIcon newImg = listImage.getImage();
             newImg.setDescription(listImage.getImagePath());
+            System.out.println(newImg.getDescription());
             dlm.add(i, listImage.getImage());
             i++;
         }
         
         mainGui.imageDirectory = popUp.getImageDirectory();
         mainGui.imagesList.setModel(dlm);
+        
         /* Cell Renderer Shenanigans
         ElementRenderer renderer = new ElementRenderer();
         mainGui.imagesList.setCellRenderer(renderer);

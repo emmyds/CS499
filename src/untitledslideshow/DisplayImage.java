@@ -50,7 +50,8 @@ public class DisplayImage{
             return null;
         }
         
-        ImageIcon icon = new ImageIcon(thumbnail);                                //display thumnail on screen
+        ImageIcon icon = new ImageIcon(thumbnail); //display thumnail on screen
+        icon.setDescription(path);
         /*try{
             this.imageLabel.setBounds(150, 150, 150, 150);
             this.imageLabel.addMouseListener(new ClickListener());

@@ -62,6 +62,7 @@ public class ClickPopUp extends JPopupMenu{
              */
             this.add("Add to End of Reel").addActionListener(e->{
                 ImageIcon temp = (ImageIcon) model.getElementAt(index);
+                System.out.println("path: " + temp.getDescription());
                 
                 int endIndex = tempModel.size();
                 tempModel.add(endIndex, temp);
@@ -72,13 +73,13 @@ public class ClickPopUp extends JPopupMenu{
                 for (ImageItem i : exporter.getImages()){
                     System.out.println("Image: " + i.getPath() + " trans: " + i.getTransition());
                 }
-
             });
             /**
              * Code that adds the selected image to the beginning of the image reel
              */
             this.add("Add to Start of Reel").addActionListener(e->{
                 ImageIcon temp = (ImageIcon) model.getElementAt(index);
+                System.out.println("path: " + temp.getDescription());
                 tempModel.add(0, temp);
                 exporter.getImages().add(0, new ImageItem(temp.getDescription(), "no transition"));
                 tempGui.imagesReel.setModel(tempModel);
