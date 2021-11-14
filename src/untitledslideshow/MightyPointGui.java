@@ -21,6 +21,10 @@ import java.nio.file.PathMatcher;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import java.util.ArrayList;
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.text.AbstractDocument;
@@ -36,6 +40,8 @@ public class MightyPointGui extends javax.swing.JFrame {
     private String saveDirectory;
     private String imageDirectory;
     private ArrayList<ImageItem> images;
+    private int soundReelCount;
+    private final DefaultListModel tempSoundReelModel = new DefaultListModel();
     public static final Exporter exporter = new Exporter();
     
     public MightyPointGui() {
@@ -52,9 +58,6 @@ public class MightyPointGui extends javax.swing.JFrame {
     private void initComponents() {
 
         manualIntervalButton = new javax.swing.ButtonGroup();
-        slideshowTitleLabel = new javax.swing.JLabel();
-        saveButton = new javax.swing.JButton();
-        filenameTextBox = new javax.swing.JTextField();
         mainTabbedPane = new javax.swing.JTabbedPane();
         imagesPanel = new javax.swing.JPanel();
         imagesScrollPane = new javax.swing.JScrollPane();
@@ -65,7 +68,7 @@ public class MightyPointGui extends javax.swing.JFrame {
         exitButton = new javax.swing.JButton();
         iconPanel = new javax.swing.JPanel();
         soundsSlidesPanel = new javax.swing.JScrollPane();
-        soundsSlidesList = new javax.swing.JList<>();
+        soundsReel = new javax.swing.JList<>();
         extraSettingsPanel = new javax.swing.JPanel();
         manualButton = new javax.swing.JRadioButton();
         intervalButton = new javax.swing.JRadioButton();
@@ -77,31 +80,20 @@ public class MightyPointGui extends javax.swing.JFrame {
         slideShowReelPanel = new javax.swing.JPanel();
         reelScrollPane = new javax.swing.JScrollPane();
         imagesReel = new javax.swing.JList<>();
+        jLabel1 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        saveButton = new javax.swing.JButton();
+        filenameTextBox = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("mainFrame");
+        setTitle("mightyPoint Editor");
         setAlwaysOnTop(true);
         setLocationByPlatform(true);
-        setMinimumSize(new java.awt.Dimension(1200, 800));
+        setMinimumSize(new java.awt.Dimension(1212, 872));
         setName("mainFrame"); // NOI18N
         setSize(new java.awt.Dimension(0, 0));
 
-        slideshowTitleLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        slideshowTitleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        slideshowTitleLabel.setText("Untitled Slideshow Editor");
-        slideshowTitleLabel.setMinimumSize(new java.awt.Dimension(250, 250));
-
-        saveButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        saveButton.setText("Save and Export");
-        saveButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveButtonActionPerformed(evt);
-            }
-        });
-
-        ((AbstractDocument) filenameTextBox.getDocument()).setDocumentFilter(new InputFilter());
-        filenameTextBox.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-
+        mainTabbedPane.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         mainTabbedPane.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         imagesList.setModel(new javax.swing.DefaultListModel<String>() {
@@ -139,7 +131,7 @@ public class MightyPointGui extends javax.swing.JFrame {
             .addGroup(imagesPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(imagesScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         mainTabbedPane.addTab("Images", imagesPanel);
@@ -157,16 +149,16 @@ public class MightyPointGui extends javax.swing.JFrame {
         soundsPanelLayout.setHorizontalGroup(
             soundsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(soundsPanelLayout.createSequentialGroup()
-                .addGap(268, 268, 268)
-                .addComponent(soundSelectButton, javax.swing.GroupLayout.PREFERRED_SIZE, 558, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(353, Short.MAX_VALUE))
+                .addGap(281, 281, 281)
+                .addComponent(soundSelectButton, javax.swing.GroupLayout.DEFAULT_SIZE, 562, Short.MAX_VALUE)
+                .addGap(340, 340, 340))
         );
         soundsPanelLayout.setVerticalGroup(
             soundsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(soundsPanelLayout.createSequentialGroup()
                 .addGap(70, 70, 70)
-                .addComponent(soundSelectButton, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(88, Short.MAX_VALUE))
+                .addComponent(soundSelectButton, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)
+                .addGap(88, 88, 88))
         );
 
         mainTabbedPane.addTab("Sounds", soundsPanel);
@@ -189,10 +181,11 @@ public class MightyPointGui extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        soundsSlidesList.setToolTipText("This is the soundtrack Reel.");
-        soundsSlidesList.setDragEnabled(true);
-        soundsSlidesList.setLayoutOrientation(javax.swing.JList.HORIZONTAL_WRAP);
-        soundsSlidesPanel.setViewportView(soundsSlidesList);
+        soundsReel.setToolTipText("This is the soundtrack Reel.");
+        soundsReel.setDragEnabled(true);
+        soundsReel.setLayoutOrientation(javax.swing.JList.HORIZONTAL_WRAP);
+        soundsSlidesPanel.setViewportView(soundsReel);
+        soundsReel.addMouseListener(new ClickListener());
 
         extraSettingsPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -239,7 +232,7 @@ public class MightyPointGui extends javax.swing.JFrame {
                 .addGroup(transitionSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(transitionLengthLabel)
                     .addComponent(transitionLengthSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout extraSettingsPanelLayout = new javax.swing.GroupLayout(extraSettingsPanel);
@@ -275,7 +268,7 @@ public class MightyPointGui extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        slideShowReelPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        slideShowReelPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         slideShowReelPanel.setPreferredSize(new java.awt.Dimension(1182, 178));
 
         imagesReel.setFixedCellHeight(175);
@@ -304,53 +297,95 @@ public class MightyPointGui extends javax.swing.JFrame {
                 .addContainerGap(15, Short.MAX_VALUE))
         );
 
+        jLabel1.setFont(new java.awt.Font("Comic Sans MS", 3, 30)); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/mightypint.jpg"))); // NOI18N
+        jLabel1.setText("mightyPoint (We make a mighty Point!)");
+        jLabel1.setToolTipText("");
+        jLabel1.setMaximumSize(new java.awt.Dimension(150, 150));
+        jLabel1.setMinimumSize(new java.awt.Dimension(150, 150));
+        jLabel1.setPreferredSize(new java.awt.Dimension(150, 150));
+        jLabel1.setVerifyInputWhenFocusTarget(false);
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        saveButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        saveButton.setText("Save and Export");
+        saveButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveButtonActionPerformed(evt);
+            }
+        });
+
+        ((AbstractDocument) filenameTextBox.getDocument()).setDocumentFilter(new untitledslideshow.SaveFileInputFilter());
+        filenameTextBox.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(filenameTextBox, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(filenameTextBox, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(slideshowTitleLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(iconPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(filenameTextBox, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(saveButton)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(18, 18, 18)
+                .addComponent(iconPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(soundsSlidesPanel)
-                    .addComponent(mainTabbedPane, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(extraSettingsPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(slideShowReelPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1184, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(soundsSlidesPanel)
+                            .addComponent(mainTabbedPane, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(extraSettingsPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(slideShowReelPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1192, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(4, 4, 4)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(iconPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(slideshowTitleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(iconPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(filenameTextBox)
-                    .addComponent(saveButton, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27)))
                 .addComponent(mainTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(slideShowReelPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(soundsSlidesPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(extraSettingsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(extraSettingsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -401,44 +436,65 @@ public class MightyPointGui extends javax.swing.JFrame {
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void soundSelectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_soundSelectButtonActionPerformed
-        File soundDirectory = null;
+        boolean isValid = false;
+        File soundDirectory;
         JFileChooser soundFileChooser = new JFileChooser();
         soundFileChooser.setDialogTitle("Choose a sound file to add to your slide show!");
         soundFileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
         soundFileChooser.showOpenDialog(this);
         soundDirectory = soundFileChooser.getSelectedFile();
-        File fileDirectories[] = soundDirectory.listFiles();
-        int counter = 0;
         PathMatcher matcher = FileSystems.getDefault().getPathMatcher("regex:^.*\\.wav");
         PathMatcher matcher2 = FileSystems.getDefault().getPathMatcher("regex:^.*\\.aiff");
-        ArrayList<String> soundPaths = new ArrayList<>();
         try{
-            for (File fileDirectory : fileDirectories) {
-                Path filePath = fileDirectory.toPath();
-                if (matcher.matches(filePath) || matcher2.matches(filePath)){
-                    counter++;
-                    System.out.print("Item name: " + filePath + " is a sound!\n");
-                    soundPaths.add(filePath.toString());
-                }
-                else{
-                    System.out.print("\nIndex: " + filePath + " is not a sound\n");
-                }
+            if (matcher.matches(soundDirectory.toPath()) || matcher2.matches(soundDirectory.toPath())){
+                System.out.print("Item name: " + soundDirectory.toPath() + " is a sound!\n");
             }
+            else{
+                System.out.print("\nItem name: " + soundDirectory.toPath() + " is not a sound\n");
+            }
+            isValid = true;
         }
         catch(NullPointerException exception){
-            System.out.print("An exception was found at index: " + counter);
+            System.out.print("An exception was found at index");
+            JOptionPane.showMessageDialog(this, "No Valid Sound File was Found");
         }
-
-        /*
-            ArrayList<DisplayImage> soundName = new ArrayList<>();
-            for(String soundPath : soundPaths){
-            DisplayImage newSound = new DisplayImage();
-            newSound.setImagePath(soundPath);
-            soundName.add(newSound);
+        boolean isReal = false;
+        double lengthSec = 0.0;
+        if(isValid){
+            try{
+                AudioInputStream audioIS = AudioSystem.getAudioInputStream(soundDirectory);
+                AudioFormat format = audioIS.getFormat();
+                long frames = audioIS.getFrameLength();
+                lengthSec = (frames + 0.0) / format.getFrameRate();
+                
+                isReal = true;
+                if(lengthSec == 0){
+                    JOptionPane.showMessageDialog(this, "Selected Sound file: " + soundDirectory.getName() + " has a length of 00.00");
+                    isReal = false;
+                }
+            } catch (UnsupportedAudioFileException ex) {
+                //Logger.getLogger(MightyPointGui.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(this, "Selected Sound file: " + soundDirectory.getName() + " is not a valid sound file.");
+            } catch (IOException ex) {
+                //Logger.getLogger(MightyPointGui.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-        */
-        
-       
+        if(isReal){
+            System.out.println("Audio file: " + soundDirectory.getName() + " is valid with track length: " + lengthSec);
+            SoundItem newSound = new SoundItem(soundDirectory.toString(), soundDirectory.getName(), lengthSec);
+            newSound.addToDLM(newSound);
+            if(soundReelCount == 0){
+                this.tempSoundReelModel.add(0, newSound);
+                soundReelCount++;
+            }
+            else{
+                this.tempSoundReelModel.add(soundReelCount, newSound);
+                soundReelCount++;
+            }
+            
+            //this.soundsSlidesList.add(newSound);
+            
+        }  
     }//GEN-LAST:event_soundSelectButtonActionPerformed
 //    public ArrayList<ImageItem> getImages(){
 //        return this.images;
@@ -511,16 +567,17 @@ public class MightyPointGui extends javax.swing.JFrame {
     private javax.swing.JRadioButton intervalButton;
     private javax.swing.JLabel intervalLabel;
     private javax.swing.JSpinner intervalSpinner;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JTabbedPane mainTabbedPane;
     private javax.swing.JRadioButton manualButton;
     private javax.swing.ButtonGroup manualIntervalButton;
     private javax.swing.JScrollPane reelScrollPane;
     private javax.swing.JButton saveButton;
     private javax.swing.JPanel slideShowReelPanel;
-    private javax.swing.JLabel slideshowTitleLabel;
     private javax.swing.JButton soundSelectButton;
     private javax.swing.JPanel soundsPanel;
-    private javax.swing.JList<String> soundsSlidesList;
+    private javax.swing.JList<String> soundsReel;
     private javax.swing.JScrollPane soundsSlidesPanel;
     private javax.swing.JLabel transitionLengthLabel;
     private javax.swing.JSpinner transitionLengthSpinner;

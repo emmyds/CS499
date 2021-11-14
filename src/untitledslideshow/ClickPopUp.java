@@ -34,11 +34,9 @@ public class ClickPopUp extends JPopupMenu{
     /**
      * Variable declarations for temporary GUI
      */
-    private static final MightyPointGui tempGui = new MightyPointGui();
-    private static final JList tempReelList = tempGui.imagesReel;
-    private static final DefaultListModel tempModel = new DefaultListModel();
-    //private static final JFrame tempFrame = new JFrame();
-    //private static final JPanel tempPanel = new JPanel();
+    private static final DefaultListModel imageTempModel = new DefaultListModel();
+    private static DefaultListModel soundTempModel = new DefaultListModel();
+    private final ArrayList<SoundItem> tempSoundList = new ArrayList<>();
     /**
      * ClickPopUp creates a popup based on the component that was clicked over.
      * For example, if the component is the imagesList, it provides the options
@@ -48,7 +46,6 @@ public class ClickPopUp extends JPopupMenu{
      */
     public ClickPopUp(Component c){
         Exporter exporter = MightyPointGui.exporter;
-        tempReelList.setName("imagesReel");
         if(c instanceof JList && "imagesList".equals(c.getName())){
             //Copies the elements found in the componenent into tempList
             JList tempList = (JList) c;
@@ -63,12 +60,9 @@ public class ClickPopUp extends JPopupMenu{
             this.add("Add to End of Reel").addActionListener(e->{
                 ImageIcon temp = (ImageIcon) model.getElementAt(index);
                 
-                int endIndex = tempModel.size();
-                tempModel.add(endIndex, temp);
+                int endIndex = imageTempModel.size();
+                imageTempModel.add(endIndex, temp);
                 exporter.getImages().add(new ImageItem(temp.getDescription(), "no transition")); //push a new image item to the end of the list
-                //tempGui.imagesReel.setModel(tempModel);
-                tempReelList.setModel(tempModel);
-                System.out.println("Size of temp model is: " + tempGui.imagesReel.getModel().getSize());
                 for (ImageItem i : exporter.getImages()){
                     System.out.println("Image: " + i.getPath() + " trans: " + i.getTransition());
                 }
@@ -79,15 +73,8 @@ public class ClickPopUp extends JPopupMenu{
              */
             this.add("Add to Start of Reel").addActionListener(e->{
                 ImageIcon temp = (ImageIcon) model.getElementAt(index);
-                tempModel.add(0, temp);
+                imageTempModel.add(0, temp);
                 exporter.getImages().add(0, new ImageItem(temp.getDescription(), "no transition"));
-                tempGui.imagesReel.setModel(tempModel);
-                tempReelList.setModel(tempModel);
-                //System.out.println("Added to Start of Reel: " + tempGui.imagesReel.getModel().getElementAt(0).toString());
-                //System.out.println("Image at end of reel: " + 
-                //        tempGui.imagesReel.getModel().getElementAt(
-                //        tempGui.imagesReel.getModel().getSize()).toString());
-                System.out.println("Size of temp model is: " + tempGui.imagesReel.getModel().getSize());
                 for (ImageItem i : exporter.getImages()){
                     System.out.println("Image: " + i.getPath() + " trans: " + i.getTransition());
                 }
@@ -103,26 +90,25 @@ public class ClickPopUp extends JPopupMenu{
         else if(c instanceof JList && "imagesReel".equals(c.getName())){
             JList tempList = (JList) c;
             int index = tempList.getSelectedIndex();
-            //DefaultListModel tempModel = (DefaultListModel) tempListModel;
             this.add("Remove from Reel:").addActionListener(e->{
-                if(tempModel.getSize() == 0){
+                if(imageTempModel.getSize() == 0){
                     System.out.println("No Elements in Reel.");
                 }
                 else{
-                    tempModel.remove(index);
+                    imageTempModel.remove(index);
                     exporter.getImages().remove(index);
                 }
 
             });
             this.add("Shift Left").addActionListener(e->{
                 if(index-1 >= 0){
-                    var temp1 = tempModel.getElementAt(index);
-                    var temp2 = tempModel.getElementAt(index - 1);
-                    tempModel.setElementAt(temp1, index-1);
-                    tempModel.setElementAt(temp2, index);
+                    var temp1 = imageTempModel.getElementAt(index);
+                    var temp2 = imageTempModel.getElementAt(index - 1);
+                    imageTempModel.setElementAt(temp1, index-1);
+                    imageTempModel.setElementAt(temp2, index);
                     Collections.swap(exporter.getImages(), index, index-1);
                 }
-                else if(tempModel.getSize() == 0){
+                else if(imageTempModel.getSize() == 0){
                     System.out.println("No Elements in Reel to shift.");
                 }
                 else{
@@ -131,16 +117,16 @@ public class ClickPopUp extends JPopupMenu{
             });
             this.add("Shift Right").addActionListener(e->{
                 try{
-                    if(index >= tempModel.getSize()){
+                    if(index >= imageTempModel.getSize()){
                     }
-                    else if(tempModel.getSize() == 0){
+                    else if(imageTempModel.getSize() == 0){
                     System.out.println("No Elements in Reel to shift.");
                     }
                     else{
-                        var temp1 = tempModel.getElementAt(index);
-                        var temp2 = tempModel.getElementAt(index + 1);
-                        tempModel.setElementAt(temp1, index+1);
-                        tempModel.setElementAt(temp2, index);
+                        var temp1 = imageTempModel.getElementAt(index);
+                        var temp2 = imageTempModel.getElementAt(index + 1);
+                        imageTempModel.setElementAt(temp1, index+1);
+                        imageTempModel.setElementAt(temp2, index);
                         Collections.swap(exporter.getImages(), index+1, index);
                     }
                 }catch(ArrayIndexOutOfBoundsException error){
@@ -190,16 +176,51 @@ public class ClickPopUp extends JPopupMenu{
            });
             
         }
-        else if("soundsList".equals(c.getName())){
-            /*
-            this.addToSoundReel = new JMenuItem("Add to End of Reel");
-            this.shiftLeft = new JMenuItem("Move sound one spot to the left");
-            this.shiftRight = new JMenuItem("Move sound one spot to the right");
-            this.add(addToSoundReel); this.add(shiftLeft); this.add(shiftRight);
-            */
+        else if(c instanceof JList && "soundsReel".equals(c.getName())){
+            JList tempList = (JList) c;
+            soundTempModel = (DefaultListModel) tempList.getModel();
+            int index = tempList.getSelectedIndex();
+            this.add("Remove from Reel").addActionListener(e -> {
+                if(soundTempModel.getSize() == 0){
+                    System.out.println("No sounds in reel to remove");
+                }
+                else{
+                    soundTempModel.remove(index);
+                    //tempSoundList.remove(index);
+                }
+            });
+            this.add("Shift Left").addActionListener(e -> {
+                if(soundTempModel.getSize() == 0){
+                    System.out.println("No sounds to shift in reel.");
+                }
+                else if(index == 0){
+                    System.out.println("Sound cannot be shifted left");
+                }
+                else{
+                    var temp1 = soundTempModel.get(index);
+                    var temp2 = soundTempModel.get(index - 1);
+                    soundTempModel.setElementAt(temp2, index);
+                    soundTempModel.setElementAt(temp1, index - 1);
+                }
+            });
+            this.add("Shift Right").addActionListener(e -> {
+                try{
+                    if(soundTempModel.getSize() == 0){
+                    System.out.println("No sounds to shift in reel.");
+                    }
+                else if(index >= soundTempModel.getSize()){
+                    System.out.println("Sound cannot be shifted right");
+                    }
+                else{
+                    var temp1 = soundTempModel.get(index);
+                    var temp2 = soundTempModel.get(index + 1);
+                    soundTempModel.setElementAt(temp2, index);
+                    soundTempModel.setElementAt(temp1, index + 1);
+                    }
+                }catch(ArrayIndexOutOfBoundsException error){}
+                
+            });
         }
-        else{
-        }  
     }
     /**
      * For the live/video presentation, must integrate into actual main gui
@@ -227,7 +248,7 @@ public class ClickPopUp extends JPopupMenu{
      * @return the reel created in the popUp class
      */
     public DefaultListModel getDLM(){
-        DefaultListModel temp = tempModel;
+        DefaultListModel temp = imageTempModel;
         return temp;
     }
     
