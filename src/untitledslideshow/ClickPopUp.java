@@ -21,19 +21,11 @@ import java.util.Collections;
  * @author Roberto Murcia
  **/
 public class ClickPopUp extends JPopupMenu{
-    /*
-    Test Variables
-    */
-    //private JMenuItem isJList;
-    //private JMenuItem isJLabel;
-    
-    
+  
     /*
     Actual Variables
     */
-    /**
-     * Variable declarations for temporary GUI
-     */
+
     private static final DefaultListModel imageTempModel = new DefaultListModel();
     private static DefaultListModel soundTempModel = new DefaultListModel();
     private final ArrayList<SoundItem> tempSoundList = new ArrayList<>();
@@ -178,7 +170,8 @@ public class ClickPopUp extends JPopupMenu{
         }
         else if(c instanceof JList && "soundsReel".equals(c.getName())){
             JList tempList = (JList) c;
-            soundTempModel = (DefaultListModel) tempList.getModel();
+            DefaultListModel model = (DefaultListModel) tempList.getModel();
+            soundTempModel = model;
             int index = tempList.getSelectedIndex();
             this.add("Remove from Reel").addActionListener(e -> {
                 if(soundTempModel.getSize() == 0){
@@ -222,27 +215,7 @@ public class ClickPopUp extends JPopupMenu{
             });
         }
     }
-    /**
-     * For the live/video presentation, must integrate into actual main gui
-     * 
-     */
-    /*private void createTempReel(){
-        tempFrame.add(tempPanel);
-        tempFrame.setSize(1000, 300);
-        tempFrame.setResizable(true);
-        tempFrame.setLocation(500, 500);
-        tempFrame.setLayout(new FlowLayout());
-        tempPanel.setLayout(new FlowLayout());
-        JScrollPane tempScroll = new JScrollPane(tempReelList);
-        //tempPanel.add(new JScrollPane(tempReelList));
-        tempReelList.setDragEnabled(false);
-        tempReelList.setSize(500,250);
-        tempScroll.setSize(500, 250);
-        tempPanel.add(tempScroll);
-        tempPanel.setSize(500,300);
-        tempFrame.setAlwaysOnTop(true);
-        tempFrame.setVisible(true);
-    }*/
+
     /**
      * Updates the primary GUI in real-time to any modifications to the reel
      * @return the reel created in the popUp class
