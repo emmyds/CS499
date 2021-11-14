@@ -18,7 +18,7 @@ import javax.swing.text.DocumentFilter;
  * 
  * @author Roberto Murcia
  */
-public class InputFilter extends DocumentFilter {
+public class SaveFileInputFilter extends DocumentFilter {
     /**
      * Checks user input to verify if it is alphanumeric, and does not contain 
      * any of the illegal windows file name characters. If it contains any
@@ -31,7 +31,6 @@ public class InputFilter extends DocumentFilter {
      * @param attrs are the attributes
      * @throws BadLocationException 
      */
-    private int limit;
     @Override
     public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
         for(int n = text.length(); n > 0; n--){
