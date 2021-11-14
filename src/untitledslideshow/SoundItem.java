@@ -5,7 +5,6 @@
  */
 
 package untitledslideshow;
-import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
 
@@ -18,82 +17,49 @@ public class SoundItem extends JLabel{
     private final String soundName;
     private final double soundLength;
     private static final DefaultListModel tempModel = new DefaultListModel();
-    private final ArrayList <SoundItem> tempFiles = new ArrayList<>();
-    private int modelSize = 0;
-    private int index;
     public SoundItem(String path, String name, double length){
-        this.index = 0;
         this.soundPath = path;
         this.soundName = name;
         this.soundLength = length;
         this.setText(soundName);
         
     }
-    /**
-     * 
-     * @param i 
-     */
-    public void setIndex(int i){
-        this.index = i;
-    }
-    /**
-     * 
-     * @return 
-     */
-    public int getIndex(){
-        return this.index;
-    }
-    /**
-     * 
-     * @return 
-     */
     public String getPath(){
         return this.soundPath;
     }
     /**
-     * 
-     * @return 
+     * returns the length of the sound
+     * @return sound length
      */
     public double getSoundLength(){
         return this.soundLength;
     }
     /**
-     * 
-     * @return 
+     * returns the name of the sound
+     * @return sound name
      */
     public String getSoundName(){
         return this.soundName;
     }
     /**
-     * 
-     * @param item 
+     * Adds the created sound item to the SoundItem DLM, to then be transferred to the main GUI
+     * @param item is the item to be added
      */
     public void addToDLM(SoundItem item){
         if(item.soundPath == null && item.soundName == null && item.soundLength == 0){}
-        else{
-            tempModel.add(modelSize, item.soundName);
-            tempFiles.add(item);
-            incrementCounter();
+        else if(tempModel.size() == 0){
+            tempModel.add(0, item.soundName);
         }
-        
+        else{
+            int endIndex = tempModel.size();
+            tempModel.add(endIndex, item.soundName);
+        }
     }
     /**
-     * 
+     * Acquire the DLM created in the SoundItem class
      * @return 
      */
     public DefaultListModel getDLM(){
         return tempModel;
-    }
-    /**
-     * 
-     */
-    public void incrementCounter(){
-        modelSize++;
-    }
-    public void decrementCounter(){
-        modelSize--;
-    }
-    public ArrayList<SoundItem> getSoundFiles(){
-        return tempFiles;
     }
 }

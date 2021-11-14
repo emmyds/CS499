@@ -28,7 +28,6 @@ public class ClickPopUp extends JPopupMenu{
 
     private static final DefaultListModel imageTempModel = new DefaultListModel();
     private static DefaultListModel soundTempModel = new DefaultListModel();
-    private final ArrayList<SoundItem> tempSoundList = new ArrayList<>();
     /**
      * ClickPopUp creates a popup based on the component that was clicked over.
      * For example, if the component is the imagesList, it provides the options
@@ -37,6 +36,7 @@ public class ClickPopUp extends JPopupMenu{
      * @param c is the component that was clicked over
      */
     public ClickPopUp(Component c){
+        SoundItem updateItem = new SoundItem(null, null, 0);
         Exporter exporter = MightyPointGui.exporter;
         if(c instanceof JList && "imagesList".equals(c.getName())){
             //Copies the elements found in the componenent into tempList
@@ -44,7 +44,6 @@ public class ClickPopUp extends JPopupMenu{
             //Gets the index of the selected items
             int index = tempList.getSelectedIndex();
             DefaultListModel model = (DefaultListModel) tempList.getModel();
-            //System.out.println("Parent Component Name: " + c.getComponentAt(c.getX(), c.getY()).getName());
             /**
              * Code that adds the selected image into the last index of the image reel
              * by creating a listener on the menu tab
@@ -168,8 +167,7 @@ public class ClickPopUp extends JPopupMenu{
         }
         else if(c instanceof JList && "soundsReel".equals(c.getName())){
             JList tempList = (JList) c;
-            DefaultListModel model = (DefaultListModel) tempList.getModel();
-            soundTempModel = model;
+            soundTempModel = updateItem.getDLM();
             int index = tempList.getSelectedIndex();
             this.add("Remove from Reel").addActionListener(e -> {
                 if(soundTempModel.getSize() == 0){
@@ -177,7 +175,7 @@ public class ClickPopUp extends JPopupMenu{
                 }
                 else{
                     soundTempModel.remove(index);
-                    //tempSoundList.remove(index);
+                    exporter.getSounds().remove(index);
                 }
             });
             this.add("Shift Left").addActionListener(e -> {
@@ -192,6 +190,10 @@ public class ClickPopUp extends JPopupMenu{
                     var temp2 = soundTempModel.get(index - 1);
                     soundTempModel.setElementAt(temp2, index);
                     soundTempModel.setElementAt(temp1, index - 1);
+                    Collections.swap(exporter.getSounds(), index, index - 1);
+                    for (SoundItem i : exporter.getSounds()){
+                    System.out.println("Sound: " + i.getPath());
+                    }
                 }
             });
             this.add("Shift Right").addActionListener(e -> {
@@ -203,10 +205,15 @@ public class ClickPopUp extends JPopupMenu{
                     System.out.println("Sound cannot be shifted right");
                     }
                 else{
+                    
                     var temp1 = soundTempModel.get(index);
                     var temp2 = soundTempModel.get(index + 1);
                     soundTempModel.setElementAt(temp2, index);
                     soundTempModel.setElementAt(temp1, index + 1);
+                    Collections.swap(exporter.getSounds(), index, index + 1);
+                    for (SoundItem i : exporter.getSounds()){
+                    System.out.println("Sound: " + i.getPath());
+                    }
                     }
                 }catch(ArrayIndexOutOfBoundsException error){}
                 

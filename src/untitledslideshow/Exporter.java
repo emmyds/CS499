@@ -13,14 +13,15 @@ import java.util.ArrayList;
  *
  * @author Annaleise
  */
-public class Exporter {
+public class Exporter{
     private boolean isManual = true;
     private int intervalTime = -1;
     private String saveDirectory = "";
     private String filename = "file name here";
     private ArrayList<ImageItem> images = new ArrayList<>();
+    private ArrayList<SoundItem> sounds = new ArrayList<>();
 
-    public Exporter() {
+    public Exporter(){
     }
 
     public boolean isIsManual() {
@@ -50,9 +51,17 @@ public class Exporter {
     public ArrayList<ImageItem> getImages() {
         return images;
     }
+    
+    public ArrayList<SoundItem> getSounds(){
+        return sounds;
+    }
 
     public void setImages(ArrayList<ImageItem> images) {
         this.images = images;
+    }
+    
+    public void setSounds(ArrayList<SoundItem> sounds) {
+        this.sounds = sounds;
     }
 
     public String getFilename() {

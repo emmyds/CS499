@@ -13,10 +13,8 @@ package untitledslideshow;
  */
 import java.awt.CardLayout;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.FileSystems;
-import java.nio.file.Path;
 import java.nio.file.PathMatcher;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -41,7 +39,6 @@ public class MightyPointGui extends javax.swing.JFrame {
     private String imageDirectory;
     private ArrayList<ImageItem> images;
     private int soundReelCount;
-    private final DefaultListModel tempSoundReelModel = new DefaultListModel();
     public static final Exporter exporter = new Exporter();
     private ArrayList<SoundItem> soundFiles;
     
@@ -375,6 +372,7 @@ public class MightyPointGui extends javax.swing.JFrame {
         soundsReel.setFixedCellHeight(100);
         soundsReel.setFixedCellWidth(200);
         soundsReel.setLayoutOrientation(javax.swing.JList.HORIZONTAL_WRAP);
+        soundsReel.setVisibleRowCount(1);
         soundsReelScroll.setViewportView(soundsReel);
         soundsReel.addMouseListener(new ClickListener());
         soundsReel.setName("soundsReel");
@@ -539,14 +537,18 @@ public class MightyPointGui extends javax.swing.JFrame {
             System.out.println("Audio file: " + soundDirectory.getName() + " is valid with track length: " + lengthSec);
             SoundItem newSound = new SoundItem(soundDirectory.toString(), soundDirectory.getName(), lengthSec);
             newSound.addToDLM(newSound);
-            this.tempSoundReelModel.add(soundReelCount, newSound);
-            soundReelCount++;       
-            
+            //int endIndex = tempSoundReelModel.getSize();
+            //tempSoundReelModel.add(endIndex, newSound);
+            exporter.getSounds().add(newSound);
+            for (SoundItem i : exporter.getSounds()){
+                System.out.println("Sound: " + i.getPath());
+            }
         }  
     }//GEN-LAST:event_soundSelectButtonActionPerformed
 
     private void manualButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manualButtonActionPerformed
-        // TODO add your handling code here:
+        isManual = true;
+        isInterval = false;
     }//GEN-LAST:event_manualButtonActionPerformed
 //    public ArrayList<ImageItem> getImages(){
 //        return this.images;
@@ -608,7 +610,6 @@ public class MightyPointGui extends javax.swing.JFrame {
             mainGui.imagesReel.setModel(updateGUI.getDLM());
             SoundItem updateItem = new SoundItem(null, null, 0);
             mainGui.soundsReel.setModel(updateItem.getDLM());
-            mainGui.soundFiles = updateItem.getSoundFiles();
         });
     }
 
