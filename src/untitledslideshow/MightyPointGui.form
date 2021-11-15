@@ -284,7 +284,7 @@
                       <Group type="102" attributes="0">
                           <Component id="intervalButton" min="-2" pref="91" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="intervalSpinner" min="-2" pref="201" max="-2" attributes="0"/>
+                          <Component id="intervalTextField" min="-2" pref="122" max="-2" attributes="0"/>
                       </Group>
                       <Component id="intervalLabel" min="-2" max="-2" attributes="0"/>
                       <Component id="manualButton" min="-2" max="-2" attributes="0"/>
@@ -306,11 +306,13 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="intervalLabel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="intervalButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="intervalSpinner" alignment="3" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="intervalButton" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Component id="intervalTextField" max="32767" attributes="0"/>
+                          <EmptySpace min="3" pref="3" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
                   <Component id="manualButton" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
               </Group>
@@ -355,17 +357,6 @@
             <Property name="text" type="java.lang.String" value="User interval or manual selection"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JSpinner" name="intervalSpinner">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="16" style="0"/>
-            </Property>
-            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[0, 10]"/>
-            </Property>
-            <Property name="name" type="java.lang.String" value="" noResource="true"/>
-          </Properties>
-        </Component>
         <Container class="javax.swing.JPanel" name="transitionSettingsPanel">
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -378,31 +369,29 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace pref="62" max="32767" attributes="0"/>
-                      <Component id="transitionLengthLabel" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="transitionLengthSpinner" min="-2" pref="52" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
+                      <Component id="transitionLengthLabel" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="transitionLengthField" min="-2" pref="122" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="transitionLengthLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="transitionLengthSpinner" alignment="3" min="-2" pref="38" max="-2" attributes="0"/>
+                          <Component id="transitionLengthField" alignment="3" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="22" max="32767" attributes="0"/>
+                      <EmptySpace pref="31" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JSpinner" name="transitionLengthSpinner">
-            </Component>
             <Component class="javax.swing.JLabel" name="transitionLengthLabel">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -411,8 +400,18 @@
                 <Property name="text" type="java.lang.String" value="Transition Length"/>
               </Properties>
             </Component>
+            <Component class="javax.swing.JTextField" name="transitionLengthField">
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="((AbstractDocument) transitionLengthField.getDocument()).setDocumentFilter(new untitledslideshow.IntervalTransitionFilter());"/>
+              </AuxValues>
+            </Component>
           </SubComponents>
         </Container>
+        <Component class="javax.swing.JTextField" name="intervalTextField">
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="((AbstractDocument) intervalTextField.getDocument()).setDocumentFilter(new untitledslideshow.IntervalTransitionFilter());"/>
+          </AuxValues>
+        </Component>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JPanel" name="slideShowReelPanel">

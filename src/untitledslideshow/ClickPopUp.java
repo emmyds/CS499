@@ -70,11 +70,10 @@ public class ClickPopUp extends JPopupMenu{
             });            
             /*
             Testing and debug code
-            */
             System.out.println(model.getElementAt(index).toString());
             System.out.println("Index selected in image list is: " + index);
             System.out.println("Main Component is: " + c.getName());
-            
+            */  
         }
         else if(c instanceof JList && "imagesReel".equals(c.getName())){
             JList tempList = (JList) c;

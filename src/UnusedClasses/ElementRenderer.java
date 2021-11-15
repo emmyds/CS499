@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package untitledslideshow;
+package UnusedClasses;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -15,6 +15,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
+import untitledslideshow.DisplayImage;
 
 /**
  *

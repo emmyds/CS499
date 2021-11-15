@@ -38,9 +38,7 @@ public class MightyPointGui extends javax.swing.JFrame {
     private String saveDirectory;
     private String imageDirectory;
     private ArrayList<ImageItem> images;
-    private int soundReelCount;
     public static final Exporter exporter = new Exporter();
-    private ArrayList<SoundItem> soundFiles;
     
     public MightyPointGui() {
         initComponents();
@@ -69,10 +67,10 @@ public class MightyPointGui extends javax.swing.JFrame {
         manualButton = new javax.swing.JRadioButton();
         intervalButton = new javax.swing.JRadioButton();
         intervalLabel = new javax.swing.JLabel();
-        intervalSpinner = new javax.swing.JSpinner();
         transitionSettingsPanel = new javax.swing.JPanel();
-        transitionLengthSpinner = new javax.swing.JSpinner();
         transitionLengthLabel = new javax.swing.JLabel();
+        transitionLengthField = new javax.swing.JTextField();
+        intervalTextField = new javax.swing.JTextField();
         slideShowReelPanel = new javax.swing.JPanel();
         slideShowReelContainer = new javax.swing.JPanel();
         reelScrollPane = new javax.swing.JScrollPane();
@@ -209,35 +207,35 @@ public class MightyPointGui extends javax.swing.JFrame {
         intervalLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         intervalLabel.setText("User interval or manual selection");
 
-        intervalSpinner.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        intervalSpinner.setMaximumSize(new java.awt.Dimension(0, 10));
-        intervalSpinner.setName(""); // NOI18N
-
         transitionSettingsPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         transitionLengthLabel.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         transitionLengthLabel.setText("Transition Length");
 
+        ((AbstractDocument) transitionLengthField.getDocument()).setDocumentFilter(new untitledslideshow.IntervalTransitionFilter());
+
         javax.swing.GroupLayout transitionSettingsPanelLayout = new javax.swing.GroupLayout(transitionSettingsPanel);
         transitionSettingsPanel.setLayout(transitionSettingsPanelLayout);
         transitionSettingsPanelLayout.setHorizontalGroup(
             transitionSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, transitionSettingsPanelLayout.createSequentialGroup()
-                .addContainerGap(62, Short.MAX_VALUE)
+            .addGroup(transitionSettingsPanelLayout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(transitionLengthLabel)
-                .addGap(18, 18, 18)
-                .addComponent(transitionLengthSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(transitionLengthField, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         transitionSettingsPanelLayout.setVerticalGroup(
             transitionSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(transitionSettingsPanelLayout.createSequentialGroup()
-                .addGap(14, 14, 14)
+                .addGap(22, 22, 22)
                 .addGroup(transitionSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(transitionLengthLabel)
-                    .addComponent(transitionLengthSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(22, Short.MAX_VALUE))
+                    .addComponent(transitionLengthField))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
+
+        ((AbstractDocument) intervalTextField.getDocument()).setDocumentFilter(new untitledslideshow.IntervalTransitionFilter());
 
         javax.swing.GroupLayout extraSettingsPanelLayout = new javax.swing.GroupLayout(extraSettingsPanel);
         extraSettingsPanel.setLayout(extraSettingsPanelLayout);
@@ -249,7 +247,7 @@ public class MightyPointGui extends javax.swing.JFrame {
                     .addGroup(extraSettingsPanelLayout.createSequentialGroup()
                         .addComponent(intervalButton, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(intervalSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(intervalTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(intervalLabel)
                     .addComponent(manualButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -266,9 +264,11 @@ public class MightyPointGui extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(intervalLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(extraSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(extraSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(intervalButton)
-                    .addComponent(intervalSpinner, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(extraSettingsPanelLayout.createSequentialGroup()
+                        .addComponent(intervalTextField)
+                        .addGap(3, 3, 3)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(manualButton)
                 .addGap(36, 36, 36))
@@ -451,8 +451,8 @@ public class MightyPointGui extends javax.swing.JFrame {
      * @param evt is the event of the user selecting the interval radio option
      */
     private void intervalButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_intervalButtonActionPerformed
+        System.out.println(evt.toString());
         isInterval = true;
-        intervalTime = (Integer) intervalSpinner.getValue();
         System.out.print(intervalTime);
     }//GEN-LAST:event_intervalButtonActionPerformed
     /**
@@ -460,6 +460,7 @@ public class MightyPointGui extends javax.swing.JFrame {
      * @param evt is the event of the user clicking the exit button
      */
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
+        System.out.println(evt.toString());
         JFrame onExitFrame = new JFrame("Exit Menu");
         onExitFrame.setSize(200,200);
         onExitFrame.setLocationRelativeTo(this);
@@ -488,10 +489,12 @@ public class MightyPointGui extends javax.swing.JFrame {
      * @param evt is the event of the user clicking on the Save button
      */
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
+        System.out.println(evt.toString());
         exporter.export();
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void soundSelectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_soundSelectButtonActionPerformed
+        System.out.println(evt.toString());
         boolean isValid = false;
         File soundDirectory;
         JFileChooser soundFileChooser = new JFileChooser();
@@ -547,6 +550,7 @@ public class MightyPointGui extends javax.swing.JFrame {
     }//GEN-LAST:event_soundSelectButtonActionPerformed
 
     private void manualButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manualButtonActionPerformed
+        System.out.println(evt.toString());
         isManual = true;
         isInterval = false;
     }//GEN-LAST:event_manualButtonActionPerformed
@@ -579,7 +583,6 @@ public class MightyPointGui extends javax.swing.JFrame {
                Thread.sleep(100); 
             }
             catch(InterruptedException ex){
-                
             }
         }
         System.out.println("Left PopUp");
@@ -624,7 +627,7 @@ public class MightyPointGui extends javax.swing.JFrame {
     private javax.swing.JScrollPane imagesScrollPane;
     private javax.swing.JRadioButton intervalButton;
     private javax.swing.JLabel intervalLabel;
-    private javax.swing.JSpinner intervalSpinner;
+    private javax.swing.JTextField intervalTextField;
     private javax.swing.JTabbedPane mainTabbedPane;
     private javax.swing.JRadioButton manualButton;
     private javax.swing.ButtonGroup manualIntervalButton;
@@ -639,8 +642,8 @@ public class MightyPointGui extends javax.swing.JFrame {
     private javax.swing.JList<String> soundsReel;
     private javax.swing.JPanel soundsReelPanel;
     private javax.swing.JScrollPane soundsReelScroll;
+    private javax.swing.JTextField transitionLengthField;
     private javax.swing.JLabel transitionLengthLabel;
-    private javax.swing.JSpinner transitionLengthSpinner;
     private javax.swing.JPanel transitionSettingsPanel;
     // End of variables declaration//GEN-END:variables
 }
