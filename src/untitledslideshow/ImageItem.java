@@ -3,7 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package untitledslideshow;
-import javax.swing.ImageIcon;
 /**
  *
  * @author Annaleise
@@ -12,8 +11,10 @@ public class ImageItem {
     
     private String path;
     private String transition = "no transition";
+    private float transitionTime;
     
     public ImageItem(String path, String transition){
+        this.transitionTime = 1;
         this.path = path;
         this.transition = transition;
     }
@@ -33,5 +34,11 @@ public class ImageItem {
     public void setTransition(String transition) {
         this.transition = transition;
     }
-   
+    
+    public void setTransitionTime(float time){
+        this.transitionTime = time;
+    }
+    public float getTransitionTime(){
+        return this.transitionTime;
+    }
 }

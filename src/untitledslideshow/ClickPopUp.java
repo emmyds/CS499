@@ -28,6 +28,7 @@ public class ClickPopUp extends JPopupMenu{
 
     private static final DefaultListModel imageTempModel = new DefaultListModel();
     private static DefaultListModel soundTempModel = new DefaultListModel();
+    private float transitionTime = 1;
     /**
      * ClickPopUp creates a popup based on the component that was clicked over.
      * For example, if the component is the imagesList, it provides the options
@@ -127,7 +128,10 @@ public class ClickPopUp extends JPopupMenu{
            this.add("Wipe Left").addActionListener(e -> {
               String trans = "WL";
               exporter.getImages().get(index).setTransition(trans);
+              transitionTime = exporter.getTransitionTime();
+              exporter.getImages().get(index).setTransitionTime(transitionTime);
               System.out.println(index);
+              System.out.println(transitionTime);
               System.out.println("Wipe Left added to current image ");
            });
            
@@ -135,32 +139,44 @@ public class ClickPopUp extends JPopupMenu{
             this.add("Wipe Right").addActionListener(e -> {
                 String trans = "WR";
                 exporter.getImages().get(index).setTransition(trans);
+                transitionTime = exporter.getTransitionTime();
+                exporter.getImages().get(index).setTransitionTime(transitionTime);
                 System.out.println(index);
-               System.out.println("Wipe Right added to current image ");
+                System.out.println(transitionTime);
+                System.out.println("Wipe Right added to current image ");
            });
             
             
             this.add("Wipe Up").addActionListener(e -> {
                 String trans = "WU";
                 exporter.getImages().get(index).setTransition(trans);
+                transitionTime = exporter.getTransitionTime();
+                exporter.getImages().get(index).setTransitionTime(transitionTime);
                 System.out.println(index);
-               System.out.println("Wipe Up added to current image ");
+                System.out.println(transitionTime);
+                System.out.println("Wipe Up added to current image ");
            });
             
             
             this.add("Wipe Down").addActionListener(e -> {
                 String trans = "WD";
                 exporter.getImages().get(index).setTransition(trans);
+                transitionTime = exporter.getTransitionTime();
+                exporter.getImages().get(index).setTransitionTime(transitionTime);
                 System.out.println(index);
-               System.out.println("Wipe Down added to current image ");
+                System.out.println(transitionTime);
+                System.out.println("Wipe Down added to current image ");
            });
             
             
             this.add("Crossfade").addActionListener(e -> {
                 String trans = "CF";
                 exporter.getImages().get(index).setTransition(trans);
+                transitionTime = exporter.getTransitionTime();
+                exporter.getImages().get(index).setTransitionTime(transitionTime);
                 System.out.println(index);
-               System.out.println("Crossfade added to current image ");
+                System.out.println(transitionTime);
+                System.out.println("Crossfade added to current image ");
            });
             
         }

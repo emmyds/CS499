@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package untitledslideshow;
 
 import java.io.File;
@@ -20,6 +16,7 @@ public class Exporter{
     private String filename = "file name here";
     private ArrayList<ImageItem> images = new ArrayList<>();
     private ArrayList<SoundItem> sounds = new ArrayList<>();
+    private float transitionTime = 1;
 
     public Exporter(){
     }
@@ -72,6 +69,13 @@ public class Exporter{
         this.filename = filename;
     }
     
+    public float getTransitionTime() {
+        return this.transitionTime;
+    }
+    
+    public void setTransitionTime(float time) {
+        this.transitionTime = time;
+    }
     
     public void export(){
         try
