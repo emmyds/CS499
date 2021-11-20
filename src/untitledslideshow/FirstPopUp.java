@@ -98,14 +98,19 @@ public class FirstPopUp {
                         imagePaths.add(filePath.toString());
                     }
                     else{
+                        //JFrame invalidImage = new JFrame();
+                        //invalidImage.setLocationRelativeTo(firstFrame);
+                        //invalidImage.setAlwaysOnTop(true);
                         System.out.print("\nIndex: " + filePath + " is not a JPEG or PNG!\n");
+                        //JOptionPane.showMessageDialog(invalidImage, "At least one image in this directory was not a JPG and will not be displayed.");
+
                     }
                 }
                 if(imagePaths.isEmpty()){
                     JFrame noImage = new JFrame();
                     noImage.setLocationRelativeTo(firstFrame);
                     noImage.setAlwaysOnTop(true);
-                    JOptionPane.showMessageDialog(noImage, "No Jpegs were found within this directory, please try again with a new directory.");
+                    JOptionPane.showMessageDialog(noImage, "No JPEGs or PNGs were found within this directory. Please try again with a new directory.");
                     //isNewSlide = false;
                     break;
                 }
