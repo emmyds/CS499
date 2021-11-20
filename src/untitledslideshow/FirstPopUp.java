@@ -98,11 +98,8 @@ public class FirstPopUp {
                         imagePaths.add(filePath.toString());
                     }
                     else{
-                        //JFrame invalidImage = new JFrame();
-                        //invalidImage.setLocationRelativeTo(firstFrame);
-                        //invalidImage.setAlwaysOnTop(true);
                         System.out.print("\nIndex: " + filePath + " is not a JPEG or PNG!\n");
-                        //JOptionPane.showMessageDialog(invalidImage, "At least one image in this directory was not a JPG and will not be displayed.");
+                        JOptionPane.showMessageDialog(null, "Item at: " + filePath + " is not a valid image!");
 
                     }
                 }
@@ -120,6 +117,7 @@ public class FirstPopUp {
                         DisplayImage newImage = new DisplayImage();                     //Then sets the image path of that image
                         newImage.setImagePath(jpegPath);                                //Then adds that display image object into imageThumbnails
                         if(newImage.getImage() == null){
+                            JOptionPane.showMessageDialog(null, "Image at: " + newImage.getImagePath() + " is corrupted, or not a valid image.");
                             continue;
                         }
                         list.add(newImage);
