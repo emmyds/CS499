@@ -112,10 +112,39 @@ public class Exporter{
         catch(IOException e)
         {
         }
-        try (FileWriter writer = new FileWriter("slideshows/" + filename)) {
-            writer.write("This is a test, Hello World!");
-            writer.write("\nThe name of this file is " + filename);
-            writer.write("\nInterval Time: " + this.intervalTime);
+         try (FileWriter writer = new FileWriter("slideshows/" + filename)) {
+            writer.write('{');
+            writer.write(String.format("\n\"changeManually\": \"%b\",", this.isManual));
+            writer.write(String.format("\n\"imageDuration:\": \"%d\"," , this.intervalTime));
+            
+            //WRITE IMAGES
+            writer.write("\n\"images\":[");
+            for(ImageItem image : images){
+                writer.write(String.format("\n\"%s\",", image.getPath()));
+            }
+            writer.write("\n],");
+            
+            //WRITE TRANSITIONS
+            writer.write("\n\"transitions\":[");
+            for(ImageItem image : images){
+                writer.write(String.format("\n\"%s\",", image.getTransition()));
+            }
+            writer.write("\n],");
+            
+            writer.write("\n\"transitionLengths\":[");
+            for(ImageItem image : images){
+                writer.write(String.format("\n\"%f\",", image.getTransitionTime()));
+            }
+            writer.write("\n],");
+            
+            //WRITE SOUNDS
+            writer.write("\n\"sounds\":[");
+            for(SoundItem sound : sounds){
+                writer.write(String.format("\n\"%s\",", sound.getPath()));
+            }
+            writer.write("\n]");
+            
+            writer.write("\n}");
         }
         catch(IOException e)
         {
