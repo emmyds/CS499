@@ -41,27 +41,17 @@ public class DisplayImage{
      * @throws IOException 
      */
     public ImageIcon getDisplayImage(String path) throws IOException{
-        
         BufferedImage img = ImageIO.read(new File(path));
         BufferedImage thumbnail = resize(img,175,175);                          // 100x150 is preferred size for thumbnails
         if(thumbnail == null)
         {
             System.out.println("Image at " + path + " is not a valid image file.");
             return null;
-        }
-        
+        }      
         ImageIcon icon = new ImageIcon(thumbnail); //display thumnail on screen
         icon.setDescription(path);
-        /*try{
-            this.imageLabel.setBounds(150, 150, 150, 150);
-            this.imageLabel.addMouseListener(new ClickListener());
-            this.imageLabel.setIcon((Icon) icon);
-        }catch(NullPointerException e){
-        }*/
-        
         return icon;
     }
-    
     /**
      * resize takes a JPEG image via its file path, along with the new height and width to change the image to
      * @param img is the image that needs to be resized
@@ -79,8 +69,7 @@ public class DisplayImage{
             return resized;
         }catch(NullPointerException exception){
             return null;
-        }
-        
+        } 
     }
     /**
      * setImagePath sets the path for the image for the given DisplayImage object

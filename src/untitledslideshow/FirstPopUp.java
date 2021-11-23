@@ -24,20 +24,19 @@ import javax.swing.JOptionPane;
  * @author Roberto Murcia
  */
 public class FirstPopUp {
-    private JFrame firstFrame = new JFrame();
-    private JButton newSlide = new JButton();
-    private JButton oldSlide = new JButton();
+    private static OldSlideInfo oldSlideInfo = new OldSlideInfo();
+    private static boolean isNew = false;
+    private final JFrame firstFrame = new JFrame();
+    private final JButton newSlide = new JButton();
+    private final JButton oldSlide = new JButton();
     private File imageDirectory = null;
     private ArrayList<DisplayImage>imageThumbnails = null;
-//    private boolean inMenu = true;
-    private boolean isDone = false;
+    private static boolean isDone = false;
     public void createPop(){
         firstFrame.setLayout(new FlowLayout());
         firstFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JLabel firstLabel = new JLabel();
         JLabel secondLabel = new JLabel();
-        //JButton newSlide = new JButton();
-        //JButton oldSlide = new JButton();
         firstLabel.setText("Welcome to the mightyPoint slideshow editor!");
         secondLabel.setText("Choose from either of the following options: ");
         newSlide.setText("Create a new slideshow");
@@ -58,30 +57,37 @@ public class FirstPopUp {
         firstFrame.setLocation(x, y);
         firstFrame.setResizable(false);
         firstFrame.setVisible(true);
-        newSlide.addActionListener((ActionEvent e) -> {newSlideButtonActionPerformed(e);});
-
+        newSlide.addActionListener((ActionEvent e) -> {setNew(); newSlideButtonActionPerformed(e);});
+        oldSlide.addActionListener((ActionEvent e) -> {setOld(); oldSlideButtonActionPerformed(e); });
     }
+    /**
+     * This is performed whenever the new slide button is pressed. It asks the user for a directory
+     * of images to import, and then verifies each of these files before then adding them to the editor.
+     * @param evt
+     * @return ArrayList of DisplayImages
+     */
     private ArrayList<DisplayImage> newSlideButtonActionPerformed(java.awt.event.ActionEvent evt){
+        setNew();
         boolean isNewSlide = true;
         boolean noDirectory = true;
         while(isNewSlide == true){
             ArrayList<String> imagePaths = new ArrayList<>();
             while(noDirectory == true){
                 try{
-                JFileChooser filechooser = new JFileChooser();
-                filechooser.setDialogTitle("Choose a Directory of Images to use for your slideshow!");
-                filechooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-                filechooser.showOpenDialog(null);
-                imageDirectory = filechooser.getSelectedFile();
-                setImageDirectory(imageDirectory);
-                if(imageDirectory == null){
-                    JOptionPane.showMessageDialog(filechooser, "New Slideshow Cancelled");
-                    isNewSlide = false;
-                    break;
-                }
-                else{
-                    noDirectory = false;
-                }
+                    JFileChooser filechooser = new JFileChooser();
+                    filechooser.setDialogTitle("Choose a Directory of Images to use for your slideshow!");
+                    filechooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                    filechooser.showOpenDialog(null);
+                    imageDirectory = filechooser.getSelectedFile();
+                    setImageDirectory(imageDirectory);
+                    if(imageDirectory == null){
+                        JOptionPane.showMessageDialog(filechooser, "New Slideshow Cancelled");
+                        isNewSlide = false;
+                        break;
+                    }
+                    else{
+                        noDirectory = false;
+                    }
             }catch(NullPointerException exception){}
             }
             try{
@@ -125,10 +131,10 @@ public class FirstPopUp {
                     setArrayList(list);
                     System.out.print(imageThumbnails.size());
                     this.firstFrame.setVisible(false);
-                    //setDone();
                     setDone();
-                    isDone = true;
+                    
                     return imageThumbnails;
+                    
                 }
             }
             catch(NullPointerException exception){System.out.print(exception);}
@@ -138,6 +144,40 @@ public class FirstPopUp {
             
         }
         return null;
+    }
+    private OldSlideInfo oldSlideButtonActionPerformed(java.awt.event.ActionEvent evt){
+        setOld();
+        PathMatcher matcher = FileSystems.getDefault().getPathMatcher("regex:^.*\\.JSON");
+        File oldSave;
+        boolean isOldSlide = true;
+        boolean noFile = true;
+        while(isOldSlide == true){
+            while(noFile == true){
+                try{
+                    JFileChooser filechooser = new JFileChooser();
+                    filechooser.setDialogTitle("Choose an old save file to use!");
+                    filechooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+                    filechooser.showOpenDialog(null);
+                    oldSave = filechooser.getSelectedFile();
+                    if(oldSave == null){
+                        JOptionPane.showMessageDialog(filechooser, "Old Slideshow Cancelled.");
+                        isOldSlide = false;
+                        break;
+                    }
+                    else if(matcher.matches(oldSave.toPath())){
+                        System.out.println("File is a .JSON file.");
+                        noFile = false;
+                    }
+                    
+                    
+                    
+                }catch(NullPointerException exception){
+                    
+                }
+            }
+        }
+        setDone();
+        return oldSlideInfo;
     }
     private void setArrayList(ArrayList<DisplayImage> list){
         imageThumbnails = list;
@@ -156,6 +196,18 @@ public class FirstPopUp {
     }
     public String getImageDirectory(){
         return imageDirectory.toString();
+    }
+    
+    private void setNew(){
+        isNew = true;
+    }
+    
+    private void setOld(){
+        isNew = false;
+    }
+    
+    public boolean getNew(){
+        return isNew;
     }
 
 }

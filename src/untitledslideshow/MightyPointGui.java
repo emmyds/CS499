@@ -687,11 +687,7 @@ public class MightyPointGui extends javax.swing.JFrame {
         FirstPopUp popUp = new FirstPopUp();
         popUp.createPop();
         ArrayList<DisplayImage> thumbImages = null;
-        while(true){
-            thumbImages = popUp.getArrayList();
-            if(thumbImages != null){
-                break;
-            }
+        while(popUp.getDone() == false){
             try {
                Thread.sleep(100); 
             }
@@ -700,33 +696,50 @@ public class MightyPointGui extends javax.swing.JFrame {
         }
         System.out.println("Left PopUp");
         DefaultListModel dlm = new DefaultListModel();
-        int i = 0;
-        for (DisplayImage listImage : thumbImages) {
-            ImageIcon newImg = listImage.getImage();
-            newImg.setDescription(listImage.getImagePath());
-            System.out.println(newImg.getDescription());
-            dlm.add(i, listImage.getImage());
-            i++;
+        
+        if(popUp.getNew() == true){
+            thumbImages = popUp.getArrayList();
+            System.out.println("Is new slide");
+            int i = 0;
+            for (DisplayImage listImage : thumbImages) {
+                ImageIcon newImg = listImage.getImage();
+                newImg.setDescription(listImage.getImagePath());
+                System.out.println(newImg.getDescription());
+                dlm.add(i, listImage.getImage());
+                i++;
+            }
+
+            mainGui.imageDirectory = popUp.getImageDirectory();
+            mainGui.imagesList.setModel(dlm);
+
+            /* Cell Renderer Shenanigans
+            ElementRenderer renderer = new ElementRenderer();
+            mainGui.imagesList.setCellRenderer(renderer);
+            */
+
+            mainGui.slideShowReelPanel.setLayout(new CardLayout());
+
+            /* Create and display the form */
+            java.awt.EventQueue.invokeLater(() -> {
+                mainGui.setVisible(true);
+                ClickPopUp updateGUI = new ClickPopUp(mainGui.imagesReel);
+                mainGui.imagesReel.setModel(updateGUI.getDLM());
+                SoundItem updateItem = new SoundItem(null, null, 0);
+                mainGui.soundsReel.setModel(updateItem.getDLM());
+            });
+        }
+        else{
+            System.out.println("Is old slide");
+            
+            java.awt.EventQueue.invokeLater(() -> {
+                mainGui.setVisible(true);
+                ClickPopUp updateGUI = new ClickPopUp(mainGui.imagesReel);
+                mainGui.imagesReel.setModel(updateGUI.getDLM());
+                SoundItem updateItem = new SoundItem(null, null, 0);
+                mainGui.soundsReel.setModel(updateItem.getDLM());
+            });
         }
         
-        mainGui.imageDirectory = popUp.getImageDirectory();
-        mainGui.imagesList.setModel(dlm);
-        
-        /* Cell Renderer Shenanigans
-        ElementRenderer renderer = new ElementRenderer();
-        mainGui.imagesList.setCellRenderer(renderer);
-        */
-        
-        mainGui.slideShowReelPanel.setLayout(new CardLayout());
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> {
-            mainGui.setVisible(true);
-            ClickPopUp updateGUI = new ClickPopUp(mainGui.imagesReel);
-            mainGui.imagesReel.setModel(updateGUI.getDLM());
-            SoundItem updateItem = new SoundItem(null, null, 0);
-            mainGui.soundsReel.setModel(updateItem.getDLM());
-        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

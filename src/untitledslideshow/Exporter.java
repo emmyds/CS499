@@ -148,7 +148,7 @@ public class Exporter{
         }
         catch(IOException e)
         {
-              System.out.println("Exception durring export: " + e);
+              System.out.println("Exception during export: " + e);
         }
     }
 }
