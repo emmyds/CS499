@@ -178,7 +178,7 @@ public class ClickPopUp extends JPopupMenu{
                 System.out.println(transitionTime);
                 System.out.println("Crossfade added to current image ");
            });
-            
+            this.addSeparator();
         }
         else if(c instanceof JList && "soundsReel".equals(c.getName())){
             JList tempList = (JList) c;
@@ -243,6 +243,10 @@ public class ClickPopUp extends JPopupMenu{
     public DefaultListModel getDLM(){
         DefaultListModel temp = imageTempModel;
         return temp;
+    }
+    
+    public void setDLM(){
+        
     }
     
 }

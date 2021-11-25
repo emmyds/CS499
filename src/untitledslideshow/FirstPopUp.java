@@ -9,6 +9,7 @@ import java.awt.FlowLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.nio.file.PathMatcher;
@@ -18,6 +19,12 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import java.io.FileReader;
+import java.io.IOException;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 /**
  *
@@ -166,18 +173,49 @@ public class FirstPopUp {
                     }
                     else if(matcher.matches(oldSave.toPath())){
                         System.out.println("File is a .JSON file.");
-                        noFile = false;
+                        JSONParser jParser = new JSONParser();
+                        try{
+                            FileReader fileReader = new FileReader(oldSave);    //Read JSON file
+                            Object obj = jParser.parse(fileReader);             //Parse file
+                            JSONArray oldSaveList = new JSONArray();
+                            oldSaveList.add(obj);
+                            oldSaveList.forEach( emp -> parseOldSave( (JSONObject) emp));
+                        }catch(FileNotFoundException e){} catch(IOException e){} catch(ParseException e){}
+                        if(oldSlideInfo.getOldImagesList().isEmpty()){
+                            JOptionPane.showMessageDialog(filechooser, "No Images Found in save file, or save file is corrupt, please try a new file.");
+                            noFile = true;
+                            break;
+                        }
+                        else{
+                            ArrayList<DisplayImage> list = new ArrayList<>();
+                            ArrayList<String> imagePaths = oldSlideInfo.getOldImagesList();
+                            for(String path : imagePaths){
+                                DisplayImage newImage = new DisplayImage();
+                                newImage.setImagePath(path);
+                                if(newImage.getImage() == null){
+                                    JOptionPane.showMessageDialog(null, "Image at: " + newImage.getImagePath() + " is corrupted, or not a valid image.");
+                                    continue;
+                                }
+                                list.add(newImage);
+                            }
+                            oldSlideInfo.setOldThumbnails(list);
+                            noFile = false;
+                            setDone();
+                            this.firstFrame.setVisible(false);
+                            return oldSlideInfo;
+                            
+                        }
+                        
                     }
-                    
-                    
-                    
+
                 }catch(NullPointerException exception){
                     
                 }
             }
         }
-        setDone();
-        return oldSlideInfo;
+        return null;
+        
+
     }
     private void setArrayList(ArrayList<DisplayImage> list){
         imageThumbnails = list;
@@ -208,6 +246,70 @@ public class FirstPopUp {
     
     public boolean getNew(){
         return isNew;
+    }
+    
+    private void parseOldSave(JSONObject oldSave){
+        String isManual = (String) oldSave.get("changeManually");               //Get whether old slide show was manual or interval
+        if(isManual.equals("true")){
+            oldSlideInfo.setManual();
+        }
+        else if(isManual.equals("false")){
+            oldSlideInfo.isInterval();
+        }
+        System.out.println(oldSlideInfo.getIsManual());
+        
+        oldSlideInfo.setImageDuration(Float.parseFloat((String) oldSave.get("imageDuration:")));    //Get image duration of old slideshow
+        System.out.println(oldSlideInfo.getImageDuration());
+        
+        //====================Get Images========================//
+        
+        ArrayList<String> imagesList = new ArrayList<>();                       //Create a string arraylist and acquire the paths of each image used.
+        String[] imagePaths = oldSave.get("images").toString().split(",");      //Remove commas and then remove quotations from string
+        for(String path : imagePaths){
+            path = path.replace("\"", "");                                      //Remove quotations and brackets from string
+            path = path.replace("[", "");
+            path = path.replace("]", "");
+            imagesList.add(path);
+        }
+        oldSlideInfo.setOldImagesList(imagesList);                              //Get list of image paths
+        System.out.println(oldSlideInfo.getOldImagesList());
+        
+        //====================Get Transitions========================//
+        
+        ArrayList<String> transitionsList = new ArrayList<>();                  //Get image transitions from old slideshow
+        String[] transitions = oldSave.get("transitions").toString().split(",");//Remove commas from strings
+        for(String transition : transitions){
+            transition = transition.replace("\"", "");                          //Remove quotations and brackets from string
+            transition = transition.replace("[", "");
+            transition = transition.replace("]", "");
+            transitionsList.add(transition);
+        }
+        oldSlideInfo.setOldImageTransitions(transitionsList);                   //Set list of transitions
+        System.out.println(oldSlideInfo.getOldImageTransitions());
+        
+        //====================Get Transition Intervals========================//
+        
+        ArrayList<Float> transitionIntervals = new ArrayList<>();
+        String[] intervals = oldSave.get("transitionLengths").toString().split(",");
+        for(String interval : intervals){
+            interval = interval.replace("\"", "");                              //Remove quotations and brackets from string
+            interval = interval.replace("[", "");
+            interval = interval.replace("]", "");
+            transitionIntervals.add(Float.parseFloat(interval));
+        }
+        oldSlideInfo.setOldImageTransLengths(transitionIntervals);
+        System.out.println(oldSlideInfo.getOldImageTransLengths());
+        
+        ArrayList<String> soundsList = new ArrayList<>();
+        String[] soundPaths = oldSave.get("sounds").toString().split(",");
+        for(String path : soundPaths){
+            path = path.replace("\"", "");                                      //Remove quotations and brackets from string
+            path = path.replace("[", "");
+            path = path.replace("]", "");
+            soundsList.add(path);
+        }
+        oldSlideInfo.setOldSoundsList(soundsList);
+        System.out.println(oldSlideInfo.getOldSoundsList());
     }
 
 }

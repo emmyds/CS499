@@ -222,11 +222,6 @@ public class MightyPointGui extends javax.swing.JFrame {
         ((AbstractDocument) transitionLengthField.getDocument()).setDocumentFilter(new untitledslideshow.IntervalTransitionFilter());
         transitionLengthField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         transitionLengthField.setText("1");
-        transitionLengthField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                transitionLengthFieldActionPerformed(evt);
-            }
-        });
 
         setTransitionTime.setText("Set Time");
         setTransitionTime.addActionListener(new java.awt.event.ActionListener() {
@@ -351,10 +346,11 @@ public class MightyPointGui extends javax.swing.JFrame {
         slideShowReelPanel.setPreferredSize(new java.awt.Dimension(1182, 178));
 
         imagesReel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        imagesReel.setFixedCellHeight(175);
-        imagesReel.setFixedCellWidth(175);
+        imagesReel.setFixedCellHeight(180);
+        imagesReel.setFixedCellWidth(180);
         imagesReel.setLayoutOrientation(javax.swing.JList.HORIZONTAL_WRAP);
         imagesReel.setName("imagesReel"); // NOI18N
+        imagesReel.setSelectionBackground(new java.awt.Color(0, 0, 51));
         imagesReel.setVisibleRowCount(1);
         reelScrollPane.setViewportView(imagesReel);
         imagesReel.addMouseListener(new ClickListener());
@@ -445,6 +441,7 @@ public class MightyPointGui extends javax.swing.JFrame {
         soundsReel.setToolTipText("This is the soundtrack Reel.");
         soundsReel.setFixedCellHeight(100);
         soundsReel.setFixedCellWidth(200);
+        soundsReel.setFocusCycleRoot(true);
         soundsReel.setLayoutOrientation(javax.swing.JList.HORIZONTAL_WRAP);
         soundsReel.setVisibleRowCount(1);
         soundsReelScroll.setViewportView(soundsReel);
@@ -630,10 +627,6 @@ public class MightyPointGui extends javax.swing.JFrame {
         isInterval = false;
     }//GEN-LAST:event_manualButtonActionPerformed
 
-    private void transitionLengthFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transitionLengthFieldActionPerformed
-
-    }//GEN-LAST:event_transitionLengthFieldActionPerformed
-
     private void setTransitionTimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setTransitionTimeActionPerformed
         if(Integer.parseInt(transitionLengthField.getText()) == 0){
             JOptionPane.showMessageDialog(this, "The transition time cannot be set to 0, defaulting to 1.");
@@ -711,12 +704,6 @@ public class MightyPointGui extends javax.swing.JFrame {
 
             mainGui.imageDirectory = popUp.getImageDirectory();
             mainGui.imagesList.setModel(dlm);
-
-            /* Cell Renderer Shenanigans
-            ElementRenderer renderer = new ElementRenderer();
-            mainGui.imagesList.setCellRenderer(renderer);
-            */
-
             mainGui.slideShowReelPanel.setLayout(new CardLayout());
 
             /* Create and display the form */
@@ -730,10 +717,21 @@ public class MightyPointGui extends javax.swing.JFrame {
         }
         else{
             System.out.println("Is old slide");
-            
+            thumbImages = OldSlideInfo.getOldThumbnails();
+            int i = 0;
+            for (DisplayImage listImage : thumbImages) {
+                ImageIcon newImg = listImage.getImage();
+                newImg.setDescription(listImage.getImagePath());
+                System.out.println(newImg.getDescription());
+                dlm.add(i, listImage.getImage());
+                i++;
+            }
+            mainGui.imagesList.setModel(dlm);
+            mainGui.slideShowReelPanel.setLayout(new CardLayout());
             java.awt.EventQueue.invokeLater(() -> {
                 mainGui.setVisible(true);
                 ClickPopUp updateGUI = new ClickPopUp(mainGui.imagesReel);
+                
                 mainGui.imagesReel.setModel(updateGUI.getDLM());
                 SoundItem updateItem = new SoundItem(null, null, 0);
                 mainGui.soundsReel.setModel(updateItem.getDLM());

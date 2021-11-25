@@ -434,9 +434,6 @@
                 <Property name="horizontalAlignment" type="int" value="0"/>
                 <Property name="text" type="java.lang.String" value="1"/>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="transitionLengthFieldActionPerformed"/>
-              </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="((AbstractDocument) transitionLengthField.getDocument()).setDocumentFilter(new untitledslideshow.IntervalTransitionFilter());"/>
               </AuxValues>
@@ -583,10 +580,13 @@
                     <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
                       <StringArray count="0"/>
                     </Property>
-                    <Property name="fixedCellHeight" type="int" value="175"/>
-                    <Property name="fixedCellWidth" type="int" value="175"/>
+                    <Property name="fixedCellHeight" type="int" value="180"/>
+                    <Property name="fixedCellWidth" type="int" value="180"/>
                     <Property name="layoutOrientation" type="int" value="2"/>
                     <Property name="name" type="java.lang.String" value="imagesReel" noResource="true"/>
+                    <Property name="selectionBackground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="33" green="0" red="0" type="rgb"/>
+                    </Property>
                     <Property name="visibleRowCount" type="int" value="1"/>
                   </Properties>
                   <AccessibilityProperties>
@@ -735,6 +735,7 @@
                 <Property name="toolTipText" type="java.lang.String" value="This is the soundtrack Reel."/>
                 <Property name="fixedCellHeight" type="int" value="100"/>
                 <Property name="fixedCellWidth" type="int" value="200"/>
+                <Property name="focusCycleRoot" type="boolean" value="true"/>
                 <Property name="layoutOrientation" type="int" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="javax.swing.JList.HORIZONTAL_WRAP" type="code"/>
                 </Property>

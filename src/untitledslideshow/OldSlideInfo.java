@@ -16,27 +16,39 @@ import java.util.ArrayList;
  * @author Roberto Murcia
  */
 public class OldSlideInfo {
-    private static ArrayList<ImageItem> oldImagesList = new ArrayList<>();
-    private static ArrayList<SoundItem> oldSoundsList = new ArrayList<>();
+    private static ArrayList<String> oldImagesList = new ArrayList<>();
+    private static ArrayList<String> oldSoundsList = new ArrayList<>();
     private static ArrayList<String> oldImageTransitions = new ArrayList<>();
+    private static ArrayList<Float> oldImageTransLengths = new ArrayList<>();
+    private static ArrayList<DisplayImage> oldThumbnails = new ArrayList<>();   
+    private static boolean isManual;
+    private static float imageDuration;
 
-    public ArrayList<ImageItem> getOldImagesList() {
+    public static ArrayList<DisplayImage> getOldThumbnails() {
+        return oldThumbnails;
+    }
+
+    public void setOldThumbnails(ArrayList<DisplayImage> thumbnails) {
+        oldThumbnails = thumbnails;
+    }
+
+    public ArrayList<String> getOldImagesList() {
         return oldImagesList;
     }
 
-    public void setOldImagesList(ArrayList<ImageItem> oldImages) {
+    public void setOldImagesList(ArrayList<String> oldImages) {
         oldImagesList = oldImages;
     }
 
-    public ArrayList<SoundItem> getOldSoundsList() {
+    public static ArrayList<String> getOldSoundsList() {
         return oldSoundsList;
     }
 
-    public void setOldSoundsList(ArrayList<SoundItem> oldSounds) {
+    public void setOldSoundsList(ArrayList<String> oldSounds) {
         oldSoundsList = oldSounds;
     }
 
-    public ArrayList<String> getOldImageTransitions() {
+    public static ArrayList<String> getOldImageTransitions() {
         return oldImageTransitions;
     }
 
@@ -44,5 +56,32 @@ public class OldSlideInfo {
         oldImageTransitions = oldTransitions;
     }
     
+    public void setOldImageTransLengths(ArrayList<Float> oldImageLengths) {
+        oldImageTransLengths = oldImageLengths;
+    }
+    
+    public static ArrayList<Float> getOldImageTransLengths(){
+        return oldImageTransLengths;
+    }
+    
+    public void setManual(){
+        isManual = true;
+    }
+    
+    public void isInterval(){
+        isManual = false;
+    }
+    
+    public boolean getIsManual(){
+        return isManual;
+    }
+    
+    public void setImageDuration(float duration){
+        imageDuration = duration; 
+    }
+    
+    public float getImageDuration(){
+        return imageDuration;
+    }
     
 }
