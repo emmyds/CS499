@@ -31,7 +31,7 @@ import org.json.simple.parser.ParseException;
  * @author Roberto Murcia
  */
 public class FirstPopUp {
-    private static OldSlideInfo oldSlideInfo = new OldSlideInfo();
+    private static final OldSlideInfo oldSlideInfo = new OldSlideInfo();
     private static boolean isNew = false;
     private final JFrame firstFrame = new JFrame();
     private final JButton newSlide = new JButton();
@@ -94,6 +94,8 @@ public class FirstPopUp {
                     }
                     else{
                         noDirectory = false;
+                        MightyPointGui.exporter.setSaveDirectory(imageDirectory.toString());
+                        System.out.println(MightyPointGui.exporter.getSaveDirectory());
                     }
             }catch(NullPointerException exception){}
             }
@@ -261,6 +263,7 @@ public class FirstPopUp {
         oldSlideInfo.setImageDuration(Float.parseFloat((String) oldSave.get("imageDuration:")));    //Get image duration of old slideshow
         System.out.println(oldSlideInfo.getImageDuration());
         
+        oldSlideInfo.setDirectory((String) oldSave.get("imageDirectory"));
         //====================Get Images========================//
         
         ArrayList<String> imagesList = new ArrayList<>();                       //Create a string arraylist and acquire the paths of each image used.
@@ -310,6 +313,57 @@ public class FirstPopUp {
         }
         oldSlideInfo.setOldSoundsList(soundsList);
         System.out.println(oldSlideInfo.getOldSoundsList());
+    }
+    
+    public ArrayList<DisplayImage> getDirectoryImages(String directory){
+        ArrayList<String> imagePaths = new ArrayList<>();
+        System.out.println(directory);
+        File fileDirectory = new File(directory);
+        File[] fileList = fileDirectory.listFiles();
+        ArrayList<DisplayImage> imageList = new ArrayList<>();
+        PathMatcher matcher = FileSystems.getDefault().getPathMatcher("regex:^.*\\.jpg");
+        PathMatcher matcher2 = FileSystems.getDefault().getPathMatcher("regex:^.*\\.png");
+        int counter = 0;
+        try{
+            for (File image : fileList) {
+                Path filePath = image.toPath();
+                    if (matcher.matches(filePath) || matcher2.matches(filePath)){
+                        counter++;
+                        System.out.print("Item name: " + filePath + " is an image!\n");
+                        imagePaths.add(filePath.toString());
+                    }
+                    else{
+                        System.out.print("\nIndex: " + filePath + " is not a JPEG or PNG!\n");
+                        JOptionPane.showMessageDialog(null, "Item at: " + filePath + " is not a valid image!");
+
+                    }
+                }
+                if(imagePaths.isEmpty()){
+                    JFrame noImage = new JFrame();
+                    noImage.setLocationRelativeTo(firstFrame);
+                    noImage.setAlwaysOnTop(true);
+                    JOptionPane.showMessageDialog(noImage, "No JPEGs or PNGs were found within this directory. Try with a new save file!");
+                    //isNewSlide = false;
+                    return null;
+                }
+                else{
+                    ArrayList<DisplayImage> list = new ArrayList<>();
+                    for(String jpegPath : imagePaths){                                  //For creates a display image object and holds the current image
+                        DisplayImage newImage = new DisplayImage();                     //Then sets the image path of that image
+                        newImage.setImagePath(jpegPath);                                //Then adds that display image object into imageThumbnails
+                        if(newImage.getImage() == null){
+                            JOptionPane.showMessageDialog(null, "Image at: " + newImage.getImagePath() + " is corrupted, or not a valid image.");
+                            continue;
+                        }
+                        list.add(newImage);
+                    }
+                    setArrayList(list);
+                    imageList = list;
+                    
+                }
+            }catch(NullPointerException exception){System.out.println(exception);}
+            
+        return imageList;
     }
 
 }

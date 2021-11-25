@@ -96,7 +96,7 @@ public class Exporter{
         }
         
         File saveFile = new File("slideshows/" + this.getFilename());
-        boolean isSuccessful;
+        /*boolean isSuccessful;
         try
         {
             isSuccessful = saveFile.createNewFile();
@@ -111,11 +111,12 @@ public class Exporter{
         }
         catch(IOException e)
         {
-        }
-         try (FileWriter writer = new FileWriter("slideshows/" + filename)) {
+        }*/
+         try (FileWriter writer = new FileWriter(saveFile)) {
             writer.write('{');
             writer.write(String.format("\n\"changeManually\": \"%b\",", this.isManual));
             writer.write(String.format("\n\"imageDuration:\": \"%d\"," , this.intervalTime));
+            writer.write(String.format("\n\"imageDirectory\": \"%s\",", this.saveDirectory));
             
             //WRITE IMAGES
             writer.write("\n\"images\":[");
@@ -145,6 +146,7 @@ public class Exporter{
             writer.write("\n]");
             
             writer.write("\n}");
+            
         }
         catch(IOException e)
         {

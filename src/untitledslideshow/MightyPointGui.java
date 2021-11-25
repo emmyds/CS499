@@ -562,6 +562,7 @@ public class MightyPointGui extends javax.swing.JFrame {
      */
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         System.out.println(evt.toString());
+        exporter.setFilename(filenameTextBox.getText());
         exporter.export();
     }//GEN-LAST:event_saveButtonActionPerformed
 
@@ -717,9 +718,11 @@ public class MightyPointGui extends javax.swing.JFrame {
         }
         else{
             System.out.println("Is old slide");
-            thumbImages = OldSlideInfo.getOldThumbnails();
+            String dirPath = OldSlideInfo.getDirectory();
+            MightyPointGui.exporter.setSaveDirectory(dirPath);
+            ArrayList<DisplayImage> oldImages = popUp.getDirectoryImages(dirPath);
             int i = 0;
-            for (DisplayImage listImage : thumbImages) {
+            for (DisplayImage listImage : oldImages) {
                 ImageIcon newImg = listImage.getImage();
                 newImg.setDescription(listImage.getImagePath());
                 System.out.println(newImg.getDescription());
@@ -728,13 +731,34 @@ public class MightyPointGui extends javax.swing.JFrame {
             }
             mainGui.imagesList.setModel(dlm);
             mainGui.slideShowReelPanel.setLayout(new CardLayout());
+            SoundItem updateItem = new SoundItem(null, null, 0);
+            ClickPopUp updateGUI = new ClickPopUp(mainGui.imagesReel);
+            for(String soundPath : OldSlideInfo.getOldSoundsList()){
+                try{
+                    File sound = new File(soundPath);
+                    boolean isReal = false;
+                    double lengthSec = 0.0;
+                    AudioInputStream audioIS = AudioSystem.getAudioInputStream(sound);
+                    AudioFormat format = audioIS.getFormat();
+                    long frames = audioIS.getFrameLength();
+                    lengthSec = (frames + 0.0) / format.getFrameRate();
+                    SoundItem newSound = new SoundItem(sound.toString(), sound.getName(), lengthSec);
+                    newSound.addToDLM(newSound);
+                    exporter.getSounds().add(newSound);
+                    for (SoundItem item : exporter.getSounds()){
+                        System.out.println("Sound: " + item.getPath());
+                    }
+                    
+                    
+                } catch (UnsupportedAudioFileException | IOException ex) {}
+            }
+            
             java.awt.EventQueue.invokeLater(() -> {
-                mainGui.setVisible(true);
-                ClickPopUp updateGUI = new ClickPopUp(mainGui.imagesReel);
-                
+                updateGUI.UpdateDLMs();
                 mainGui.imagesReel.setModel(updateGUI.getDLM());
-                SoundItem updateItem = new SoundItem(null, null, 0);
                 mainGui.soundsReel.setModel(updateItem.getDLM());
+                mainGui.setVisible(true);   
+                
             });
         }
         

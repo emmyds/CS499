@@ -29,6 +29,7 @@ public class ClickPopUp extends JPopupMenu{
     private static final DefaultListModel imageTempModel = new DefaultListModel();
     private static DefaultListModel soundTempModel = new DefaultListModel();
     private float transitionTime = 1;
+    Exporter exporter = MightyPointGui.exporter;
     /**
      * ClickPopUp creates a popup based on the component that was clicked over.
      * For example, if the component is the imagesList, it provides the options
@@ -38,7 +39,7 @@ public class ClickPopUp extends JPopupMenu{
      */
     public ClickPopUp(Component c){
         SoundItem updateItem = new SoundItem(null, null, 0);
-        Exporter exporter = MightyPointGui.exporter;
+        
         if(c instanceof JList && "imagesList".equals(c.getName())){
             //Copies the elements found in the componenent into tempList
             JList tempList = (JList) c;
@@ -245,8 +246,15 @@ public class ClickPopUp extends JPopupMenu{
         return temp;
     }
     
-    public void setDLM(){
-        
+    public void UpdateDLMs(){
+        ArrayList<DisplayImage> imageList = OldSlideInfo.getOldThumbnails();
+        int i = 0;
+        for(DisplayImage image : imageList){
+            imageTempModel.add(i, image.getImage());
+            exporter.getImages().add(i, new ImageItem(OldSlideInfo.getOldImagesList().get(i), OldSlideInfo.getOldImageTransitions().get(i)));
+            exporter.getImages().get(i).setTransitionTime(OldSlideInfo.getOldImageTransLengths().get(i));
+            i++;
+        }
     }
     
 }

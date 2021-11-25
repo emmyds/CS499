@@ -16,6 +16,7 @@ import java.util.ArrayList;
  * @author Roberto Murcia
  */
 public class OldSlideInfo {
+    private static String oldImageDirectory;
     private static ArrayList<String> oldImagesList = new ArrayList<>();
     private static ArrayList<String> oldSoundsList = new ArrayList<>();
     private static ArrayList<String> oldImageTransitions = new ArrayList<>();
@@ -31,8 +32,17 @@ public class OldSlideInfo {
     public void setOldThumbnails(ArrayList<DisplayImage> thumbnails) {
         oldThumbnails = thumbnails;
     }
-
-    public ArrayList<String> getOldImagesList() {
+    
+    
+    public static String getDirectory(){
+        return oldImageDirectory;
+    }
+    
+    public void setDirectory(String directory){
+        oldImageDirectory = directory;
+    }
+    
+    public static ArrayList<String> getOldImagesList() {
         return oldImagesList;
     }
 
