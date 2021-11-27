@@ -126,7 +126,7 @@ public class ClickPopUp extends JPopupMenu{
             });
             this.addSeparator();
            
-           this.add("Wipe Left").addActionListener(e -> {
+           this.add("Wipe Left (WL)").addActionListener(e -> {
               String trans = "WL";
               exporter.getImages().get(index).setTransition(trans);
               transitionTime = exporter.getTransitionTime();
@@ -137,7 +137,7 @@ public class ClickPopUp extends JPopupMenu{
            });
            
            
-            this.add("Wipe Right").addActionListener(e -> {
+            this.add("Wipe Right (WR)").addActionListener(e -> {
                 String trans = "WR";
                 exporter.getImages().get(index).setTransition(trans);
                 transitionTime = exporter.getTransitionTime();
@@ -148,7 +148,7 @@ public class ClickPopUp extends JPopupMenu{
            });
             
             
-            this.add("Wipe Up").addActionListener(e -> {
+            this.add("Wipe Up (WU)").addActionListener(e -> {
                 String trans = "WU";
                 exporter.getImages().get(index).setTransition(trans);
                 transitionTime = exporter.getTransitionTime();
@@ -159,7 +159,7 @@ public class ClickPopUp extends JPopupMenu{
            });
             
             
-            this.add("Wipe Down").addActionListener(e -> {
+            this.add("Wipe Down (WD)").addActionListener(e -> {
                 String trans = "WD";
                 exporter.getImages().get(index).setTransition(trans);
                 transitionTime = exporter.getTransitionTime();
@@ -170,7 +170,7 @@ public class ClickPopUp extends JPopupMenu{
            });
             
             
-            this.add("Crossfade").addActionListener(e -> {
+            this.add("Crossfade (CF)").addActionListener(e -> {
                 String trans = "CF";
                 exporter.getImages().get(index).setTransition(trans);
                 transitionTime = exporter.getTransitionTime();
@@ -180,6 +180,10 @@ public class ClickPopUp extends JPopupMenu{
                 System.out.println("Crossfade added to current image ");
            });
             this.addSeparator();
+            if(imageTempModel.getSize() > 0){
+                this.add("Set to: " + exporter.getImages().get(index).getTransition());
+                this.add("Time set to: " + Float.toString(exporter.getImages().get(index).getTransitionTime()));
+            }
         }
         else if(c instanceof JList && "soundsReel".equals(c.getName())){
             JList tempList = (JList) c;
