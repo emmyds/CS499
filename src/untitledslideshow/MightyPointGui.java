@@ -12,6 +12,7 @@ package untitledslideshow;
  * @author Roberto Murcia
  */
 import java.awt.CardLayout;
+import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileSystems;
@@ -532,13 +533,16 @@ public class MightyPointGui extends javax.swing.JFrame {
      * @param evt is the event of the user clicking the exit button
      */
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
+        if(evt == null){
+            System.exit(1);
+        }
         System.out.println(evt.toString());
         JFrame onExitFrame = new JFrame("Exit Menu");
         onExitFrame.setSize(200,200);
         onExitFrame.setLocationRelativeTo(this);
         onExitFrame.setAlwaysOnTop(true);
         int result = JOptionPane.showConfirmDialog(onExitFrame, "Please confirm that you have saved your slideshow first! "
-               + "Would you like to exit anyway?");
+               + "Would you like to exit anyway?", null, JOptionPane.YES_NO_OPTION);
         switch(result){
             case JOptionPane.YES_OPTION:
                 System.out.println("\nExiting Now\n");
@@ -546,11 +550,8 @@ public class MightyPointGui extends javax.swing.JFrame {
             case JOptionPane.NO_OPTION:
                 System.out.println("\nClosing Exit Dialog\n");
                 break;
-            case JOptionPane.CANCEL_OPTION:
-                System.out.println("\nExit Dialog Cancelled\n");
-                break;
             case JOptionPane.CLOSED_OPTION:
-                System.out.println("\nExit Dialog Closed\n");
+                System.out.println("\nOption Menu Closed\n");
        }
     }//GEN-LAST:event_exitButtonActionPerformed
 
@@ -721,6 +722,10 @@ public class MightyPointGui extends javax.swing.JFrame {
             String dirPath = OldSlideInfo.getDirectory();
             MightyPointGui.exporter.setSaveDirectory(dirPath);
             ArrayList<DisplayImage> oldImages = popUp.getDirectoryImages(dirPath);
+            if(oldImages == null || oldImages.get(0) == null){
+                ActionEvent evt = null;
+                mainGui.exitButtonActionPerformed(evt);
+            }
             int i = 0;
             for (DisplayImage listImage : oldImages) {
                 ImageIcon newImg = listImage.getImage();
@@ -736,7 +741,6 @@ public class MightyPointGui extends javax.swing.JFrame {
             for(String soundPath : OldSlideInfo.getOldSoundsList()){
                 try{
                     File sound = new File(soundPath);
-                    boolean isReal = false;
                     double lengthSec = 0.0;
                     AudioInputStream audioIS = AudioSystem.getAudioInputStream(sound);
                     AudioFormat format = audioIS.getFormat();

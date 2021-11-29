@@ -12,6 +12,8 @@ import javax.swing.JList;
 import javax.swing.JPopupMenu;
 import java.util.ArrayList;
 import java.util.Collections;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  * ClickPopUp creates a JPopupMenu whenever the user clicks on a component
@@ -179,10 +181,22 @@ public class ClickPopUp extends JPopupMenu{
                 System.out.println(transitionTime);
                 System.out.println("Crossfade added to current image ");
            });
+            this.add("Change Transition Time to: " + Float.toString(exporter.getTransitionTime())).addActionListener(e ->{
+                JFrame jf = new JFrame();
+                jf.setAlwaysOnTop(true);
+                if(exporter.getImages().get(index).getTransitionTime() != exporter.getTransitionTime()){
+                    JOptionPane.showMessageDialog(jf, "Image at position " + index + " transition time changed from " + 
+                            Float.toString(exporter.getImages().get(index).getTransitionTime()) +
+                            " to: " + Float.toString(exporter.getTransitionTime()));
+                }
+                exporter.getImages().get(index).setTransitionTime(exporter.getTransitionTime());
+                System.out.println("Object at index: " + index + " set to: " + Float.toString(exporter.getTransitionTime()));
+            });
             this.addSeparator();
+            
             if(imageTempModel.getSize() > 0){
-                this.add("Set to: " + exporter.getImages().get(index).getTransition());
-                this.add("Time set to: " + Float.toString(exporter.getImages().get(index).getTransitionTime()));
+                this.add("Current Image Transition set to: " + exporter.getImages().get(index).getTransition());
+                this.add("Current Transition time set to: " + Float.toString(exporter.getImages().get(index).getTransitionTime()));
             }
         }
         else if(c instanceof JList && "soundsReel".equals(c.getName())){
