@@ -298,7 +298,13 @@ public class FirstPopUp {
             interval = interval.replace("\"", "");                              //Remove quotations and brackets from string
             interval = interval.replace("[", "");
             interval = interval.replace("]", "");
-            transitionIntervals.add(Float.parseFloat(interval));
+            if(interval.isEmpty() || interval.isBlank()){
+                
+            }
+            else{
+                transitionIntervals.add(Float.parseFloat(interval));
+            }
+            
         }
         oldSlideInfo.setOldImageTransLengths(transitionIntervals);
         System.out.println(oldSlideInfo.getOldImageTransLengths());
