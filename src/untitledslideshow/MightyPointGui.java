@@ -574,7 +574,7 @@ public class MightyPointGui extends javax.swing.JFrame {
         boolean isValid = false;
         File soundDirectory;
         JFileChooser soundFileChooser = new JFileChooser();
-        soundFileChooser.setDialogTitle("Choose a sound file to add to your slide show!");
+        soundFileChooser.setDialogTitle("Choose a sound file of .AIFF or .wav format for the slideshow!");
         soundFileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
         soundFileChooser.showOpenDialog(this);
         soundDirectory = soundFileChooser.getSelectedFile();
@@ -591,7 +591,6 @@ public class MightyPointGui extends javax.swing.JFrame {
         }
         catch(NullPointerException exception){
             System.out.print("An exception was found at index");
-            JOptionPane.showMessageDialog(this, "No Valid Sound File was Found");
         }
         boolean isReal = false;
         double lengthSec = 0.0;

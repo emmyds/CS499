@@ -82,7 +82,7 @@ public class FirstPopUp {
             while(noDirectory == true){
                 try{
                     JFileChooser filechooser = new JFileChooser();
-                    filechooser.setDialogTitle("Choose a Directory of Images to use for your slideshow!");
+                    filechooser.setDialogTitle("Choose a directory of .png or .jpg images to use for your slideshow!");
                     filechooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
                     filechooser.showOpenDialog(null);
                     imageDirectory = filechooser.getSelectedFile();
@@ -208,6 +208,9 @@ public class FirstPopUp {
                             
                         }
                         
+                    }
+                    else if(!matcher.matches(oldSave.toPath())){
+                        JOptionPane.showMessageDialog(null, "Selected file is not a .JSON file.");
                     }
 
                 }catch(NullPointerException exception){
