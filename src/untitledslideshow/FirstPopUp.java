@@ -83,13 +83,17 @@ public class FirstPopUp {
                 try{
                     JFileChooser filechooser = new JFileChooser();
                     filechooser.setDialogTitle("Choose a directory of .png or .jpg images to use for your slideshow!");
-                    filechooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                    filechooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
                     filechooser.showOpenDialog(null);
                     imageDirectory = filechooser.getSelectedFile();
                     setImageDirectory(imageDirectory);
                     if(imageDirectory == null){
                         JOptionPane.showMessageDialog(filechooser, "New Slideshow Cancelled");
                         isNewSlide = false;
+                        break;
+                    }
+                    else if(!imageDirectory.isDirectory()){
+                        JOptionPane.showMessageDialog(filechooser, "Item selected is not a directory.");
                         break;
                     }
                     else{

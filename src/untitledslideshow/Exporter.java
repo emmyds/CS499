@@ -11,7 +11,7 @@ import java.util.ArrayList;
  */
 public class Exporter{
     private boolean isManual;
-    private float intervalTime = -1;
+    private float intervalTime = 1;
     private String saveDirectory = "";
     private String filename = "file name here";
     private ArrayList<ImageItem> images = new ArrayList<>();

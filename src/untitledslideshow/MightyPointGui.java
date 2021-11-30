@@ -17,6 +17,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.PathMatcher;
+import java.text.DecimalFormat;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import java.util.ArrayList;
@@ -98,9 +99,10 @@ public class MightyPointGui extends javax.swing.JFrame {
         setAlwaysOnTop(true);
         setBackground(new java.awt.Color(153, 153, 153));
         setLocationByPlatform(true);
-        setMinimumSize(new java.awt.Dimension(1212, 910));
+        setMinimumSize(new java.awt.Dimension(1260, 950));
         setName("mainFrame"); // NOI18N
-        setSize(new java.awt.Dimension(0, 0));
+        setPreferredSize(new java.awt.Dimension(1260, 1080));
+        setSize(new java.awt.Dimension(1260, 1080));
 
         mainTabbedPane.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         mainTabbedPane.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -455,8 +457,8 @@ public class MightyPointGui extends javax.swing.JFrame {
             soundsReelPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(soundsReelPanelLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(soundsReelScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 1151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(soundsReelScroll)
+                .addGap(20, 20, 20))
         );
         soundsReelPanelLayout.setVerticalGroup(
             soundsReelPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -505,15 +507,14 @@ public class MightyPointGui extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(saveExportPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(9, 9, 9)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(mainTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(slideShowReelPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(soundsReelPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(extraSettingsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(19, 19, 19))
+                .addComponent(extraSettingsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -612,8 +613,9 @@ public class MightyPointGui extends javax.swing.JFrame {
             }
         }
         if(isReal){
+            DecimalFormat numberFormat = new DecimalFormat("#.00");
             System.out.println("Audio file: " + soundDirectory.getName() + " is valid with track length: " + lengthSec);
-            SoundItem newSound = new SoundItem(soundDirectory.toString(), soundDirectory.getName(), lengthSec);
+            SoundItem newSound = new SoundItem(soundDirectory.toString(), soundDirectory.getName() + ": " + numberFormat.format(lengthSec) + "sec", lengthSec);
             newSound.addToDLM(newSound);
             //int endIndex = tempSoundReelModel.getSize();
             //tempSoundReelModel.add(endIndex, newSound);
