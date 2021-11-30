@@ -74,23 +74,23 @@ public class OldSlideInfo {
         return oldImageTransLengths;
     }
     
-    public void setManual(){
+    public static void setManual(){
         isManual = true;
     }
     
-    public void isInterval(){
+    public static void isInterval(){
         isManual = false;
     }
     
-    public boolean getIsManual(){
+    public static boolean getIsManual(){
         return isManual;
     }
     
-    public void setImageDuration(float duration){
+    public static void setImageDuration(float duration){
         imageDuration = duration; 
     }
     
-    public float getImageDuration(){
+    public static float getImageDuration(){
         return imageDuration;
     }
     

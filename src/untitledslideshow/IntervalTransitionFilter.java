@@ -15,6 +15,7 @@ public class IntervalTransitionFilter extends DocumentFilter {
 
     @Override
     public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+        
         for(int n = text.length(); n > 0; n--){
             char c = text.charAt(n - 1);
             System.out.println(c);

@@ -10,8 +10,8 @@ import java.util.ArrayList;
  * @author Annaleise
  */
 public class Exporter{
-    private boolean isManual = true;
-    private int intervalTime = -1;
+    private boolean isManual;
+    private float intervalTime = -1;
     private String saveDirectory = "";
     private String filename = "file name here";
     private ArrayList<ImageItem> images = new ArrayList<>();
@@ -29,11 +29,11 @@ public class Exporter{
         this.isManual = isManual;
     }
 
-    public int getIntervalTime() {
+    public float getIntervalTime() {
         return intervalTime;
     }
 
-    public void setIntervalTime(int intervalTime) {
+    public void setIntervalTime(float intervalTime) {
         this.intervalTime = intervalTime;
     }
 
@@ -115,7 +115,7 @@ public class Exporter{
          try (FileWriter writer = new FileWriter(saveFile)) {
             writer.write('{');
             writer.write(String.format("\n\"changeManually\": \"%b\",", this.isManual));
-            writer.write(String.format("\n\"imageDuration:\": \"%d\"," , this.intervalTime));
+            writer.write(String.format("\n\"imageDuration:\": \"%f\"," , this.intervalTime));
             writer.write(String.format("\n\"imageDirectory\": \"%s\",", this.saveDirectory));
             
             //WRITE IMAGES

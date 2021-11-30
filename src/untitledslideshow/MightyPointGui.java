@@ -34,7 +34,6 @@ public class MightyPointGui extends javax.swing.JFrame {
      * Creates new form MightyPointGUI
      */
     private boolean isManual;
-    private boolean isInterval;
     private String saveDirectory;
     private String imageDirectory;
     private ArrayList<ImageItem> images;
@@ -525,7 +524,8 @@ public class MightyPointGui extends javax.swing.JFrame {
      */
     private void intervalButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_intervalButtonActionPerformed
         System.out.println(evt.toString());
-        isInterval = true;
+        isManual = false;
+        exporter.setIsManual(isManual);
         System.out.print(intervalTime);
     }//GEN-LAST:event_intervalButtonActionPerformed
     /**
@@ -627,7 +627,7 @@ public class MightyPointGui extends javax.swing.JFrame {
     private void manualButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manualButtonActionPerformed
         System.out.println(evt.toString());
         isManual = true;
-        isInterval = false;
+        exporter.setIsManual(isManual);
     }//GEN-LAST:event_manualButtonActionPerformed
 
     private void setTransitionTimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setTransitionTimeActionPerformed
@@ -658,6 +658,7 @@ public class MightyPointGui extends javax.swing.JFrame {
     private void intervalSetTimeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_intervalSetTimeButtonActionPerformed
         intervalTime = Float.parseFloat(intervalTextField.getText());
         currentIntervalTimeLabel.setText(Float.toString(intervalTime));
+        exporter.setIntervalTime(intervalTime);
         JOptionPane.showMessageDialog(this,"Slide interval time set to: " + intervalTime + ".");
         if(transitionIntervalTime == 420.0 && intervalTime == 69.0){
             JOptionPane.showMessageDialog(this, "Credentials validated.... accessing hidden resource.");
@@ -722,6 +723,11 @@ public class MightyPointGui extends javax.swing.JFrame {
             System.out.println("Is old slide");
             String dirPath = OldSlideInfo.getDirectory();
             MightyPointGui.exporter.setSaveDirectory(dirPath);
+            MightyPointGui.exporter.setIntervalTime(OldSlideInfo.getImageDuration());
+            MightyPointGui.exporter.setIsManual(OldSlideInfo.getIsManual());
+            if(!MightyPointGui.exporter.isIsManual()){
+                mainGui.intervalButton.setSelected(true);
+            }
             ArrayList<DisplayImage> oldImages = popUp.getDirectoryImages(dirPath);
             if(oldImages == null || oldImages.get(0) == null){
                 ActionEvent evt = null;
@@ -762,6 +768,7 @@ public class MightyPointGui extends javax.swing.JFrame {
                 updateGUI.UpdateDLMs();
                 mainGui.imagesReel.setModel(updateGUI.getDLM());
                 mainGui.soundsReel.setModel(updateItem.getDLM());
+                mainGui.currentIntervalTimeLabel.setText(Float.toString(exporter.getIntervalTime()));
                 mainGui.setVisible(true);   
                 
             });

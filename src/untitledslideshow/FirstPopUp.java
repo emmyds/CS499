@@ -265,7 +265,6 @@ public class FirstPopUp {
         
         oldSlideInfo.setImageDuration(Float.parseFloat((String) oldSave.get("imageDuration:")));    //Get image duration of old slideshow
         System.out.println(oldSlideInfo.getImageDuration());
-        
         oldSlideInfo.setDirectory((String) oldSave.get("imageDirectory"));
         //====================Get Images========================//
         
