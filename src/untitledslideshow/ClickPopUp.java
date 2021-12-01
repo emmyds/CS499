@@ -128,8 +128,8 @@ public class ClickPopUp extends JPopupMenu{
             });
             this.addSeparator();
            
-           this.add("Wipe Left (WL)").addActionListener(e -> {
-              String trans = "WL";
+           this.add("Wipe Left").addActionListener(e -> {
+              String trans = "Wipe Left";
               exporter.getImages().get(index).setTransition(trans);
               transitionTime = exporter.getTransitionTime();
               exporter.getImages().get(index).setTransitionTime(transitionTime);
@@ -139,8 +139,8 @@ public class ClickPopUp extends JPopupMenu{
            });
            
            
-            this.add("Wipe Right (WR)").addActionListener(e -> {
-                String trans = "WR";
+            this.add("Wipe Right").addActionListener(e -> {
+                String trans = "Wipe Right";
                 exporter.getImages().get(index).setTransition(trans);
                 transitionTime = exporter.getTransitionTime();
                 exporter.getImages().get(index).setTransitionTime(transitionTime);
@@ -150,8 +150,8 @@ public class ClickPopUp extends JPopupMenu{
            });
             
             
-            this.add("Wipe Up (WU)").addActionListener(e -> {
-                String trans = "WU";
+            this.add("Wipe Up").addActionListener(e -> {
+                String trans = "Wipe Up";
                 exporter.getImages().get(index).setTransition(trans);
                 transitionTime = exporter.getTransitionTime();
                 exporter.getImages().get(index).setTransitionTime(transitionTime);
@@ -161,8 +161,8 @@ public class ClickPopUp extends JPopupMenu{
            });
             
             
-            this.add("Wipe Down (WD)").addActionListener(e -> {
-                String trans = "WD";
+            this.add("Wipe Down").addActionListener(e -> {
+                String trans = "Wipe Down";
                 exporter.getImages().get(index).setTransition(trans);
                 transitionTime = exporter.getTransitionTime();
                 exporter.getImages().get(index).setTransitionTime(transitionTime);
@@ -172,8 +172,8 @@ public class ClickPopUp extends JPopupMenu{
            });
             
             
-            this.add("Crossfade (CF)").addActionListener(e -> {
-                String trans = "CF";
+            this.add("Crossfade").addActionListener(e -> {
+                String trans = "Crossfade";
                 exporter.getImages().get(index).setTransition(trans);
                 transitionTime = exporter.getTransitionTime();
                 exporter.getImages().get(index).setTransitionTime(transitionTime);

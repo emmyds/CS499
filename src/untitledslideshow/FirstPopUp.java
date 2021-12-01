@@ -47,7 +47,7 @@ public class FirstPopUp {
         firstLabel.setText("Welcome to the mightyPoint slideshow editor!");
         secondLabel.setText("Choose from either of the following options: ");
         newSlide.setText("Create a new slideshow");
-        oldSlide.setText("Import an old slideshow");
+        oldSlide.setText("Import an existing slideshow");
         firstFrame.add(firstLabel);
         firstFrame.add(secondLabel);
         firstFrame.add(newSlide);
@@ -118,7 +118,7 @@ public class FirstPopUp {
                     }
                     else{
                         System.out.print("\nIndex: " + filePath + " is not a JPEG or PNG!\n");
-                        JOptionPane.showMessageDialog(null, "Item at: " + filePath + " is not a valid image!");
+                        JOptionPane.showMessageDialog(null, "Item at: " + filePath + " is not a valid image! Images must be JPEGs or PNGs.");
 
                     }
                 }
@@ -136,7 +136,7 @@ public class FirstPopUp {
                         DisplayImage newImage = new DisplayImage();                     //Then sets the image path of that image
                         newImage.setImagePath(jpegPath);                                //Then adds that display image object into imageThumbnails
                         if(newImage.getImage() == null){
-                            JOptionPane.showMessageDialog(null, "Image at: " + newImage.getImagePath() + " is corrupted, or not a valid image.");
+                            JOptionPane.showMessageDialog(null, "Image at: " + newImage.getImagePath() + " is corrupted, or not a valid image. Images must be JPEGs or PNGs.");
                             continue;
                         }
                         list.add(newImage);

@@ -76,14 +76,20 @@ public class MightyPointGui extends javax.swing.JFrame {
         transitionLengthText = new javax.swing.JLabel();
         currentTransitionText = new javax.swing.JLabel();
         currentSetTransitionLabel = new javax.swing.JLabel();
+        secondsTransLabel2 = new javax.swing.JLabel();
+        secondsTransLabel = new javax.swing.JLabel();
+        ChangeAllButton = new javax.swing.JButton();
         intervalTextField = new javax.swing.JTextField();
         intervalSetTimeButton = new javax.swing.JButton();
         currentSetIntervalTimeText = new javax.swing.JLabel();
         currentIntervalTimeLabel = new javax.swing.JLabel();
+        secondsLabel2 = new javax.swing.JLabel();
+        secondsLabel = new javax.swing.JLabel();
         slideShowReelPanel = new javax.swing.JPanel();
         slideShowReelContainer = new javax.swing.JPanel();
         reelScrollPane = new javax.swing.JScrollPane();
         imagesReel = new javax.swing.JList<>();
+        slideshowReelLabel = new javax.swing.JLabel();
         mightyPointLogo = new javax.swing.JLabel();
         saveExportPanel = new javax.swing.JPanel();
         saveButton = new javax.swing.JButton();
@@ -91,6 +97,7 @@ public class MightyPointGui extends javax.swing.JFrame {
         soundsReelPanel = new javax.swing.JPanel();
         soundsReelScroll = new javax.swing.JScrollPane();
         soundsReel = new javax.swing.JList<>();
+        audioReelLabel = new javax.swing.JLabel();
 
         label1.setText("label1");
 
@@ -146,7 +153,7 @@ public class MightyPointGui extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        mainTabbedPane.addTab("Images", imagesPanel);
+        mainTabbedPane.addTab("Image Palette", imagesPanel);
 
         soundsPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -175,7 +182,7 @@ public class MightyPointGui extends javax.swing.JFrame {
                 .addGap(88, 88, 88))
         );
 
-        mainTabbedPane.addTab("Sounds", soundsPanel);
+        mainTabbedPane.addTab("Sound Palette", soundsPanel);
 
         exitButton.setText("X");
         exitButton.addActionListener(new java.awt.event.ActionListener() {
@@ -241,6 +248,14 @@ public class MightyPointGui extends javax.swing.JFrame {
         currentSetTransitionLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         currentSetTransitionLabel.setText("1.0");
 
+        secondsTransLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        secondsTransLabel2.setText("second(s)");
+
+        secondsTransLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        secondsTransLabel.setText("second(s)");
+
+        ChangeAllButton.setText("Change All");
+
         javax.swing.GroupLayout transitionSettingsPanelLayout = new javax.swing.GroupLayout(transitionSettingsPanel);
         transitionSettingsPanel.setLayout(transitionSettingsPanelLayout);
         transitionSettingsPanelLayout.setHorizontalGroup(
@@ -249,16 +264,21 @@ public class MightyPointGui extends javax.swing.JFrame {
                 .addGap(14, 14, 14)
                 .addGroup(transitionSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(transitionSettingsPanelLayout.createSequentialGroup()
-                        .addComponent(currentTransitionText)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(currentSetTransitionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(transitionSettingsPanelLayout.createSequentialGroup()
                         .addComponent(transitionLengthText, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(transitionLengthField, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(setTransitionTime, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(transitionLengthField, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(secondsTransLabel))
+                    .addGroup(transitionSettingsPanelLayout.createSequentialGroup()
+                        .addComponent(currentTransitionText)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(currentSetTransitionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(secondsTransLabel2)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addGroup(transitionSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(setTransitionTime, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+                    .addComponent(ChangeAllButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         transitionSettingsPanelLayout.setVerticalGroup(
@@ -268,11 +288,14 @@ public class MightyPointGui extends javax.swing.JFrame {
                 .addGroup(transitionSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(transitionLengthField, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(setTransitionTime, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(transitionLengthText, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(transitionLengthText, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(secondsTransLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(transitionSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(transitionSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(currentTransitionText, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
-                    .addComponent(currentSetTransitionLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(currentSetTransitionLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(secondsTransLabel2)
+                    .addComponent(ChangeAllButton))
                 .addContainerGap())
         );
 
@@ -297,6 +320,11 @@ public class MightyPointGui extends javax.swing.JFrame {
 
         currentIntervalTimeLabel.setText("1");
 
+        secondsLabel2.setText("second(s)");
+
+        secondsLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        secondsLabel.setText("second(s)");
+
         javax.swing.GroupLayout extraSettingsPanelLayout = new javax.swing.GroupLayout(extraSettingsPanel);
         extraSettingsPanel.setLayout(extraSettingsPanelLayout);
         extraSettingsPanelLayout.setHorizontalGroup(
@@ -304,18 +332,24 @@ public class MightyPointGui extends javax.swing.JFrame {
             .addGroup(extraSettingsPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(extraSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(extraSettingsPanelLayout.createSequentialGroup()
-                        .addComponent(intervalButton, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(intervalTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(intervalSetTimeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(intervalSelectionText)
                     .addComponent(manualButton)
                     .addGroup(extraSettingsPanelLayout.createSequentialGroup()
-                        .addComponent(currentSetIntervalTimeText)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(currentIntervalTimeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(extraSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(extraSettingsPanelLayout.createSequentialGroup()
+                                .addComponent(intervalButton, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(intervalTextField))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, extraSettingsPanelLayout.createSequentialGroup()
+                                .addComponent(currentSetIntervalTimeText)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(currentIntervalTimeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(secondsLabel2)))
+                        .addGap(7, 7, 7)
+                        .addComponent(secondsLabel)
+                        .addGap(18, 18, 18)
+                        .addComponent(intervalSetTimeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(transitionSettingsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -329,12 +363,14 @@ public class MightyPointGui extends javax.swing.JFrame {
                 .addGroup(extraSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(extraSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(intervalButton)
-                        .addComponent(intervalTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(intervalTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(secondsLabel))
                     .addComponent(intervalSetTimeButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(extraSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(currentSetIntervalTimeText)
-                    .addComponent(currentIntervalTimeLabel))
+                    .addComponent(currentIntervalTimeLabel)
+                    .addComponent(secondsLabel2))
                 .addGap(3, 3, 3)
                 .addComponent(manualButton)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -359,6 +395,8 @@ public class MightyPointGui extends javax.swing.JFrame {
         imagesReel.setModel(new DefaultListModel());
         imagesReel.getAccessibleContext().setAccessibleName("");
 
+        slideshowReelLabel.setText("Slideshow Reel");
+
         javax.swing.GroupLayout slideShowReelContainerLayout = new javax.swing.GroupLayout(slideShowReelContainer);
         slideShowReelContainer.setLayout(slideShowReelContainerLayout);
         slideShowReelContainerLayout.setHorizontalGroup(
@@ -367,12 +405,17 @@ public class MightyPointGui extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(reelScrollPane)
                 .addContainerGap())
+            .addGroup(slideShowReelContainerLayout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addComponent(slideshowReelLabel)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         slideShowReelContainerLayout.setVerticalGroup(
             slideShowReelContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(slideShowReelContainerLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(reelScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
+                .addComponent(slideshowReelLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(reelScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -388,7 +431,7 @@ public class MightyPointGui extends javax.swing.JFrame {
         slideShowReelPanelLayout.setVerticalGroup(
             slideShowReelPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(slideShowReelPanelLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(20, 20, 20)
                 .addComponent(slideShowReelContainer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -451,6 +494,8 @@ public class MightyPointGui extends javax.swing.JFrame {
         soundsReel.setName("soundsReel");
         soundsReel.setModel(new DefaultListModel());
 
+        audioReelLabel.setText("Audio Reel");
+
         javax.swing.GroupLayout soundsReelPanelLayout = new javax.swing.GroupLayout(soundsReelPanel);
         soundsReelPanel.setLayout(soundsReelPanelLayout);
         soundsReelPanelLayout.setHorizontalGroup(
@@ -459,11 +504,16 @@ public class MightyPointGui extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addComponent(soundsReelScroll)
                 .addGap(20, 20, 20))
+            .addGroup(soundsReelPanelLayout.createSequentialGroup()
+                .addGap(39, 39, 39)
+                .addComponent(audioReelLabel)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         soundsReelPanelLayout.setVerticalGroup(
             soundsReelPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(soundsReelPanelLayout.createSequentialGroup()
-                .addContainerGap()
+                .addComponent(audioReelLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(soundsReelScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -779,6 +829,8 @@ public class MightyPointGui extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton ChangeAllButton;
+    private javax.swing.JLabel audioReelLabel;
     private javax.swing.JLabel currentIntervalTimeLabel;
     private javax.swing.JLabel currentSetIntervalTimeText;
     private javax.swing.JLabel currentSetTransitionLabel;
@@ -789,7 +841,7 @@ public class MightyPointGui extends javax.swing.JFrame {
     private javax.swing.JPanel iconPanel;
     protected javax.swing.JList<String> imagesList;
     private javax.swing.JPanel imagesPanel;
-    protected javax.swing.JList<String> imagesReel;
+    private javax.swing.JList<String> imagesReel;
     private javax.swing.JScrollPane imagesScrollPane;
     private javax.swing.JRadioButton intervalButton;
     private javax.swing.JLabel intervalSelectionText;
@@ -803,9 +855,14 @@ public class MightyPointGui extends javax.swing.JFrame {
     private javax.swing.JScrollPane reelScrollPane;
     private javax.swing.JButton saveButton;
     private javax.swing.JPanel saveExportPanel;
+    private javax.swing.JLabel secondsLabel;
+    private javax.swing.JLabel secondsLabel2;
+    private javax.swing.JLabel secondsTransLabel;
+    private javax.swing.JLabel secondsTransLabel2;
     private javax.swing.JButton setTransitionTime;
     private javax.swing.JPanel slideShowReelContainer;
     private javax.swing.JPanel slideShowReelPanel;
+    private javax.swing.JLabel slideshowReelLabel;
     private javax.swing.JButton soundSelectButton;
     private javax.swing.JPanel soundsPanel;
     private javax.swing.JList<String> soundsReel;

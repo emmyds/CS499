@@ -123,8 +123,8 @@
         <Container class="javax.swing.JPanel" name="imagesPanel">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Images">
-                <Property name="tabTitle" type="java.lang.String" value="Images"/>
+              <JTabbedPaneConstraints tabName="Image Palette">
+                <Property name="tabTitle" type="java.lang.String" value="Image Palette"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -209,8 +209,8 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Sounds">
-                <Property name="tabTitle" type="java.lang.String" value="Sounds"/>
+              <JTabbedPaneConstraints tabName="Sound Palette">
+                <Property name="tabTitle" type="java.lang.String" value="Sound Palette"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -289,19 +289,27 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <Component id="intervalButton" min="-2" pref="91" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="intervalTextField" min="-2" pref="164" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="intervalSetTimeButton" min="-2" pref="99" max="-2" attributes="0"/>
-                      </Group>
                       <Component id="intervalSelectionText" min="-2" max="-2" attributes="0"/>
                       <Component id="manualButton" min="-2" max="-2" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="currentSetIntervalTimeText" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="currentIntervalTimeLabel" min="-2" pref="132" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Component id="intervalButton" min="-2" pref="91" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="intervalTextField" max="32767" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="currentSetIntervalTimeText" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="currentIntervalTimeLabel" min="-2" pref="20" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="secondsLabel2" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
+                          <Component id="secondsLabel" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="intervalSetTimeButton" min="-2" pref="99" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
@@ -320,6 +328,7 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="intervalButton" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="intervalTextField" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                          <Component id="secondsLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Component id="intervalSetTimeButton" alignment="0" max="32767" attributes="0"/>
                   </Group>
@@ -327,6 +336,7 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="currentSetIntervalTimeText" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="currentIntervalTimeLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="secondsLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
                   <Component id="manualButton" min="-2" max="-2" attributes="0"/>
@@ -393,19 +403,25 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="currentTransitionText" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="currentSetTransitionLabel" min="-2" pref="126" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
                               <Component id="transitionLengthText" min="-2" pref="134" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="transitionLengthField" min="-2" pref="185" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Component id="setTransitionTime" min="-2" pref="90" max="-2" attributes="0"/>
+                              <Component id="transitionLengthField" min="-2" pref="115" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="secondsTransLabel" min="-2" max="-2" attributes="0"/>
                           </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="currentTransitionText" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="currentSetTransitionLabel" min="-2" pref="26" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="secondsTransLabel2" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace pref="32" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="setTransitionTime" pref="90" max="32767" attributes="0"/>
+                          <Component id="ChangeAllButton" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -419,11 +435,14 @@
                           <Component id="transitionLengthField" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
                           <Component id="setTransitionTime" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
                           <Component id="transitionLengthText" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+                          <Component id="secondsTransLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="currentTransitionText" pref="33" max="32767" attributes="0"/>
-                          <Component id="currentSetTransitionLabel" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="currentTransitionText" alignment="3" pref="33" max="32767" attributes="0"/>
+                          <Component id="currentSetTransitionLabel" alignment="3" max="32767" attributes="0"/>
+                          <Component id="secondsTransLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="ChangeAllButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -472,6 +491,27 @@
                 <Property name="text" type="java.lang.String" value="1.0"/>
               </Properties>
             </Component>
+            <Component class="javax.swing.JLabel" name="secondsTransLabel2">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="14" style="0"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="second(s)"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="secondsTransLabel">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="14" style="0"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="second(s)"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="ChangeAllButton">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Change All"/>
+              </Properties>
+            </Component>
           </SubComponents>
         </Container>
         <Component class="javax.swing.JTextField" name="intervalTextField">
@@ -507,6 +547,19 @@
             <Property name="text" type="java.lang.String" value="1"/>
           </Properties>
         </Component>
+        <Component class="javax.swing.JLabel" name="secondsLabel2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="second(s)"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="secondsLabel">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Tahoma" size="14" style="0"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="second(s)"/>
+          </Properties>
+        </Component>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JPanel" name="slideShowReelPanel">
@@ -534,7 +587,7 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                   <Component id="slideShowReelContainer" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -552,13 +605,19 @@
                       <Component id="reelScrollPane" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+                      <Component id="slideshowReelLabel" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                  </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="reelScrollPane" pref="173" max="32767" attributes="0"/>
+                      <Component id="slideshowReelLabel" min="-2" pref="25" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="reelScrollPane" pref="139" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -602,6 +661,11 @@
                 </Component>
               </SubComponents>
             </Container>
+            <Component class="javax.swing.JLabel" name="slideshowReelLabel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Slideshow Reel"/>
+              </Properties>
+            </Component>
           </SubComponents>
         </Container>
       </SubComponents>
@@ -704,11 +768,17 @@
                   <Component id="soundsReelScroll" max="32767" attributes="0"/>
                   <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
               </Group>
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
+                  <Component id="audioReelLabel" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
+              </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
+                  <Component id="audioReelLabel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="soundsReelScroll" min="-2" pref="106" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
@@ -750,6 +820,11 @@
             </Component>
           </SubComponents>
         </Container>
+        <Component class="javax.swing.JLabel" name="audioReelLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Audio Reel"/>
+          </Properties>
+        </Component>
       </SubComponents>
     </Container>
   </SubComponents>
