@@ -24,6 +24,7 @@ public class OldSlideInfo {
     private static ArrayList<DisplayImage> oldThumbnails = new ArrayList<>();   
     private static boolean isManual;
     private static float imageDuration;
+    private static String comments;
 
     public static ArrayList<DisplayImage> getOldThumbnails() {
         return oldThumbnails;
@@ -92,6 +93,9 @@ public class OldSlideInfo {
     
     public static float getImageDuration(){
         return imageDuration;
+    }
+    public static String getComments() {
+        return comments;
     }
     
 }

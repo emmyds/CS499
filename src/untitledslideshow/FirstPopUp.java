@@ -258,6 +258,7 @@ public class FirstPopUp {
     }
     
     private void parseOldSave(JSONObject oldSave){
+      
         String isManual = (String) oldSave.get("changeManually");               //Get whether old slide show was manual or interval
         if(isManual.equals("true")){
             oldSlideInfo.setManual();
@@ -325,6 +326,17 @@ public class FirstPopUp {
         }
         oldSlideInfo.setOldSoundsList(soundsList);
         System.out.println(oldSlideInfo.getOldSoundsList());
+        
+            ArrayList<String> commentList = new ArrayList<>();   
+        String[] comments = oldSave.get("_comments").toString().split("\n");
+        for(String comment: comments)
+        {
+            comment = comment.replace("\"", "");                                      //Remove quotations and brackets from string
+            comment = comment.replace("[", "");
+            comment = comment.replace("]", "");
+            commentList.add(comment);
+        }
+        System.out.println(OldSlideInfo.getComments());
     }
     
     public ArrayList<DisplayImage> getDirectoryImages(String directory){
