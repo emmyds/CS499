@@ -35,9 +35,6 @@ public class MightyPointGui extends javax.swing.JFrame {
      * Creates new form MightyPointGUI
      */
     private boolean isManual;
-    private String saveDirectory;
-    private String imageDirectory;
-    private ArrayList<ImageItem> images;
     public static final Exporter exporter = new Exporter();
     public static float intervalTime = 1;
     public static float transitionIntervalTime = 1;
@@ -76,14 +73,12 @@ public class MightyPointGui extends javax.swing.JFrame {
         transitionLengthText = new javax.swing.JLabel();
         currentTransitionText = new javax.swing.JLabel();
         currentSetTransitionLabel = new javax.swing.JLabel();
-        secondsTransLabel2 = new javax.swing.JLabel();
         secondsTransLabel = new javax.swing.JLabel();
         ChangeAllButton = new javax.swing.JButton();
         intervalTextField = new javax.swing.JTextField();
         intervalSetTimeButton = new javax.swing.JButton();
         currentSetIntervalTimeText = new javax.swing.JLabel();
         currentIntervalTimeLabel = new javax.swing.JLabel();
-        secondsLabel2 = new javax.swing.JLabel();
         secondsLabel = new javax.swing.JLabel();
         slideShowReelPanel = new javax.swing.JPanel();
         slideShowReelContainer = new javax.swing.JPanel();
@@ -106,10 +101,10 @@ public class MightyPointGui extends javax.swing.JFrame {
         setAlwaysOnTop(true);
         setBackground(new java.awt.Color(153, 153, 153));
         setLocationByPlatform(true);
-        setMinimumSize(new java.awt.Dimension(1260, 950));
+        setMinimumSize(new java.awt.Dimension(1260, 980));
         setName("mainFrame"); // NOI18N
-        setPreferredSize(new java.awt.Dimension(1260, 1080));
-        setSize(new java.awt.Dimension(1260, 1080));
+        setPreferredSize(new java.awt.Dimension(1260, 1000));
+        setSize(new java.awt.Dimension(1260, 1000));
 
         mainTabbedPane.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         mainTabbedPane.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -228,9 +223,13 @@ public class MightyPointGui extends javax.swing.JFrame {
 
         transitionSettingsPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        ((AbstractDocument) transitionLengthField.getDocument()).setDocumentFilter(new untitledslideshow.IntervalTransitionFilter());
         transitionLengthField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        transitionLengthField.setText("1");
+        transitionLengthField.setText("1.0");
+        transitionLengthField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                transitionLengthFieldKeyTyped(evt);
+            }
+        });
 
         setTransitionTime.setText("Set Time");
         setTransitionTime.addActionListener(new java.awt.event.ActionListener() {
@@ -246,15 +245,17 @@ public class MightyPointGui extends javax.swing.JFrame {
         currentTransitionText.setText("Current Set Transition Length:");
 
         currentSetTransitionLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        currentSetTransitionLabel.setText("1.0");
-
-        secondsTransLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        secondsTransLabel2.setText("second(s)");
+        currentSetTransitionLabel.setText("1.0 seconds");
 
         secondsTransLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         secondsTransLabel.setText("second(s)");
 
         ChangeAllButton.setText("Change All");
+        ChangeAllButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ChangeAllButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout transitionSettingsPanelLayout = new javax.swing.GroupLayout(transitionSettingsPanel);
         transitionSettingsPanel.setLayout(transitionSettingsPanelLayout);
@@ -262,19 +263,17 @@ public class MightyPointGui extends javax.swing.JFrame {
             transitionSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(transitionSettingsPanelLayout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addGroup(transitionSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(transitionSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(transitionSettingsPanelLayout.createSequentialGroup()
                         .addComponent(transitionLengthText, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(transitionLengthField, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(secondsTransLabel))
+                        .addComponent(transitionLengthField))
                     .addGroup(transitionSettingsPanelLayout.createSequentialGroup()
                         .addComponent(currentTransitionText)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(currentSetTransitionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(secondsTransLabel2)))
+                        .addComponent(currentSetTransitionLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(secondsTransLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addGroup(transitionSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(setTransitionTime, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
@@ -294,17 +293,15 @@ public class MightyPointGui extends javax.swing.JFrame {
                 .addGroup(transitionSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(currentTransitionText, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
                     .addComponent(currentSetTransitionLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(secondsTransLabel2)
                     .addComponent(ChangeAllButton))
                 .addContainerGap())
         );
 
-        ((AbstractDocument) intervalTextField.getDocument()).setDocumentFilter(new untitledslideshow.IntervalTransitionFilter());
         intervalTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        intervalTextField.setText("1");
-        intervalTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                intervalTextFieldActionPerformed(evt);
+        intervalTextField.setText("1.0");
+        intervalTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                intervalTextFieldKeyTyped(evt);
             }
         });
 
@@ -318,9 +315,7 @@ public class MightyPointGui extends javax.swing.JFrame {
 
         currentSetIntervalTimeText.setText("Current Set Interval Time: ");
 
-        currentIntervalTimeLabel.setText("1");
-
-        secondsLabel2.setText("second(s)");
+        currentIntervalTimeLabel.setText("1.0 seconds");
 
         secondsLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         secondsLabel.setText("second(s)");
@@ -332,25 +327,25 @@ public class MightyPointGui extends javax.swing.JFrame {
             .addGroup(extraSettingsPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(extraSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(intervalSelectionText)
-                    .addComponent(manualButton)
-                    .addGroup(extraSettingsPanelLayout.createSequentialGroup()
-                        .addGroup(extraSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(extraSettingsPanelLayout.createSequentialGroup()
-                                .addComponent(intervalButton, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(intervalTextField))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, extraSettingsPanelLayout.createSequentialGroup()
-                                .addComponent(currentSetIntervalTimeText)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(currentIntervalTimeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(secondsLabel2)))
-                        .addGap(7, 7, 7)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, extraSettingsPanelLayout.createSequentialGroup()
+                        .addComponent(currentSetIntervalTimeText)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(currentIntervalTimeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, extraSettingsPanelLayout.createSequentialGroup()
+                        .addComponent(intervalButton, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(intervalTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(secondsLabel)
-                        .addGap(18, 18, 18)
-                        .addComponent(intervalSetTimeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(intervalSetTimeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(extraSettingsPanelLayout.createSequentialGroup()
+                        .addGroup(extraSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(intervalSelectionText)
+                            .addComponent(manualButton))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(transitionSettingsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -360,17 +355,15 @@ public class MightyPointGui extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(intervalSelectionText)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(extraSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(extraSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(intervalButton)
-                        .addComponent(intervalTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(secondsLabel))
+                .addGroup(extraSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(intervalButton)
+                    .addComponent(intervalTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(secondsLabel)
                     .addComponent(intervalSetTimeButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(extraSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(currentSetIntervalTimeText)
-                    .addComponent(currentIntervalTimeLabel)
-                    .addComponent(secondsLabel2))
+                    .addComponent(currentIntervalTimeLabel))
                 .addGap(3, 3, 3)
                 .addComponent(manualButton)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -571,6 +564,7 @@ public class MightyPointGui extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     /**
      * Gives the user the option to have slides transition with a given interval
+     * Sets isManual to false and updates the exporter to this change
      * @param evt is the event of the user selecting the interval radio option
      */
     private void intervalButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_intervalButtonActionPerformed
@@ -580,7 +574,8 @@ public class MightyPointGui extends javax.swing.JFrame {
         System.out.print(intervalTime);
     }//GEN-LAST:event_intervalButtonActionPerformed
     /**
-     * Allows the user to exit the program
+     * Allows the user to exit the program, and provides a message box to verify
+     * that the user wishes to exit.
      * @param evt is the event of the user clicking the exit button
      */
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
@@ -610,6 +605,7 @@ public class MightyPointGui extends javax.swing.JFrame {
    /**
      * Allows the user to save a file that can be opened in the companion application
      * Will also create a folder in the project directory for saved slideshows if not present already
+     * Exporter will also be called to export this information
      * @param evt is the event of the user clicking on the Save button
      */
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
@@ -619,7 +615,15 @@ public class MightyPointGui extends javax.swing.JFrame {
                 + "as this application.");
         exporter.export();
     }//GEN-LAST:event_saveButtonActionPerformed
-
+    /**
+     * This is the method that controls what happens when the import sound button is pressed
+     * If it is pressed, a filechooser box will appear to allow the user to select a
+     * sound file. The file must have the extension of .wav, or .aiff. If it does not, it is declined
+     * and the user must choose another file. If it is, the authenticity/integrity of the file is tested
+     * to make sure it is a valid version of those files. If the file is corrupted/not valid, the user is warned
+     * and they must choose a new file. If it is valid, it is added to the exporter, as well as the soundtrack reel.
+     * @param evt is the import sound button being pressed.
+     */
     private void soundSelectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_soundSelectButtonActionPerformed
         System.out.println(evt.toString());
         boolean isValid = false;
@@ -675,49 +679,118 @@ public class MightyPointGui extends javax.swing.JFrame {
             }
         }  
     }//GEN-LAST:event_soundSelectButtonActionPerformed
-
+    /**
+     * This method determines what happens when the manual button is selected.
+     * If it is selected, isManual is set to true, and the exporter is updated to this.
+     * @param evt is the manual radio button being selected
+     */
     private void manualButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manualButtonActionPerformed
         System.out.println(evt.toString());
         isManual = true;
         exporter.setIsManual(isManual);
     }//GEN-LAST:event_manualButtonActionPerformed
-
+    /**
+     * This is the method that controls what happens when the setTransitionTime  button is pressed.
+     * Once pressed, it verifies if the value inserted is valid, if not it defaults to 1.0
+     * It also verifies if the value is 0, if it is, then it defaults to 1.0
+     * If it is valid, the appropriate labels are updated to let the user know what the current
+     * interval time is, and the exporter is updated with this value as well. A message dialog is
+     * also provided to let the user know that their change went through.
+     * @param evt is the button being pressed.
+     */
     private void setTransitionTimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setTransitionTimeActionPerformed
-        if(Integer.parseInt(transitionLengthField.getText()) == 0){
-            JOptionPane.showMessageDialog(this, "The transition time cannot be set to 0, defaulting to 1.");
-            transitionLengthField.setText("1");
-            exporter.setTransitionTime(transitionIntervalTime);
-            System.out.println(transitionIntervalTime);
-        }
-        else{
-            transitionIntervalTime = Float.parseFloat(transitionLengthField.getText());
-            exporter.setTransitionTime(transitionIntervalTime);
-            JOptionPane.showMessageDialog(this, "Transition Time set to: " + exporter.getTransitionTime() + ".");
-            currentSetTransitionLabel.setText(Float.toString(transitionIntervalTime));
-        }
-        if(transitionIntervalTime == 420.0 && intervalTime == 69.0){
-            JOptionPane.showMessageDialog(this, "Credentials validated.... accessing hidden resource.");
-            ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("resources/propaganda.PNG"));
-            JOptionPane.showMessageDialog(this, icon);
+        try{
+            if(Float.parseFloat(transitionLengthField.getText()) == 0){
+                JOptionPane.showMessageDialog(this, "The transition time cannot be set to 0, defaulting to 1.");
+                transitionLengthField.setText("1.0");
+                currentSetTransitionLabel.setText((Float.toString(1) + " seconds"));
+                exporter.setTransitionTime(transitionIntervalTime);
+                System.out.println(transitionIntervalTime);
+            }
+            else{
+                transitionIntervalTime = Float.parseFloat(transitionLengthField.getText());
+                exporter.setTransitionTime(transitionIntervalTime);
+                JOptionPane.showMessageDialog(this, "Transition Time set to: " + exporter.getTransitionTime() + ".");
+                currentSetTransitionLabel.setText(Float.toString(transitionIntervalTime) + " seconds");
+            }
+            if(transitionIntervalTime == 420.0 && intervalTime == 69.0){
+                JOptionPane.showMessageDialog(this, "Credentials validated.... accessing hidden resource.");
+                ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("resources/propaganda.PNG"));
+                JOptionPane.showMessageDialog(this, icon);
+            }
+        }catch(NumberFormatException e){
+            JOptionPane.showMessageDialog(this, "Input: " + transitionLengthField.getText() +" is not a valid number, please use an input that is a valid integer or decimal value. \nDefaulting to 1.0");
+            exporter.setTransitionTime(1);
+            currentSetTransitionLabel.setText(Float.toString(1) + " seconds");
+            transitionLengthField.setText("1.0");
         }
         
     }//GEN-LAST:event_setTransitionTimeActionPerformed
 
-    private void intervalTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_intervalTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_intervalTextFieldActionPerformed
-
     private void intervalSetTimeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_intervalSetTimeButtonActionPerformed
-        intervalTime = Float.parseFloat(intervalTextField.getText());
-        currentIntervalTimeLabel.setText(Float.toString(intervalTime));
-        exporter.setIntervalTime(intervalTime);
-        JOptionPane.showMessageDialog(this,"Slide interval time set to: " + intervalTime + ".");
-        if(transitionIntervalTime == 420.0 && intervalTime == 69.0){
-            JOptionPane.showMessageDialog(this, "Credentials validated.... accessing hidden resource.");
-            ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("resources/propaganda.PNG"));
-            JOptionPane.showMessageDialog(this, icon);
+        try{
+            intervalTime = Float.parseFloat(intervalTextField.getText());
+            currentIntervalTimeLabel.setText(Float.toString(intervalTime) + " seconds");
+            exporter.setIntervalTime(intervalTime);
+            JOptionPane.showMessageDialog(this,"Slide interval time set to: " + intervalTime + ".");
+            if(transitionIntervalTime == 420.0 && intervalTime == 69.0){
+                JOptionPane.showMessageDialog(this, "Credentials validated.... accessing hidden resource.");
+                ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("resources/propaganda.PNG"));
+                JOptionPane.showMessageDialog(this, icon);
+            }
+        }catch(NumberFormatException e){
+            JOptionPane.showMessageDialog(this, "Input: " + intervalTextField.getText() +" is not a valid number, please use an input that is a valid integer or decimal value. \nDefaulting to 1.0");
+            exporter.setIntervalTime(1);
+            currentIntervalTimeLabel.setText(Float.toString(1) + " seconds");
+            intervalTextField.setText("1.0");
         }
     }//GEN-LAST:event_intervalSetTimeButtonActionPerformed
+    /**
+     * This method verifies input placed into the transitionLengthField field.
+     * This prevents any non-numbers, as well as invalid numbers from being
+     * inserted into the text field. This also prevents any decimals from being placed
+     * in the fields by themselves.
+     * @param evt is the key typed into the box
+     */
+    private void transitionLengthFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_transitionLengthFieldKeyTyped
+        if(Character.isLetter(evt.getKeyChar())){
+            evt.consume();
+        }
+        else{
+            try{
+                Double.parseDouble(transitionLengthField.getText()+evt.getKeyChar());
+            }catch(NumberFormatException e){
+                evt.consume();
+            }
+        }
+    }//GEN-LAST:event_transitionLengthFieldKeyTyped
+
+    private void intervalTextFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_intervalTextFieldKeyTyped
+        if(Character.isLetter(evt.getKeyChar())){
+            evt.consume();
+        }
+        else{
+            try{
+                Double.parseDouble(intervalTextField.getText()+evt.getKeyChar());
+            }catch(NumberFormatException e){
+                evt.consume();
+            }
+        }
+    }//GEN-LAST:event_intervalTextFieldKeyTyped
+
+    private void ChangeAllButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChangeAllButtonActionPerformed
+        if(exporter.getImages().isEmpty()){
+            JOptionPane.showMessageDialog(this, "No images with transitions to change.");
+        }
+        else{
+            for(ImageItem item : exporter.getImages()){
+                item.setTransitionTime(exporter.getTransitionTime());
+            }
+            JOptionPane.showMessageDialog(this, "Transition lengths of the image transitions in the "
+                + "slideshow reel have been set to: " + Float.toString(exporter.getTransitionTime()));
+        }
+        
+    }//GEN-LAST:event_ChangeAllButtonActionPerformed
 
     /**
      * Main will begin by providing a popup, asking the user if they would like to
@@ -726,6 +799,9 @@ public class MightyPointGui extends javax.swing.JFrame {
      * will be found and put into ArrayList imagePaths. From there, this list can be sent to
      * various classes that will provide thumbnails, along with creating Item objects for these
      * images.
+     * 
+     * If previous slideshow is selected, the reels, along with the image palette will be updated, along
+     * with the exporter and the necessary fields within the GUI.
      * @param args the command line arguments
      */
     public static void main(String args[]) {
@@ -758,7 +834,6 @@ public class MightyPointGui extends javax.swing.JFrame {
                 i++;
             }
 
-            mainGui.imageDirectory = popUp.getImageDirectory();
             mainGui.imagesList.setModel(dlm);
             mainGui.slideShowReelPanel.setLayout(new CardLayout());
 
@@ -841,7 +916,7 @@ public class MightyPointGui extends javax.swing.JFrame {
     private javax.swing.JPanel iconPanel;
     protected javax.swing.JList<String> imagesList;
     private javax.swing.JPanel imagesPanel;
-    private javax.swing.JList<String> imagesReel;
+    protected javax.swing.JList<String> imagesReel;
     private javax.swing.JScrollPane imagesScrollPane;
     private javax.swing.JRadioButton intervalButton;
     private javax.swing.JLabel intervalSelectionText;
@@ -856,9 +931,7 @@ public class MightyPointGui extends javax.swing.JFrame {
     private javax.swing.JButton saveButton;
     private javax.swing.JPanel saveExportPanel;
     private javax.swing.JLabel secondsLabel;
-    private javax.swing.JLabel secondsLabel2;
     private javax.swing.JLabel secondsTransLabel;
-    private javax.swing.JLabel secondsTransLabel2;
     private javax.swing.JButton setTransitionTime;
     private javax.swing.JPanel slideShowReelContainer;
     private javax.swing.JPanel slideShowReelPanel;

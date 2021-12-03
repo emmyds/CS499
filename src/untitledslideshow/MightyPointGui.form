@@ -19,14 +19,14 @@
     </Property>
     <Property name="locationByPlatform" type="boolean" value="true"/>
     <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-      <Dimension value="[1260, 950]"/>
+      <Dimension value="[1260, 980]"/>
     </Property>
     <Property name="name" type="java.lang.String" value="mainFrame" noResource="true"/>
     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-      <Dimension value="[1260, 1080]"/>
+      <Dimension value="[1260, 1000]"/>
     </Property>
     <Property name="size" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-      <Dimension value="[1260, 1080]"/>
+      <Dimension value="[1260, 1000]"/>
     </Property>
   </Properties>
   <SyntheticProperties>
@@ -289,30 +289,30 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="intervalSelectionText" min="-2" max="-2" attributes="0"/>
-                      <Component id="manualButton" min="-2" max="-2" attributes="0"/>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Component id="intervalButton" min="-2" pref="91" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="intervalTextField" max="32767" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="currentSetIntervalTimeText" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="currentIntervalTimeLabel" min="-2" pref="20" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="secondsLabel2" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
+                      <Group type="102" alignment="1" attributes="0">
+                          <Component id="currentSetIntervalTimeText" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="currentIntervalTimeLabel" max="32767" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="1" attributes="0">
+                          <Component id="intervalButton" min="-2" pref="91" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="intervalTextField" min="-2" pref="164" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="secondsLabel" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="intervalSetTimeButton" min="-2" pref="99" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="intervalSelectionText" min="-2" max="-2" attributes="0"/>
+                              <Component id="manualButton" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
                   <Component id="transitionSettingsPanel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -324,19 +324,16 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="intervalSelectionText" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="intervalButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="intervalTextField" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
-                          <Component id="secondsLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Component id="intervalSetTimeButton" alignment="0" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="intervalButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="intervalTextField" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                      <Component id="secondsLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="intervalSetTimeButton" alignment="3" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="currentSetIntervalTimeText" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="currentIntervalTimeLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="secondsLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
                   <Component id="manualButton" min="-2" max="-2" attributes="0"/>
@@ -402,22 +399,20 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="transitionLengthText" min="-2" pref="134" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="transitionLengthField" min="-2" pref="115" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="secondsTransLabel" min="-2" max="-2" attributes="0"/>
+                              <Component id="transitionLengthField" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="currentTransitionText" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="currentSetTransitionLabel" min="-2" pref="26" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="secondsTransLabel2" min="-2" max="-2" attributes="0"/>
+                              <Component id="currentSetTransitionLabel" max="32767" attributes="0"/>
                           </Group>
                       </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="secondsTransLabel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace pref="32" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="setTransitionTime" pref="90" max="32767" attributes="0"/>
@@ -441,7 +436,6 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="currentTransitionText" alignment="3" pref="33" max="32767" attributes="0"/>
                           <Component id="currentSetTransitionLabel" alignment="3" max="32767" attributes="0"/>
-                          <Component id="secondsTransLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="ChangeAllButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -453,11 +447,11 @@
             <Component class="javax.swing.JTextField" name="transitionLengthField">
               <Properties>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="1"/>
+                <Property name="text" type="java.lang.String" value="1.0"/>
               </Properties>
-              <AuxValues>
-                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="((AbstractDocument) transitionLengthField.getDocument()).setDocumentFilter(new untitledslideshow.IntervalTransitionFilter());"/>
-              </AuxValues>
+              <Events>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="transitionLengthFieldKeyTyped"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="setTransitionTime">
               <Properties>
@@ -488,15 +482,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="0"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="1.0"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="secondsTransLabel2">
-              <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Tahoma" size="14" style="0"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="second(s)"/>
+                <Property name="text" type="java.lang.String" value="1.0 seconds"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="secondsTransLabel">
@@ -511,20 +497,20 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Change All"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ChangeAllButtonActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
         <Component class="javax.swing.JTextField" name="intervalTextField">
           <Properties>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="1"/>
+            <Property name="text" type="java.lang.String" value="1.0"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="intervalTextFieldActionPerformed"/>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="intervalTextFieldKeyTyped"/>
           </Events>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="((AbstractDocument) intervalTextField.getDocument()).setDocumentFilter(new untitledslideshow.IntervalTransitionFilter());"/>
-          </AuxValues>
         </Component>
         <Component class="javax.swing.JButton" name="intervalSetTimeButton">
           <Properties>
@@ -544,12 +530,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="currentIntervalTimeLabel">
           <Properties>
-            <Property name="text" type="java.lang.String" value="1"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="secondsLabel2">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="second(s)"/>
+            <Property name="text" type="java.lang.String" value="1.0 seconds"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="secondsLabel">
