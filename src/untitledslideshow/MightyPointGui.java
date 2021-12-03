@@ -611,8 +611,8 @@ public class MightyPointGui extends javax.swing.JFrame {
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         System.out.println(evt.toString());
         exporter.setFilename(filenameTextBox.getText());
-        JOptionPane.showMessageDialog(this, "Save file " + exporter.getFilename() + " created in the slideshows folder. You can find this folder in the same directory "
-                + "as this application.");
+        JOptionPane.showMessageDialog(this, "Save file " + exporter.getFilename() + " created in the slideshows folder.\n"
+                + "You can find this folder here: " + exporter.getSaveDirectory() + "\\slideshows");
         exporter.export();
     }//GEN-LAST:event_saveButtonActionPerformed
     /**
