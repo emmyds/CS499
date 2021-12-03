@@ -783,11 +783,24 @@ public class MightyPointGui extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No images with transitions to change.");
         }
         else{
-            for(ImageItem item : exporter.getImages()){
-                item.setTransitionTime(exporter.getTransitionTime());
-            }
-            JOptionPane.showMessageDialog(this, "Transition lengths of the image transitions in the "
-                + "slideshow reel have been set to: " + Float.toString(exporter.getTransitionTime()));
+            int result = JOptionPane.showConfirmDialog(this, "All image transition lengths will be set to: " + Float.toString(exporter.getTransitionTime())
+               + " seconds.\n Would you like to continue this change?", null, JOptionPane.YES_NO_CANCEL_OPTION);
+            switch(result){
+            case JOptionPane.YES_OPTION:
+                for(ImageItem item : exporter.getImages()){
+                    item.setTransitionTime(exporter.getTransitionTime());
+                }
+                JOptionPane.showMessageDialog(this, "Transition lengths of the image transitions in the "
+                    + "slideshow reel have been set to: " + Float.toString(exporter.getTransitionTime()) + " seconds.");
+                break;
+            case JOptionPane.NO_OPTION:
+                JOptionPane.showMessageDialog(this, "Change all cancelled.");
+                break;
+            case JOptionPane.CLOSED_OPTION:
+                JOptionPane.showMessageDialog(this, "Change all cancelled.");
+                break;
+       }
+            
         }
         
     }//GEN-LAST:event_ChangeAllButtonActionPerformed
