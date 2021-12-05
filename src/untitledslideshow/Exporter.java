@@ -88,7 +88,7 @@ public class Exporter{
     public void export(){
         try
         {
-            boolean isSuccessful = new File("slideshows").mkdir();                          //Attempts to create a folder named slideshows in the root project folder
+            boolean isSuccessful = new File(saveDirectory + "\\slideshows").mkdir();                          //Attempts to create a folder named slideshows in the root project folder
             if(isSuccessful)
             {
                 
@@ -103,7 +103,7 @@ public class Exporter{
         {
         }
         
-        File saveFile = new File("slideshows/" + this.getFilename());
+        File saveFile = new File(saveDirectory + "\\slideshows\\" + this.getFilename());
         /*boolean isSuccessful;
         try
         {
