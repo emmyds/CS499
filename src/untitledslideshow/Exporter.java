@@ -123,11 +123,9 @@ public class Exporter{
          try (FileWriter writer = new FileWriter(saveFile)) {
             writer.write('{');
           
-            
-            
-      
+
             writer.write(String.format("\n\"changeManually\": \"%b\",", this.isManual));
-            writer.write(String.format("\n\"imageDuration:\": \"%f\"," , this.intervalTime));
+            writer.write(String.format("\n\"imageDuration\": \"%f\"," , this.intervalTime));
             writer.write(String.format("\n\"imageDirectory\": \"%s\",", this.saveDirectory));
             
            
@@ -161,16 +159,13 @@ public class Exporter{
             writer.write("\n\"_comments\":[");
             writer.write(String.format("\n\"%s\",",getComments()));
             writer.write("\n]");
-            writer.write("\n}");
-            
+            writer.write("\n}");    
         }
         catch(IOException e)
         {
               System.out.println("Exception during export: " + e);
         }
     }
-
-
 }
 
 
