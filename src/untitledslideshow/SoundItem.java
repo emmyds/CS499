@@ -9,7 +9,9 @@ import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
 
 /**
- *
+ * SoundItem allows information about a sound file to be stored into a SoundItem
+ * which holds its path, length, and name, and allows for the DefaultListModel
+ * to be updated as SoundItems are created.
  * @author Roberto Murcia
  */
 public class SoundItem extends JLabel{
@@ -24,6 +26,10 @@ public class SoundItem extends JLabel{
         this.setText(soundName);
         
     }
+    /**
+     * Returns the file path for the sound item
+     * @return sound item file path
+     */
     public String getPath(){
         return this.soundPath;
     }

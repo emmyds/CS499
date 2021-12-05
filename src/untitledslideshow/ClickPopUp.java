@@ -23,11 +23,6 @@ import javax.swing.JOptionPane;
  * @author Roberto Murcia
  **/
 public class ClickPopUp extends JPopupMenu{
-  
-    /*
-    Actual Variables
-    */
-
     private static final DefaultListModel imageTempModel = new DefaultListModel();
     private static DefaultListModel soundTempModel = new DefaultListModel();
     private float transitionTime = 1;

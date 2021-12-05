@@ -158,6 +158,15 @@ public class FirstPopUp {
         }
         return null;
     }
+    /**
+     * This method allows the user to import a previous slideshow.
+     * The user will be asked to provide said save, and then the file is parsed.
+     * Information such as the order of the images in the image reel, order of audio files
+     * in the sound reel, the interval time, each of the image's transitions and their respective
+     * transition times, and the directory to be used are acquired and presented to the user.
+     * @param evt is the button being clicked.
+     * @return the information in OldSaveInfo
+     */
     private OldSlideInfo oldSlideButtonActionPerformed(java.awt.event.ActionEvent evt){
         setOld();
         PathMatcher matcher = FileSystems.getDefault().getPathMatcher("regex:^.*\\.JSON");
@@ -185,7 +194,7 @@ public class FirstPopUp {
                             Object obj = jParser.parse(fileReader);             //Parse file
                             JSONArray oldSaveList = new JSONArray();
                             oldSaveList.add(obj);
-                            oldSaveList.forEach( emp -> parseOldSave( (JSONObject) emp));
+                            oldSaveList.forEach( emp -> parsePreviousSave( (JSONObject) emp));
                         }catch(FileNotFoundException e){} catch(IOException e){} catch(ParseException e){}
                         if(oldSlideInfo.getOldImagesList().isEmpty()){
                             JOptionPane.showMessageDialog(filechooser, "No Images Found in save file, or save file is corrupt, please try a new file.");
@@ -226,40 +235,74 @@ public class FirstPopUp {
         
 
     }
+    /**
+     * Sets the imageThumbnails list to list
+     * @param list 
+     */
     private void setArrayList(ArrayList<DisplayImage> list){
         imageThumbnails = list;
     }
+    /**
+     * Acquires image thumbnails
+     * @return imageThumbnails
+     */
     public ArrayList<DisplayImage> getArrayList(){
         return imageThumbnails;
     }
+    /**
+     * Sets isDone to true
+     */
     private void setDone(){
         isDone = true;
     }
+    /**
+     * Returns whether or not isDone is true
+     * @return true or false
+     */
     public boolean getDone(){
         return isDone;
     }
+    /**
+     * Sets the image directory to directory
+     * @param directory is the directory provided
+     */
     private void setImageDirectory(File directory){
         imageDirectory = directory;
     }
+    /**
+     * Acquires the image directory stored
+     * @return that image directory
+     */
     public String getImageDirectory(){
         return imageDirectory.toString();
     }
-    
+    /**
+     *  Sets isNew to true; 
+     */
     private void setNew(){
         isNew = true;
     }
-    
+    /**
+     * Sets isNew to false
+     */
     private void setOld(){
         isNew = false;
     }
-    
+    /**
+     * Returns whether isNew is true or false
+     * @return true or false
+     */
     public boolean getNew(){
         return isNew;
     }
-    
-    private void parseOldSave(JSONObject oldSave){
+    /**
+     * parsePreviousSave will parse the JSON file that is provided by the user to acquire
+     * information from the previous save file.
+     * @param previousSave is the provided file from the user to be parsed.
+     */
+    private void parsePreviousSave(JSONObject previousSave){
       
-        String isManual = (String) oldSave.get("changeManually");               //Get whether old slide show was manual or interval
+        String isManual = (String) previousSave.get("changeManually");               //Get whether old slide show was manual or interval
         if(isManual.equals("true")){
             oldSlideInfo.setManual();
         }
@@ -268,13 +311,13 @@ public class FirstPopUp {
         }
         System.out.println(oldSlideInfo.getIsManual());
         
-        oldSlideInfo.setImageDuration(Float.parseFloat((String) oldSave.get("imageDuration:")));    //Get image duration of old slideshow
+        oldSlideInfo.setImageDuration(Float.parseFloat((String) previousSave.get("imageDuration")));    //Get image duration of old slideshow
         System.out.println(oldSlideInfo.getImageDuration());
-        oldSlideInfo.setDirectory((String) oldSave.get("imageDirectory"));
+        oldSlideInfo.setDirectory((String) previousSave.get("imageDirectory"));
         //====================Get Images========================//
         
         ArrayList<String> imagesList = new ArrayList<>();                       //Create a string arraylist and acquire the paths of each image used.
-        String[] imagePaths = oldSave.get("images").toString().split(",");      //Remove commas and then remove quotations from string
+        String[] imagePaths = previousSave.get("images").toString().split(",");      //Remove commas and then remove quotations from string
         for(String path : imagePaths){
             path = path.replace("\"", "");                                      //Remove quotations and brackets from string
             path = path.replace("[", "");
@@ -286,8 +329,9 @@ public class FirstPopUp {
         
         //====================Get Transitions========================//
         
+
         ArrayList<Integer> transitionsList = new ArrayList<>();                  //Get image transitions from old slideshow
-        String[] transitions = oldSave.get("transitions").toString().split(",");//Remove commas from strings
+        String[] transitions = previousSave.get("transitions").toString().split(",");//Remove commas from strings
         for(String transition : transitions){
             transition = transition.replace("\"", "");                          //Remove quotations and brackets from string
             transition = transition.replace("[", "");
@@ -300,7 +344,7 @@ public class FirstPopUp {
         //====================Get Transition Intervals========================//
         
         ArrayList<Float> transitionIntervals = new ArrayList<>();
-        String[] intervals = oldSave.get("transitionLengths").toString().split(",");
+        String[] intervals = previousSave.get("transitionLengths").toString().split(",");
         for(String interval : intervals){
             interval = interval.replace("\"", "");                              //Remove quotations and brackets from string
             interval = interval.replace("[", "");
@@ -317,7 +361,7 @@ public class FirstPopUp {
         System.out.println(oldSlideInfo.getOldImageTransLengths());
         
         ArrayList<String> soundsList = new ArrayList<>();
-        String[] soundPaths = oldSave.get("sounds").toString().split(",");
+        String[] soundPaths = previousSave.get("sounds").toString().split(",");
         for(String path : soundPaths){
             path = path.replace("\"", "");                                      //Remove quotations and brackets from string
             path = path.replace("[", "");
@@ -328,7 +372,7 @@ public class FirstPopUp {
         System.out.println(oldSlideInfo.getOldSoundsList());
         
             ArrayList<String> commentList = new ArrayList<>();   
-        String[] comments = oldSave.get("_comments").toString().split("\n");
+        String[] comments = previousSave.get("_comments").toString().split("\n");
         for(String comment: comments)
         {
             comment = comment.replace("\"", "");                                      //Remove quotations and brackets from string
@@ -338,7 +382,11 @@ public class FirstPopUp {
         }
         System.out.println(OldSlideInfo.getComments());
     }
-    
+    /**
+     * Acquires the images within the directory supplied by the previous slideshow file.
+     * @param directory is the directory from the file
+     * @return the images from that directory
+     */
     public ArrayList<DisplayImage> getDirectoryImages(String directory){
         ArrayList<String> imagePaths = new ArrayList<>();
         System.out.println(directory);

@@ -601,7 +601,6 @@ public class MightyPointGui extends javax.swing.JFrame {
        }
     }//GEN-LAST:event_exitButtonActionPerformed
 
-   
    /**
      * Allows the user to save a file that can be opened in the companion application
      * Will also create a folder in the project directory for saved slideshows if not present already
@@ -704,6 +703,7 @@ public class MightyPointGui extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "The transition time cannot be set to 0, defaulting to 1.");
                 transitionLengthField.setText("1.0");
                 currentSetTransitionLabel.setText((Float.toString(1) + " seconds"));
+                transitionIntervalTime = 1;
                 exporter.setTransitionTime(transitionIntervalTime);
                 System.out.println(transitionIntervalTime);
             }
@@ -729,10 +729,21 @@ public class MightyPointGui extends javax.swing.JFrame {
 
     private void intervalSetTimeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_intervalSetTimeButtonActionPerformed
         try{
-            intervalTime = Float.parseFloat(intervalTextField.getText());
-            currentIntervalTimeLabel.setText(Float.toString(intervalTime) + " seconds");
-            exporter.setIntervalTime(intervalTime);
-            JOptionPane.showMessageDialog(this,"Slide interval time set to: " + intervalTime + ".");
+            if(Float.parseFloat(intervalTextField.getText()) == 0){
+                JOptionPane.showMessageDialog(this, "The interval time cannot be set to 0, defaulting to 1.");
+                intervalTextField.setText("1.0");
+                currentIntervalTimeLabel.setText((Float.toString(1) + " seconds"));
+                intervalTime = 1;
+                exporter.setTransitionTime(intervalTime);
+                System.out.println(transitionIntervalTime);
+            }
+            else{
+                intervalTime = Float.parseFloat(intervalTextField.getText());
+                currentIntervalTimeLabel.setText(Float.toString(intervalTime) + " seconds");
+                exporter.setIntervalTime(intervalTime);
+                JOptionPane.showMessageDialog(this,"Slide interval time set to: " + intervalTime + ".");
+            }
+            
             if(transitionIntervalTime == 420.0 && intervalTime == 69.0){
                 JOptionPane.showMessageDialog(this, "Credentials validated.... accessing hidden resource.");
                 ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("resources/propaganda.PNG"));
@@ -764,7 +775,11 @@ public class MightyPointGui extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_transitionLengthFieldKeyTyped
-
+    /**
+     * This method verifies input placed into the intervalTextfield.
+     * This prevents any non-numbers as well as invalid numbers from being inserted.
+     * @param evt is a key typed into the box
+     */
     private void intervalTextFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_intervalTextFieldKeyTyped
         if(Character.isLetter(evt.getKeyChar())){
             evt.consume();
@@ -777,7 +792,12 @@ public class MightyPointGui extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_intervalTextFieldKeyTyped
-
+    /**
+     * The change all button sets all the image transition length values of the current
+     * images in the image reel to the global transition time. The user is given
+     * a message before this action is performed and their confirmation is asked for.
+     * @param evt is the Change All button being pressed
+     */
     private void ChangeAllButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChangeAllButtonActionPerformed
         if(exporter.getImages().isEmpty()){
             JOptionPane.showMessageDialog(this, "No images with transitions to change.");
@@ -799,9 +819,9 @@ public class MightyPointGui extends javax.swing.JFrame {
             case JOptionPane.CLOSED_OPTION:
                 JOptionPane.showMessageDialog(this, "Change all cancelled.");
                 break;
-       }
+            }
             
-        }
+       }
         
     }//GEN-LAST:event_ChangeAllButtonActionPerformed
 

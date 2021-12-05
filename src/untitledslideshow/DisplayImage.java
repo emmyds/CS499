@@ -30,9 +30,7 @@ public class DisplayImage{
     /**
      * Constructor for DisplayImage
      */
-    public DisplayImage(){
-        
-    }
+    public DisplayImage(){}
     /**
      * getDisplayImage acquires the image at the given path, and creates an icon
      * for it that can then be accessed by the DisplayImage object
