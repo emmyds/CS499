@@ -286,13 +286,13 @@ public class FirstPopUp {
         
         //====================Get Transitions========================//
         
-        ArrayList<String> transitionsList = new ArrayList<>();                  //Get image transitions from old slideshow
+        ArrayList<Integer> transitionsList = new ArrayList<>();                  //Get image transitions from old slideshow
         String[] transitions = oldSave.get("transitions").toString().split(",");//Remove commas from strings
         for(String transition : transitions){
             transition = transition.replace("\"", "");                          //Remove quotations and brackets from string
             transition = transition.replace("[", "");
             transition = transition.replace("]", "");
-            transitionsList.add(transition);
+            transitionsList.add(Integer.parseInt(transition));
         }
         oldSlideInfo.setOldImageTransitions(transitionsList);                   //Set list of transitions
         System.out.println(oldSlideInfo.getOldImageTransitions());

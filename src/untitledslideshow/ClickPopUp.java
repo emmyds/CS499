@@ -56,7 +56,7 @@ public class ClickPopUp extends JPopupMenu{
                 ImageIcon temp = (ImageIcon) model.getElementAt(index);
                 int endIndex = imageTempModel.size();
                 imageTempModel.add(endIndex, temp);
-                exporter.getImages().add(new ImageItem(temp.getDescription(), "no transition")); //push a new image item to the end of the list
+                exporter.getImages().add(new ImageItem(temp.getDescription(),0)); //push a new image item to the end of the list
                 for (ImageItem i : exporter.getImages()){
                     System.out.println("Image: " + i.getPath() + " trans: " + i.getTransition());
                 }
@@ -67,7 +67,7 @@ public class ClickPopUp extends JPopupMenu{
             this.add("Add to Start of Reel").addActionListener(e->{
                 ImageIcon temp = (ImageIcon) model.getElementAt(index);
                 imageTempModel.add(0, temp);
-                exporter.getImages().add(0, new ImageItem(temp.getDescription(), "no transition"));
+                exporter.getImages().add(0, new ImageItem(temp.getDescription(), 0));
                 for (ImageItem i : exporter.getImages()){
                     System.out.println("Image: " + i.getPath() + " trans: " + i.getTransition());
                 }
@@ -130,7 +130,7 @@ public class ClickPopUp extends JPopupMenu{
            
            this.add("Wipe Left").addActionListener(e -> {
               String trans = "Wipe Left";
-              exporter.getImages().get(index).setTransition(trans);
+              exporter.getImages().get(index).setTransition(1);
               transitionTime = exporter.getTransitionTime();
               exporter.getImages().get(index).setTransitionTime(transitionTime);
               System.out.println(index);
@@ -141,7 +141,7 @@ public class ClickPopUp extends JPopupMenu{
            
             this.add("Wipe Right").addActionListener(e -> {
                 String trans = "Wipe Right";
-                exporter.getImages().get(index).setTransition(trans);
+                exporter.getImages().get(index).setTransition(2);
                 transitionTime = exporter.getTransitionTime();
                 exporter.getImages().get(index).setTransitionTime(transitionTime);
                 System.out.println(index);
@@ -152,7 +152,7 @@ public class ClickPopUp extends JPopupMenu{
             
             this.add("Wipe Up").addActionListener(e -> {
                 String trans = "Wipe Up";
-                exporter.getImages().get(index).setTransition(trans);
+                exporter.getImages().get(index).setTransition(3);
                 transitionTime = exporter.getTransitionTime();
                 exporter.getImages().get(index).setTransitionTime(transitionTime);
                 System.out.println(index);
@@ -163,7 +163,7 @@ public class ClickPopUp extends JPopupMenu{
             
             this.add("Wipe Down").addActionListener(e -> {
                 String trans = "Wipe Down";
-                exporter.getImages().get(index).setTransition(trans);
+                exporter.getImages().get(index).setTransition(4);
                 transitionTime = exporter.getTransitionTime();
                 exporter.getImages().get(index).setTransitionTime(transitionTime);
                 System.out.println(index);
@@ -174,7 +174,7 @@ public class ClickPopUp extends JPopupMenu{
             
             this.add("Crossfade").addActionListener(e -> {
                 String trans = "Crossfade";
-                exporter.getImages().get(index).setTransition(trans);
+                exporter.getImages().get(index).setTransition(5);
                 transitionTime = exporter.getTransitionTime();
                 exporter.getImages().get(index).setTransitionTime(transitionTime);
                 System.out.println(index);

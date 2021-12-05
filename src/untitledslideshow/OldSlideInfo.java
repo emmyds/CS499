@@ -19,7 +19,7 @@ public class OldSlideInfo {
     private static String oldImageDirectory;
     private static ArrayList<String> oldImagesList = new ArrayList<>();
     private static ArrayList<String> oldSoundsList = new ArrayList<>();
-    private static ArrayList<String> oldImageTransitions = new ArrayList<>();
+    private static ArrayList<Integer> oldImageTransitions = new ArrayList<>();
     private static ArrayList<Float> oldImageTransLengths = new ArrayList<>();
     private static ArrayList<DisplayImage> oldThumbnails = new ArrayList<>();   
     private static boolean isManual;
@@ -59,11 +59,11 @@ public class OldSlideInfo {
         oldSoundsList = oldSounds;
     }
 
-    public static ArrayList<String> getOldImageTransitions() {
+    public static ArrayList<Integer> getOldImageTransitions() {
         return oldImageTransitions;
     }
 
-    public void setOldImageTransitions(ArrayList<String> oldTransitions) {
+    public void setOldImageTransitions(ArrayList<Integer> oldTransitions) {
         oldImageTransitions = oldTransitions;
     }
     

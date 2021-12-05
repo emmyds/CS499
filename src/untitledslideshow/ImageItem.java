@@ -10,10 +10,10 @@ package untitledslideshow;
 public class ImageItem {
     
     private String path;
-    private String transition = "no transition";
+    private int transition = 0;
     private float transitionTime;
     
-    public ImageItem(String path, String transition){
+    public ImageItem(String path, int transition){
         this.transitionTime = 1;
         this.path = path;
         this.transition = transition;
@@ -27,11 +27,11 @@ public class ImageItem {
         this.path = path;
     }
 
-    public String getTransition() {
+    public int getTransition() {
         return transition;
     }
 
-    public void setTransition(String transition) {
+    public void setTransition(int transition) {
         this.transition = transition;
     }
     
