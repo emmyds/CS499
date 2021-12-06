@@ -1,14 +1,17 @@
-package untitledslideshow;
-
-
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * This class has been created and developed by Team F (Slideshow Editor).
  */
 
+package untitledslideshow;
 /**
- *
+ * The MightyPointGui creates the graphical user interface(GUI) that will be used.
+ * It contains key components such as the image pallete, image reel, and soundtrack
+ * reel, where most of the interactions between the user and the program will
+ * take place. The purpose of this GUI is to allow for an easy and convenient
+ * interface between the primary functions of our program, and the user.
+ * Most of the GUI elements have been generate by the Netbeans IDE 12.4,
+ * and so cannot be modified. The code that contain Javadocs have been created by
+ * our team.
  * @author Roberto Murcia
  */
 import java.awt.CardLayout;
@@ -36,8 +39,9 @@ public class MightyPointGui extends javax.swing.JFrame {
      */
     private boolean isManual;
     public static final Exporter exporter = new Exporter();
-    public static float intervalTime = 1;
-    public static float transitionIntervalTime = 1;
+    private static float intervalTime = 1;
+    private static float transitionIntervalTime = 1;
+    private boolean hasSaved = false;
     
     public MightyPointGui() {
         initComponents();
@@ -575,7 +579,8 @@ public class MightyPointGui extends javax.swing.JFrame {
     }//GEN-LAST:event_intervalButtonActionPerformed
     /**
      * Allows the user to exit the program, and provides a message box to verify
-     * that the user wishes to exit.
+     * that the user wishes to exit. If the user has already saved, the program
+     * exits anyway.
      * @param evt is the event of the user clicking the exit button
      */
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
@@ -587,6 +592,9 @@ public class MightyPointGui extends javax.swing.JFrame {
         onExitFrame.setSize(200,200);
         onExitFrame.setLocationRelativeTo(this);
         onExitFrame.setAlwaysOnTop(true);
+        if(hasSaved){
+            System.exit(1);
+        }
         int result = JOptionPane.showConfirmDialog(onExitFrame, "Please confirm that you have saved your slideshow first! "
                + "Would you like to exit anyway?", null, JOptionPane.YES_NO_OPTION);
         switch(result){
@@ -613,6 +621,7 @@ public class MightyPointGui extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Save file " + exporter.getFilename() + " created in the slideshows folder.\n"
                 + "You can find this folder here: " + exporter.getSaveDirectory() + "\\slideshows");
         exporter.export();
+        hasSaved = true;
     }//GEN-LAST:event_saveButtonActionPerformed
     /**
      * This is the method that controls what happens when the import sound button is pressed
@@ -726,7 +735,13 @@ public class MightyPointGui extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_setTransitionTimeActionPerformed
-
+    /**
+     * This method saves whatever value was placed in the intervalTextField by the user.
+     * This value is saved into the exporter, as well as being displayed in the currentIntervalTimeLabel
+     * so that the user is aware of the current interval time. If an invalid value is placed,
+     * the program will default to placing 1.0 as the value.
+     * @param evt 
+     */
     private void intervalSetTimeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_intervalSetTimeButtonActionPerformed
         try{
             if(Float.parseFloat(intervalTextField.getText()) == 0){
@@ -929,6 +944,7 @@ public class MightyPointGui extends javax.swing.JFrame {
                 mainGui.imagesReel.setModel(updateGUI.getDLM());
                 mainGui.soundsReel.setModel(updateItem.getDLM());
                 mainGui.currentIntervalTimeLabel.setText(Float.toString(exporter.getIntervalTime()));
+                mainGui.intervalTextField.setText(Float.toString(exporter.getIntervalTime()));
                 mainGui.setVisible(true);   
                 
             });

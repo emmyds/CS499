@@ -1,7 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * This class has been created and developed by Team F (Slideshow Editor).
  */
 
 package untitledslideshow;
@@ -10,7 +8,10 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 /**
- *
+ * ClickListener allows for certain GUI components to register that they have been
+ * clicked on, such as the image pallete, image reel, and soundtrack reel. This
+ * allows those components to detect whether the mouse has been pressed on it, or
+ * the mouse has been released on it.
  * @author Roberto Murcia
  */
 public class ClickListener extends MouseAdapter{
@@ -20,9 +21,7 @@ public class ClickListener extends MouseAdapter{
      */
     @Override
     public void mousePressed(MouseEvent e){
-        //if(e.isPopupTrigger()){
-            showPopUp(e);
-       //}
+        showPopUp(e);
     }
 
     /**
@@ -31,9 +30,7 @@ public class ClickListener extends MouseAdapter{
      */
     @Override
     public void mouseReleased(MouseEvent e){
-        //if(e.isPopupTrigger()){
-            showPopUp(e);
-        //}
+        showPopUp(e);
     }
     /**
      * Create a popup over the component that was clicked over.

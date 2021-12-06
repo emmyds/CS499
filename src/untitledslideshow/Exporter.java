@@ -1,3 +1,6 @@
+/*
+ * This class has been created and developed by Team F (Slideshow Editor).
+ */
 package untitledslideshow;
 
 import java.io.File;
@@ -7,8 +10,18 @@ import java.util.ArrayList;
 import java.text.SimpleDateFormat;  
 import java.util.Date;  
 /**
- *
+ * The exporter holds the information that the user inputs and saves from the
+ * mightyPoint editor. As images are added to the image reel, or sounds are
+ * added to the soundtrack reel, the exporter is updated of their current
+ * position, as well as the various attributes of said images or sounds.
+ * 
+ * Once the user saves their information, the exporter will begin writing a custom
+ * .mp.json file that will then contain all the information about the currently made
+ * slideshow. This file will then be saved in a slideshow folder within the
+ * directory of images used by the user to create the slideshow. This file can
+ * then be imported back into the editor to be customized and edited once again.
  * @author Annaleise
+ * @author Roberto Murcia
  */
 public class Exporter{
     private boolean isManual;
@@ -19,48 +32,82 @@ public class Exporter{
     private ArrayList<SoundItem> sounds = new ArrayList<>();
     private float transitionTime = 1;
 
-    public Exporter(){
-    }
-
+    /**
+     * Returns whether or not the slideshow is set to manual
+     * @return 
+     */
     public boolean isIsManual() {
         return isManual;
     }
-
+    /**
+     * Sets IsManual to whatever the slideshow is currently set to
+     * @param isManual 
+     */
     public void setIsManual(boolean isManual) {
         this.isManual = isManual;
     }
-
+    /**
+     * Returns the image interval time the slideshow is currently set to
+     * @return 
+     */
     public float getIntervalTime() {
         return intervalTime;
     }
-
+    /**
+     * Sets the image interval time to intervalTime
+     * @param intervalTime 
+     */
     public void setIntervalTime(float intervalTime) {
         this.intervalTime = intervalTime;
     }
-
+    /**
+     * Returns the save directory that is stored in the exporter
+     * @return 
+     */
     public String getSaveDirectory() {
         return saveDirectory;
     }
-
+    /**
+     * Sets the save directory that will be used in the exporter
+     * @param saveDirectory 
+     */
     public void setSaveDirectory(String saveDirectory) {
         this.saveDirectory = saveDirectory;
     }
-
+    /**
+     * Returns the array list of ImageItems stored within the exporter
+     * @return 
+     */
     public ArrayList<ImageItem> getImages() {
         return images;
     }
-    
+    /**
+     * Returns the array list of SoundItems stored within the exporter
+     * @return 
+     */
     public ArrayList<SoundItem> getSounds(){
         return sounds;
     }
-
+    /**
+     * Sets the array list of ImageItems that will be stored in the exporter
+     * @param images 
+     */
     public void setImages(ArrayList<ImageItem> images) {
         this.images = images;
     }
-    
+    /**
+     * Sets the array list of SoundItems that will be stored in the exporter
+     * @param sounds 
+     */
     public void setSounds(ArrayList<SoundItem> sounds) {
         this.sounds = sounds;
     }
+    /**
+     * Returns the comment that is used to denote when the slideshow was created
+     * and also lets the user know that manipulating this file is strongly
+     * discouraged.
+     * @return 
+     */
     public String getComments()
     {
         SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");  
@@ -69,22 +116,44 @@ public class Exporter{
         return comments;
        
     }
+    /**
+     * Returns the filename saved within the exporter that will be used to create
+     * the slideshow save file
+     * @return 
+     */
     public String getFilename() {
         return filename + ".mp.JSON";
     }
-
+    /**
+     * Sets the filename to be used to create the slideshow save file in the 
+     * exporter
+     * @param filename 
+     */
     public void setFilename(String filename) {
         this.filename = filename;
     }
-    
+    /**
+     * Returns the current transition time set in the exporter
+     * @return 
+     */
     public float getTransitionTime() {
         return this.transitionTime;
     }
-    
+    /**
+     * Sets the transition time to be stored in the exporter
+     * @param time 
+     */
     public void setTransitionTime(float time) {
         this.transitionTime = time;
     }
-    
+    /**
+     * Export retrieves all the information stored in the exporter and formats
+     * it into a .json format. This format is used for ease of retrieving specific information
+     * The images used, and the order they are in are stored, along with the sounds used, and their order.
+     * Whether the slide transitions manually or not is also saved. The interval time for interval transition
+     * slides will also be saved. The image directory is also saved into this file. Finally, a comment is placed
+     * in the file to remind the user that it is strongly discouraged to modify this save file in anyway.
+     */
     public void export(){
         try
         {
@@ -104,22 +173,6 @@ public class Exporter{
         }
         
         File saveFile = new File(saveDirectory + "\\slideshows\\" + this.getFilename());
-        /*boolean isSuccessful;
-        try
-        {
-            isSuccessful = saveFile.createNewFile();
-            if(isSuccessful)
-            {
-                System.out.println("\nFile created at " + saveFile.getCanonicalPath());
-            }
-            else
-            {
-                System.out.println("\nFile already exists at location: " + saveFile.getCanonicalPath());
-            }
-        }
-        catch(IOException e)
-        {
-        }*/
          try (FileWriter writer = new FileWriter(saveFile)) {
             writer.write('{');
           

@@ -1,3 +1,6 @@
+/*
+ * This class has been created and developed by Team F (Slideshow Editor).
+ */
 package untitledslideshow;
 
 import javax.swing.text.AttributeSet;

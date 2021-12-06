@@ -1,9 +1,6 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * This class has been created and developed by Team F (Slideshow Editor).
  */
-
 package untitledslideshow;
 import javax.swing.DefaultListModel;
 import javax.swing.JLabel;

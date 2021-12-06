@@ -1,6 +1,7 @@
 /*
-Packages
-*/
+ * This class has been created and developed by Team F (Slideshow Editor).
+ */
+
 package untitledslideshow;
 /*
 Importations
@@ -67,13 +68,10 @@ public class ClickPopUp extends JPopupMenu{
                     System.out.println("Image: " + i.getPath() + " trans: " + i.getTransition());
                 }
             });            
-            /*
-            Testing and debug code
-            System.out.println(model.getElementAt(index).toString());
-            System.out.println("Index selected in image list is: " + index);
-            System.out.println("Main Component is: " + c.getName());
-            */  
         }
+        /**
+         * If the user clicks over the image reel
+         */
         else if(c instanceof JList && "imagesReel".equals(c.getName())){
             JList tempList = (JList) c;
             int index = tempList.getSelectedIndex();
@@ -190,10 +188,32 @@ public class ClickPopUp extends JPopupMenu{
             this.addSeparator();
             
             if(imageTempModel.getSize() > 0){
-                this.add("Current Image Transition set to: " + exporter.getImages().get(index).getTransition());
+                switch(exporter.getImages().get(index).getTransition()){
+                    case 1:
+                        this.add("Current Transition set to: " + "Wipe Left");
+                        break;
+                    case 2:
+                        this.add("Current Transition set to: " + "Wipe Right");
+                        break;
+                    case 3:
+                        this.add("Current Transition set to: " + "Wipe Up");
+                        break;
+                    case 4:
+                        this.add("Current Transition set to: " + "Wipe Down");
+                        break;
+                    case 5:
+                        this.add("Current Transition set to: " + "Crossfade");
+                        break;
+                    default:
+                        this.add("Current Transition set to: no transition");
+                        break;
+                }
                 this.add("Current Transition time set to: " + Float.toString(exporter.getImages().get(index).getTransitionTime()));
             }
         }
+        /**
+         * If the user clicks over the soundtrack reel
+         */
         else if(c instanceof JList && "soundsReel".equals(c.getName())){
             JList tempList = (JList) c;
             soundTempModel = updateItem.getDLM();
@@ -258,7 +278,10 @@ public class ClickPopUp extends JPopupMenu{
         DefaultListModel temp = imageTempModel;
         return temp;
     }
-    
+    /**
+     * Updates the current DefaultListModel with any changes perfomed due to the
+     * importation of a previous save file.
+     */
     public void UpdateDLMs(){
         ArrayList<DisplayImage> imageList = OldSlideInfo.getOldThumbnails();
         int i = 0;
