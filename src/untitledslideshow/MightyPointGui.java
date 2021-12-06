@@ -639,11 +639,12 @@ public class MightyPointGui extends javax.swing.JFrame {
         JFileChooser soundFileChooser = new JFileChooser();
         soundFileChooser.setDialogTitle("Choose a sound file of .AIFF or .wav format for the slideshow!");
         soundFileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-        soundFileChooser.showOpenDialog(this);
+        int option = soundFileChooser.showOpenDialog(this);
         soundDirectory = soundFileChooser.getSelectedFile();
         PathMatcher matcher = FileSystems.getDefault().getPathMatcher("regex:^.*\\.wav");
         PathMatcher matcher2 = FileSystems.getDefault().getPathMatcher("regex:^.*\\.aiff");
-        try{
+        if(option != JFileChooser.CANCEL_OPTION){
+            try{
             if (matcher.matches(soundDirectory.toPath()) || matcher2.matches(soundDirectory.toPath())){
                 System.out.print("Item name: " + soundDirectory.toPath() + " is a sound!\n");
             }
@@ -651,41 +652,46 @@ public class MightyPointGui extends javax.swing.JFrame {
                 System.out.print("\nItem name: " + soundDirectory.toPath() + " is not a sound\n");
             }
             isValid = true;
-        }
-        catch(NullPointerException exception){
-            System.out.print("An exception was found at index");
-        }
-        boolean isReal = false;
-        double lengthSec = 0.0;
-        if(isValid){
-            try{
-                AudioInputStream audioIS = AudioSystem.getAudioInputStream(soundDirectory);
-                AudioFormat format = audioIS.getFormat();
-                long frames = audioIS.getFrameLength();
-                lengthSec = (frames + 0.0) / format.getFrameRate();
-                
-                isReal = true;
-                if(lengthSec == 0){
-                    JOptionPane.showMessageDialog(this, "Selected Sound file: " + soundDirectory.getName() + " has a length of 00.00");
-                    isReal = false;
+            }
+            catch(NullPointerException exception){
+                System.out.print("An exception was found at index");
+            }
+            boolean isReal = false;
+            double lengthSec = 0.0;
+            if(isValid){
+                try{
+                    AudioInputStream audioIS = AudioSystem.getAudioInputStream(soundDirectory);
+                    AudioFormat format = audioIS.getFormat();
+                    long frames = audioIS.getFrameLength();
+                    lengthSec = (frames + 0.0) / format.getFrameRate();
+
+                    isReal = true;
+                    if(lengthSec == 0){
+                        JOptionPane.showMessageDialog(this, "Selected Sound file: " + soundDirectory.getName() + " has a length of 00.00");
+                        isReal = false;
+                    }
+                } catch (UnsupportedAudioFileException ex) {
+                    JOptionPane.showMessageDialog(this, "Selected Sound file: " + soundDirectory.getName() + " is not a valid sound file.");
+                } catch (IOException ex) {
                 }
-            } catch (UnsupportedAudioFileException ex) {
-                JOptionPane.showMessageDialog(this, "Selected Sound file: " + soundDirectory.getName() + " is not a valid sound file.");
-            } catch (IOException ex) {
             }
+                if(isReal){
+                    DecimalFormat numberFormat = new DecimalFormat("#.00");
+                    System.out.println("Audio file: " + soundDirectory.getName() + " is valid with track length: " + lengthSec);
+                    SoundItem newSound = new SoundItem(soundDirectory.toString(), soundDirectory.getName() + ": " + numberFormat.format(lengthSec) + "sec", lengthSec);
+                    newSound.addToDLM(newSound);
+                    //int endIndex = tempSoundReelModel.getSize();
+                    //tempSoundReelModel.add(endIndex, newSound);
+                    exporter.getSounds().add(newSound);
+                    for (SoundItem i : exporter.getSounds()){
+                        System.out.println("Sound: " + i.getPath());
+                    }
+                }  
         }
-        if(isReal){
-            DecimalFormat numberFormat = new DecimalFormat("#.00");
-            System.out.println("Audio file: " + soundDirectory.getName() + " is valid with track length: " + lengthSec);
-            SoundItem newSound = new SoundItem(soundDirectory.toString(), soundDirectory.getName() + ": " + numberFormat.format(lengthSec) + "sec", lengthSec);
-            newSound.addToDLM(newSound);
-            //int endIndex = tempSoundReelModel.getSize();
-            //tempSoundReelModel.add(endIndex, newSound);
-            exporter.getSounds().add(newSound);
-            for (SoundItem i : exporter.getSounds()){
-                System.out.println("Sound: " + i.getPath());
-            }
-        }  
+        else{
+            JOptionPane.showMessageDialog(this, "Audio selection cancelled.");
+        }
+        
     }//GEN-LAST:event_soundSelectButtonActionPerformed
     /**
      * This method determines what happens when the manual button is selected.

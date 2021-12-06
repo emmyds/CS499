@@ -27,7 +27,14 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 /**
- *
+ * FirstPopUp presents the options of creating a new slideshow or importing a previous
+ * slideshow to the user. Depending on which option they choose, the user will either be asked for
+ * a directory of images, or a previously made save file. If a new slideshow is created, the images in
+ * the provided directory will be verified, then loaded into the editor.
+ * 
+ * If a previous file is imported, then the exporter along with the editor GUI will be 
+ * populated depending on the information present within the save file. Error checking is present in both 
+ * of these to prevent invalid images/invalid save files from being sent to the editor.
  * @author Roberto Murcia
  */
 public class FirstPopUp {
@@ -84,11 +91,16 @@ public class FirstPopUp {
                     JFileChooser filechooser = new JFileChooser();
                     filechooser.setDialogTitle("Choose a directory of .png or .jpg images to use for your slideshow!");
                     filechooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-                    filechooser.showOpenDialog(null);
+                    int option = filechooser.showOpenDialog(newSlide);
+                    if(option == JFileChooser.CANCEL_OPTION){
+                        JOptionPane.showMessageDialog(filechooser, "New slideshow creation cancelled.");
+                        isNewSlide = false;
+                        break;
+                    }
                     imageDirectory = filechooser.getSelectedFile();
                     setImageDirectory(imageDirectory);
                     if(imageDirectory == null){
-                        JOptionPane.showMessageDialog(filechooser, "New Slideshow Cancelled");
+                        JOptionPane.showMessageDialog(filechooser, "New slideshow creation cancelled.");
                         isNewSlide = false;
                         break;
                     }
@@ -101,10 +113,14 @@ public class FirstPopUp {
                         MightyPointGui.exporter.setSaveDirectory(imageDirectory.toString());
                         System.out.println(MightyPointGui.exporter.getSaveDirectory());
                     }
+                    
             }catch(NullPointerException exception){}
             }
             try{
                 File fileDirectories[] = this.imageDirectory.listFiles();
+                if(fileDirectories.length > 30){
+                    JOptionPane.showMessageDialog(null, "Larger image directories require more time to load and verify, therefore mightyPoint may take longer to load.");
+                }
                 int counter = 0;
             PathMatcher matcher = FileSystems.getDefault().getPathMatcher("regex:^.*\\.jpg");
             PathMatcher matcher2 = FileSystems.getDefault().getPathMatcher("regex:^.*\\.png");
@@ -179,10 +195,15 @@ public class FirstPopUp {
                     JFileChooser filechooser = new JFileChooser();
                     filechooser.setDialogTitle("Choose an old save file to use!");
                     filechooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-                    filechooser.showOpenDialog(null);
+                    int option = filechooser.showOpenDialog(null);
                     oldSave = filechooser.getSelectedFile();
+                    if(option == JFileChooser.CANCEL_OPTION){
+                        JOptionPane.showMessageDialog(filechooser, "Previous slideshow selection cancelled.");
+                        isOldSlide = false;
+                        break;
+                    }
                     if(oldSave == null){
-                        JOptionPane.showMessageDialog(filechooser, "Old Slideshow Cancelled.");
+                        JOptionPane.showMessageDialog(filechooser, "Previous slideshow selection cancelled.");
                         isOldSlide = false;
                         break;
                     }
@@ -375,7 +396,7 @@ public class FirstPopUp {
         String[] comments = previousSave.get("_comments").toString().split("\n");
         for(String comment: comments)
         {
-            comment = comment.replace("\"", "");                                      //Remove quotations and brackets from string
+            comment = comment.replace("\"", "");                                //Remove quotations and brackets from string
             comment = comment.replace("[", "");
             comment = comment.replace("]", "");
             commentList.add(comment);
